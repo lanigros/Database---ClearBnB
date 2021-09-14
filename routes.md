@@ -8,8 +8,6 @@
 
 # GET rest/users/:id/reviews
 
-# GET POST rest/users/:id/bookings
-
 # POST DELETE rest/reviews/host/:id --> mot host
 
 # POST DELETE rest/review/renter/:id --> mot renter
@@ -21,6 +19,8 @@
 # GET rest/homes/:id/history
 
 <!-- functions -->
+
+<!-- if payment is valid, create booking -->
 
 # GET POST api/user/:id/payment
 
