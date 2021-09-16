@@ -14,7 +14,7 @@ public class Host {
   @GeneratedValue
   private int id;
   @OneToOne
-  private User user_id;
+  private User user;
 
   public Host() {
   }
@@ -29,14 +29,14 @@ public class Host {
 
   @Override
   public String toString() {
-    return "Host{" + "id=" + id + ", user_id=" + user_id + '}';
+    return "Host" + "id=" + id;
   }
 
-  public User getUser_id() {
-    return user_id;
+  public User getUser() {
+    return user;
   }
 
-  public void setUser_id(User user_id) {
-    this.user_id = user_id;
+  public void setUser(User user) {
+    this.user = user;
   }
 }

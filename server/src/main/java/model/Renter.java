@@ -15,14 +15,14 @@ public class Renter {
   @GeneratedValue
   private int id;
   @OneToOne
-  private User user_id;
+  private User user;
 
   public Renter() {
   }
 
   @Override
   public String toString() {
-    return "Renter{" + "id=" + id + ", user_id=" + user_id + '}';
+    return "Renter " + "id=" + id;
   }
 
   public int getId() {
@@ -33,11 +33,11 @@ public class Renter {
     this.id = id;
   }
 
-  public User getUser_id() {
-    return user_id;
+  public User getUser() {
+    return user;
   }
 
-  public void setUser_id(User user_id) {
-    this.user_id = user_id;
+  public void setUser(User user) {
+    this.user = user;
   }
 }
