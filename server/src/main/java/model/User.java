@@ -25,9 +25,11 @@ public class User {
   private String lastName;
   private String email;
   private String password;
+  @JsonManagedReference
   @OneToOne(mappedBy = "user")
   @JsonManagedReference
   private Host hostProfile;
+  @JsonManagedReference
   @OneToOne(mappedBy = "user")
   @JsonManagedReference
   private Renter renterProfile;
