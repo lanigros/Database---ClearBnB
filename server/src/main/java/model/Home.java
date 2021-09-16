@@ -54,6 +54,9 @@ public class Home {
         this.createdDate = createdDate;
     }
 
+    public Home() {
+    }
+
     @Override
     public String toString() {
         return "Home{" + "id=" + id + ", hostId=" + hostId + ", addressId=" + addressId + ", imgUrl='" + imgUrl + '\'' + ", pricePerNight=" + pricePerNight + ", startDate='" + startDate + '\'' + ", endDate='" + endDate + '\'' + ", updatedDate='" + updatedDate + '\'' + ", createdDate='" + createdDate + '\'' + '}';
@@ -91,38 +94,37 @@ public class Home {
         this.pricePerNight = pricePerNight;
     }
 
-    public String getStartDate() {
+    public Timestamp getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(Timestamp startDate) {
         this.startDate = startDate;
+
     }
 
-    public String getEndDate() {
+    public Timestamp getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(Timestamp endDate) {
         this.endDate = endDate;
     }
 
-    public String getUpdatedDate() {
+    public Timestamp getUpdatedDate() {
         return updatedDate;
     }
 
-    public void setUpdatedDate(String updatedDate) {
+    public void setUpdatedDate(Timestamp updatedDate) {
         this.updatedDate = updatedDate;
     }
 
-    public String getCreatedDate() {
+    public Timestamp getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(String createdDate) {
+    public void setCreatedDate(Timestamp createdDate) {
         this.createdDate = createdDate;
     }
-
-
 
 }
