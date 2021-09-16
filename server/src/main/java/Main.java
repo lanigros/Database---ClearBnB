@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -16,7 +17,9 @@ public class Main {
 
     // Create our repositories
     Optional<User> user = userRepository.findById(1);
+    List<User> users = userRepository.findAll();
 
+    System.out.println(users);
     System.out.println(user.isPresent() ? user : "No user with that id");
 
   }
