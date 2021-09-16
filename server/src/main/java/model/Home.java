@@ -41,9 +41,8 @@ public class Home {
     @Column(name = "created_date")
     private Timestamp createdDate;
 
-    public Home(int id, int hostId, Address address, String imgUrl, int pricePerNight,
+    public Home(int hostId, Address address, String imgUrl, int pricePerNight,
             Timestamp startDate, Timestamp endDate) {
-        this.id = id;
         this.hostId = hostId;
         this.address = address;
         this.imgUrl = imgUrl;
