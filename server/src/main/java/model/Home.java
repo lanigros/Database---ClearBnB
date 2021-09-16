@@ -42,7 +42,7 @@ public class Home {
     private Timestamp createdDate;
 
     public Home(int id, int hostId, Address address, String imgUrl, int pricePerNight,
-            Timestamp startDate, Timestamp endDate, Timestamp updatedDate, Timestamp createdDate) {
+            Timestamp startDate, Timestamp endDate) {
         this.id = id;
         this.hostId = hostId;
         this.address = address;
@@ -50,8 +50,7 @@ public class Home {
         this.pricePerNight = pricePerNight;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.updatedDate = updatedDate;
-        this.createdDate = createdDate;
+
     }
 
     public Home() {
