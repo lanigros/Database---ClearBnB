@@ -36,6 +36,11 @@ public class Home {
     @Column(name = "created_date", nullable = false)
     private String createdDate;
 
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+
     public int getHostId() {
         return hostId;
     }
@@ -99,5 +104,6 @@ public class Home {
     public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
     }
+
 
 }
