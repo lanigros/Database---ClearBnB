@@ -4,44 +4,49 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="Home")
-public class Home {
+@NamedQueries({
+        @NamedQuery(name = "Home.findById", query="SELECT h FROM Home WHERE h.id = :id"),
+        @NamedQuery(name = "Home.findAll", query="SELECT h FROM Home")
+})
 
-    public Home(){
-    }
+public class Home {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @Column(name = "host_id", nullable = false)
+    @Column(name = "host_id")
     @ManyToOne //MANY homes to ONE host
     private int hostId;
 
-    @Column(name = "address_id", nullable = false)
-    @OneToOne //ONE address to ONE home
+    @Column(name = "address_id")
+    @OneToOne(mappedBy = "") //ONE address to ONE home
     private int addressId;
 
-    @Column(name = "img_url", nullable = false)
+    @Column(name = "img_url")
     private String imgUrl;
 
-    @Column(name = "price_per_night", nullable = false)
+    @Column(name = "price_per_night")
     private int pricePerNight;
 
-    @Column(name = "start_date", nullable = false)
+    @Column(name = "start_date")
     private String startDate;
 
-    @Column(name = "end_date", nullable = false)
+    @Column(name = "end_date")
     private String endDate;
 
-    @Column(name = "updated_date", nullable = false)
+    @Column(name = "updated_date")
     private String updatedDate;
 
-    @Column(name = "created_date", nullable = false)
+    @Column(name = "created_date")
     private String createdDate;
+
+    public Home(){
+    }
 
     @Override
     public String toString() {
-        return super.toString();
+        return "Home{" + "id=" + id + ", hostId=" + hostId + ", addressId=" + addressId + ", imgUrl='" + imgUrl + '\'' + ", pricePerNight=" + pricePerNight + ", startDate='" + startDate + '\'' + ", endDate='" + endDate + '\'' + ", updatedDate='" + updatedDate + '\'' + ", createdDate='" + createdDate + '\'' + '}';
     }
 
     public int getHostId() {
@@ -107,6 +112,7 @@ public class Home {
     public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
     }
+
 
 
 }
