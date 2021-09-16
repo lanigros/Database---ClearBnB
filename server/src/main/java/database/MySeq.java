@@ -1,3 +1,4 @@
+//Behövs denna klassen?
 package database;
 
 import java.sql.Connection;
