@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,8 +25,10 @@ public class User {
   private String lastName;
   private String email;
   private String password;
+  @JsonManagedReference
   @OneToOne(mappedBy = "user")
   private Host hostProfile;
+  @JsonManagedReference
   @OneToOne(mappedBy = "user")
   private Renter renterProfile;
 
