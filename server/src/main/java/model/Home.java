@@ -1,5 +1,5 @@
 package model;
-
+import java.sql.Timestamp;
 import javax.persistence.*;
 
 @Entity
@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class Home {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue
     private int id;
 
     @Column(name = "host_id")
@@ -20,8 +20,8 @@ public class Home {
     private int hostId;
 
     @Column(name = "address_id")
-    @OneToOne(mappedBy = "") //ONE address to ONE home
-    private int addressId;
+    @OneToOne(mappedBy = "home_id") //ONE address to ONE home
+    private Address address;
 
     @Column(name = "img_url")
     private String imgUrl;
@@ -30,16 +30,16 @@ public class Home {
     private int pricePerNight;
 
     @Column(name = "start_date")
-    private String startDate;
+    private Timestamp startDate;
 
     @Column(name = "end_date")
-    private String endDate;
+    private Timestamp endDate;
 
     @Column(name = "updated_date")
-    private String updatedDate;
+    private Timestamp updatedDate;
 
     @Column(name = "created_date")
-    private String createdDate;
+    private Timestamp createdDate;
 
     public Home(){
     }
