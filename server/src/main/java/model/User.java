@@ -11,10 +11,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "user")
-@NamedQueries({
-    @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
-    @NamedQuery(name = "User.findAll",
-        query = "SELECT u FROM User u")})
+@NamedQueries({@NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
+    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")})
 public class User {
 
   @Id
@@ -26,9 +24,9 @@ public class User {
   private String lastName;
   private String email;
   private String password;
-  @OneToOne(mappedBy = "user_id")
+  @OneToOne(mappedBy = "user")
   private Host hostProfile;
-  @OneToOne(mappedBy = "user_id")
+  @OneToOne(mappedBy = "user")
   private Renter renterProfile;
 
   public User() {
