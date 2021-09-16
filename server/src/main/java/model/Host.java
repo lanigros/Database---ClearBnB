@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,6 +14,7 @@ public class Host {
   @Id
   @GeneratedValue
   private int id;
+  @JsonBackReference
   @OneToOne
   private User user;
 
