@@ -16,7 +16,8 @@ public class Main {
 
     // Create our repositories
     Optional<User> user = userRepository.findById(1);
-    System.out.println(user);
+
+    System.out.println(user.isPresent() ? user : "No user with that id");
 
   }
 
