@@ -41,7 +41,17 @@ public class Home {
     @Column(name = "created_date")
     private Timestamp createdDate;
 
-    public Home(){
+    public Home(int id, int hostId, Address address, String imgUrl, int pricePerNight,
+            Timestamp startDate, Timestamp endDate, Timestamp updatedDate, Timestamp createdDate) {
+        this.id = id;
+        this.hostId = hostId;
+        this.address = address;
+        this.imgUrl = imgUrl;
+        this.pricePerNight = pricePerNight;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.updatedDate = updatedDate;
+        this.createdDate = createdDate;
     }
 
     @Override
