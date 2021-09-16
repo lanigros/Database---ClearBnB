@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Table(name = "user")
 @NamedQueries({@NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")})
-public class User {
+public class Review {
 
   @Id
   @GeneratedValue
