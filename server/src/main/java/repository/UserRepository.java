@@ -1,5 +1,6 @@
 package repository;
 
+import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import model.User;
@@ -19,7 +20,7 @@ public class UserRepository {
     return user != null ? Optional.of(user) : Optional.empty();
   }
 
-//  public List<User> findAll() {
-//    return entityManager.createQuery("from User").getResultList();
-//  }
+  public List<User> findAll() {
+    return entityManager.createQuery("from User").getResultList();
+  }
 }
