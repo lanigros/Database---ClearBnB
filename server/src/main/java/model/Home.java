@@ -3,8 +3,11 @@ package model;
 import javax.persistence.*;
 
 @Entity
-@Table(name="home")
+@Table(name="Home")
 public class Home {
+
+    public Home(){
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
