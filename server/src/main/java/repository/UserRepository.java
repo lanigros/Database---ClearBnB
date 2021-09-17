@@ -15,7 +15,9 @@ public class UserRepository {
     this.entityManager = entityManager;
   }
 
-  public Optional<User> findById(int id) {
+  public Optional<User> findById(String ids) {
+    int id = Integer.parseInt(ids);
+
     User user = entityManager.find(User.class, id);
     return user != null ? Optional.of(user) : Optional.empty();
   }
