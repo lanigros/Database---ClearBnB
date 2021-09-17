@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -27,7 +28,7 @@ public class Review {
   private Timestamp created;
   @Column(name = "is_deleted")
   private boolean isDeleted;
-  @OneToOne
+  @ManyToOne
   @JoinColumn(name = "booking_detail_id")
   private BookingDetail bookingDetail;
   @OneToOne

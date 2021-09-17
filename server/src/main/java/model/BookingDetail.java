@@ -1,6 +1,8 @@
 package model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -22,6 +25,8 @@ public class BookingDetail {
   @Id
   @GeneratedValue
   private int id;
+  @OneToOne
+  private Renter renter;
   @ManyToOne
   private Home home;
   @Column(name = "total_price")
@@ -32,27 +37,29 @@ public class BookingDetail {
   private Timestamp endDate;
   @Column(name = "created_date")
   private Timestamp createdDate;
-  @OneToOne
-  private Review review;
+  @OneToMany
+  private List<Review> reviews = new ArrayList<>();
 
   public BookingDetail() {
 
   }
 
   public BookingDetail(Home home, int totalPrice, Timestamp startDate,
-      Timestamp endDate, Timestamp createdDate, Review review) {
+      Timestamp endDate, Timestamp createdDate, List<Review> reviews, Renter renter) {
     this.home = home;
     this.totalPrice = totalPrice;
     this.startDate = startDate;
     this.endDate = endDate;
     this.createdDate = createdDate;
-    this.review = review;
+    this.reviews = reviews;
+    this.renter = renter;
   }
 
   @Override
   public String toString() {
     return "BookingDetail{" + "id=" + id + ", home=" + home + ", totalPrice=" + totalPrice +
-        ", startDate=" + startDate + ", endDate=" + endDate + ", createdDate=" + createdDate + '}';
+        ", startDate=" + startDate + ", endDate=" + endDate + ", createdDate=" + createdDate +
+        "reviews=" + reviews + "}";
   }
 
   public Home getHome() {
@@ -61,6 +68,14 @@ public class BookingDetail {
 
   public void setHome(Home home) {
     this.home = home;
+  }
+
+  public Renter getRenter() {
+    return renter;
+  }
+
+  public void setRenter(Renter renter) {
+    this.renter = renter;
   }
 
   public int getTotalPrice() {
@@ -95,11 +110,11 @@ public class BookingDetail {
     this.createdDate = createdDate;
   }
 
-  public Review getReview() {
-    return review;
+  public List<Review> getReviews() {
+    return reviews;
   }
 
-  public void setReview(Review review) {
-    this.review = review;
+  public void setReviews(List<Review> reviews) {
+    this.reviews = reviews;
   }
 }
