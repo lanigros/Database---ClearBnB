@@ -9,12 +9,12 @@
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <!--      ända db i value -->
             <property name="javax.persistence.jdbc.url"
-                      value="jdbc:mysql://localhost:3306/db_mysql"/>
+                      value="jdbc:mysql://localhost:3306/test"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
             <!--      ändra till era credentials-->
-            <property name="javax.persistence.jdbc.user" value="alex"/>
+            <property name="javax.persistence.jdbc.user" value="root"/>
             <!--      ändra till era credentials-->
-            <property name="javax.persistence.jdbc.password" value="banan123"/>
+            <property name="javax.persistence.jdbc.password" value="password"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
 
@@ -28,12 +28,12 @@
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <!--      ända db i value -->
             <property name="javax.persistence.jdbc.url"
-                      value="jdbc:mysql://localhost:3306/db_mysql"/>
+                      value="jdbc:mysql://localhost:3306/test"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
             <!--      ändra till era credentials-->
-            <property name="javax.persistence.jdbc.user" value="alex"/>
+            <property name="javax.persistence.jdbc.user" value="root"/>
             <!--      ändra till era credentials-->
-            <property name="javax.persistence.jdbc.password" value="banan123"/>
+            <property name="javax.persistence.jdbc.password" value="password"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
         </properties>
@@ -46,12 +46,12 @@
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <!--      ända db i value -->
             <property name="javax.persistence.jdbc.url"
-                      value="jdbc:mysql://localhost:3306/db_mysql"/>
+                      value="jdbc:mysql://localhost:3306/test"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
             <!--      ändra till era credentials-->
-            <property name="javax.persistence.jdbc.user" value="alex"/>
+            <property name="javax.persistence.jdbc.user" value="root"/>
             <!--      ändra till era credentials-->
-            <property name="javax.persistence.jdbc.password" value="banan123"/>
+            <property name="javax.persistence.jdbc.password" value="password"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="true"/>
         </properties>

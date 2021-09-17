@@ -1,27 +1,20 @@
 import java.util.List;
-import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import model.User;
-import repository.UserRepository;
+import model.Home;
+import repository.HomeRepository;
 
 public class Main {
 
-  public static void main(String[] args) {
-
-    // Create our entity manager
-    EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("User");
-    EntityManager entityManager = entityManagerFactory.createEntityManager();
-    UserRepository userRepository = new UserRepository(entityManager);
-
-    // Create our repositories
-    Optional<User> user = userRepository.findById(1);
-    List<User> users = userRepository.findAll();
-
-    System.out.println(users);
-    System.out.println(user.isPresent() ? user : "No user with that id");
-
-  }
+    public static void main(String[] args) {
+        // Create our entity manager
+        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("Home");
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        HomeRepository HomeRepository = new HomeRepository(entityManager);
+        // Create our repositories
+        List<Home> homes = HomeRepository.findAll();
+        System.out.println(homes);
+    }
 
 }
