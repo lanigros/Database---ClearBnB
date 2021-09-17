@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -24,33 +25,27 @@ public class Home {
   @Id
   @GeneratedValue
   private int id;
-
   @Column(name = "host_id")
   @ManyToOne //MANY homes to ONE host
   private int hostId;
-
   @JsonManagedReference
   @Column(name = "address_id")
   @OneToOne(mappedBy = "home_id") //ONE address to ONE home
   private Address address;
-
   @Column(name = "img_url")
   private String imgUrl;
-
   @Column(name = "price_per_night")
   private int pricePerNight;
-
   @Column(name = "start_date")
   private Timestamp startDate;
-
   @Column(name = "end_date")
   private Timestamp endDate;
-
   @Column(name = "updated_date")
   private Timestamp updatedDate;
-
   @Column(name = "created_date")
   private Timestamp createdDate;
+  @OneToMany
+  private BookingDetail bookingDetail;
 
   public Home(int hostId, Address address, String imgUrl, int pricePerNight,
       Timestamp startDate, Timestamp endDate) {
