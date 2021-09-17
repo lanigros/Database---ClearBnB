@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -18,6 +19,7 @@ public class Host {
     @GeneratedValue
     private int id;
     @OneToOne
+    @JsonBackReference
     private User user;
     @OneToMany(mappedBy = "host", cascade = CascadeType.ALL)
     private List<Home> homes = new ArrayList<>();
