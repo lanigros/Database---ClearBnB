@@ -1,8 +1,7 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,8 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -25,7 +22,8 @@ public class BookingDetail {
   @Id
   @GeneratedValue
   private int id;
-  @OneToOne
+  @JsonBackReference
+  @ManyToOne
   private Renter renter;
   @ManyToOne
   private Home home;
@@ -37,29 +35,27 @@ public class BookingDetail {
   private Timestamp endDate;
   @Column(name = "created_date")
   private Timestamp createdDate;
-  @OneToMany
-  private List<Review> reviews = new ArrayList<>();
 
   public BookingDetail() {
 
   }
 
   public BookingDetail(Home home, int totalPrice, Timestamp startDate,
-      Timestamp endDate, Timestamp createdDate, List<Review> reviews, Renter renter) {
+      Timestamp endDate, Timestamp createdDate, Renter renter) {
     this.home = home;
     this.totalPrice = totalPrice;
     this.startDate = startDate;
     this.endDate = endDate;
     this.createdDate = createdDate;
-    this.reviews = reviews;
     this.renter = renter;
+
   }
 
   @Override
   public String toString() {
-    return "BookingDetail{" + "id=" + id + ", home=" + home + ", totalPrice=" + totalPrice +
+    return "BookingDetail{" + "id=" + id + ",totalPrice=" + totalPrice +
         ", startDate=" + startDate + ", endDate=" + endDate + ", createdDate=" + createdDate +
-        "reviews=" + reviews + "}";
+        "}";
   }
 
   public Home getHome() {
@@ -110,11 +106,4 @@ public class BookingDetail {
     this.createdDate = createdDate;
   }
 
-  public List<Review> getReviews() {
-    return reviews;
-  }
-
-  public void setReviews(List<Review> reviews) {
-    this.reviews = reviews;
-  }
 }
