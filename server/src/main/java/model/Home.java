@@ -62,78 +62,79 @@ public class Home {
 
   @Override
   public String toString() {
-    return "Home{" + "id=" + id + ", hostId=" + hostId + ", addressId=" + addressId + '\'' + ", "
+    return "Home{" + "id=" + id + ", hostId=" + hostId + ", address=" + address + '\'' + ", "
         + "pricePerNight=" + pricePerNight + ", startDate='" + startDate + '\''
         + ", endDate='" + endDate + '\'' + ", updatedDate='" + updatedDate + '\''
         + ", createdDate='" + createdDate + '\'' + '}';
+  }
 
-    public int getHostId () {
-      return hostId;
-    }
+  public int getHostId() {
+    return hostId;
+  }
 
-    public void setHostId ( int hostId){
-      this.hostId = hostId;
-    }
+  public void setHostId(int hostId) {
+    this.hostId = hostId;
+  }
 
-    public Address getAddress () {
-      return address;
-    }
+  public Address getAddress() {
+    return address;
+  }
 
-    public void setAddress (Address address){
-      this.address = address;
-    }
+  public void setAddress(Address address) {
+    this.address = address;
+  }
 
-    public void setAddressId (Address address){
-      this.address = address;
-    }
+  public void setAddressId(Address address) {
+    this.address = address;
+  }
 
-    public int getPricePerNight () {
-      return pricePerNight;
-    }
+  public int getPricePerNight() {
+    return pricePerNight;
+  }
 
-    public void setPricePerNight ( int pricePerNight){
-      this.pricePerNight = pricePerNight;
-    }
+  public void setPricePerNight(int pricePerNight) {
+    this.pricePerNight = pricePerNight;
+  }
 
-    public Timestamp getStartDate () {
-      return startDate;
-    }
+  public Timestamp getStartDate() {
+    return startDate;
+  }
 
-    public void setStartDate (Timestamp startDate){
-      this.startDate = startDate;
-
-    }
-
-    public List<BookingDetail> getBookingDetails () {
-      return bookingDetails;
-    }
-
-    public void setBookingDetails (List < BookingDetail > bookingDetails) {
-      this.bookingDetails = bookingDetails;
-    }
-
-    public Timestamp getEndDate () {
-      return endDate;
-    }
-
-    public void setEndDate (Timestamp endDate){
-      this.endDate = endDate;
-    }
-
-    public Timestamp getUpdatedDate () {
-      return updatedDate;
-    }
-
-    public void setUpdatedDate (Timestamp updatedDate){
-      this.updatedDate = updatedDate;
-    }
-
-    public Timestamp getCreatedDate () {
-      return createdDate;
-    }
-
-    public void setCreatedDate (Timestamp createdDate){
-      this.createdDate = createdDate;
-    }
+  public void setStartDate(Timestamp startDate) {
+    this.startDate = startDate;
 
   }
+
+  public List<BookingDetail> getBookingDetails() {
+    return bookingDetails;
+  }
+
+  public void setBookingDetails(List<BookingDetail> bookingDetails) {
+    this.bookingDetails = bookingDetails;
+  }
+
+  public Timestamp getEndDate() {
+    return endDate;
+  }
+
+  public void setEndDate(Timestamp endDate) {
+    this.endDate = endDate;
+  }
+
+  public Timestamp getUpdatedDate() {
+    return updatedDate;
+  }
+
+  public void setUpdatedDate(Timestamp updatedDate) {
+    this.updatedDate = updatedDate;
+  }
+
+  public Timestamp getCreatedDate() {
+    return createdDate;
+  }
+
+  public void setCreatedDate(Timestamp createdDate) {
+    this.createdDate = createdDate;
+  }
+
+}
