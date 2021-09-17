@@ -20,7 +20,33 @@ public class UserRepository {
     return user != null ? Optional.of(user) : Optional.empty();
   }
 
+  public User findByEmail(String email) {
+    try {
+      User user = entityManager.createNamedQuery("User.findByEmail", User.class)
+          .setParameter("email", email).getSingleResult();
+      System.out.println(user);
+      return user;
+    } catch (Exception e) {
+      System.out.println(e);
+      return null;
+    }
+
+  }
+
   public List<User> findAll() {
     return entityManager.createQuery("from User").getResultList();
+  }
+
+
+  public Optional<User> save(User user) {
+    try {
+      entityManager.getTransaction().begin();
+      entityManager.persist(user);
+      entityManager.getTransaction().commit();
+      return Optional.of(user);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return Optional.empty();
   }
 }

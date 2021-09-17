@@ -3,7 +3,6 @@ package model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -12,12 +11,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "user")
-@NamedQueries({@NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id"),
+@NamedQueries({
+    @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
     @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")})
 public class User {
 
   @Id
-  @GeneratedValue
   private Integer id;
   @Column(name = "first_name")
   private String firstName;
@@ -25,11 +24,13 @@ public class User {
   private String lastName;
   private String email;
   private String password;
-  @JsonManagedReference
+
   @OneToOne(mappedBy = "user")
+  @JsonManagedReference
   private Host hostProfile;
-  @JsonManagedReference
+
   @OneToOne(mappedBy = "user")
+  @JsonManagedReference
   private Renter renterProfile;
 
   public User() {
