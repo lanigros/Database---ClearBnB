@@ -1,26 +1,32 @@
 package model;
+
 import java.sql.Timestamp;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
-@Table(name="Home")
-@NamedQueries({
-        @NamedQuery(name = "Home.findById", query="SELECT h FROM Home WHERE h.id = :id"),
-        @NamedQuery(name = "Home.findAll", query="SELECT h FROM Home")
-})
-
+@Table(name = "Home")
+@NamedQueries({@NamedQuery(name = "Home.findById", query = "SELECT h FROM Home WHERE h.id = :id"), @NamedQuery(name = "Home.findAll", query = "SELECT h FROM Home")})
 public class Home {
 
     @Id
     @GeneratedValue
     private int id;
 
-    @Column(name = "host_id")
+    @Column(name = "host")
     @ManyToOne //MANY homes to ONE host
     private int hostId;
 
-    @Column(name = "address_id")
-    @OneToOne(mappedBy = "home_id") //ONE address to ONE home
+    @JoinColumn(name = "address")
+    @OneToOne(mappedBy = "home") //ONE address to ONE home
     private Address address;
 
     @Column(name = "img_url")
@@ -41,15 +47,14 @@ public class Home {
     @Column(name = "created_date")
     private Timestamp createdDate;
 
-    public Home(int hostId, Address address, String imgUrl, int pricePerNight,
-            Timestamp startDate, Timestamp endDate) {
+    public Home(int hostId, Address address, String imgUrl, int pricePerNight, Timestamp startDate,
+            Timestamp endDate) {
         this.hostId = hostId;
         this.address = address;
         this.imgUrl = imgUrl;
         this.pricePerNight = pricePerNight;
         this.startDate = startDate;
         this.endDate = endDate;
-
     }
 
     public Home() {
@@ -57,7 +62,7 @@ public class Home {
 
     @Override
     public String toString() {
-        return "Home{" + "id=" + id + ", hostId=" + hostId + ", addressId=" + addressId + ", imgUrl='" + imgUrl + '\'' + ", pricePerNight=" + pricePerNight + ", startDate='" + startDate + '\'' + ", endDate='" + endDate + '\'' + ", updatedDate='" + updatedDate + '\'' + ", createdDate='" + createdDate + '\'' + '}';
+        return "Home{" + "id=" + id + ", hostId=" + hostId + ", addressId=" + address + ", imgUrl='" + imgUrl + '\'' + ", pricePerNight=" + pricePerNight + ", startDate='" + startDate + '\'' + ", endDate='" + endDate + '\'' + ", updatedDate='" + updatedDate + '\'' + ", createdDate='" + createdDate + '\'' + '}';
     }
 
     public int getHostId() {
@@ -68,12 +73,12 @@ public class Home {
         this.hostId = hostId;
     }
 
-    public int getAddressId() {
-        return addressId;
+    public Address getAddressId() {
+        return address;
     }
 
-    public void setAddressId(int addressId) {
-        this.addressId = addressId;
+    public void setAddressId(Address address) {
+        this.address = address;
     }
 
     public String getImgUrl() {
@@ -98,7 +103,6 @@ public class Home {
 
     public void setStartDate(Timestamp startDate) {
         this.startDate = startDate;
-
     }
 
     public Timestamp getEndDate() {
