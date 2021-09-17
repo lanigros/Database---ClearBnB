@@ -9,7 +9,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 //import org.eclipse.jetty.server.Authentication.User;
 
@@ -20,6 +19,7 @@ public class Review {
 
     @Id
     @GeneratedValue
+    private int id;
     private int rating;
     private String comment;
     @Column(name = "created_date")
@@ -27,11 +27,11 @@ public class Review {
     @Column(name = "is_deleted")
     private boolean isDeleted;
     @ManyToOne
-    @JoinColumn(name = "booking_detail_id")
+    @JoinColumn(name = "booking_id")
     private BookingDetail bookingDetail;
-    @OneToOne
-    @JoinColumn(name = "creator_id")
-    private User creator;
+
+    public Review() {
+    }
 
     public Review(int rating, String comment, Timestamp created, boolean isDeleted,
             BookingDetail bookingDetail, User creator) {
@@ -40,12 +40,11 @@ public class Review {
         this.created = created;
         this.isDeleted = isDeleted;
         this.bookingDetail = bookingDetail;
-        this.creator = creator;
     }
 
     @Override
     public String toString() {
-        return "Review{" + "rating=" + rating + ", comment='" + comment + '\'' + ", created=" + created + ", isDeleted=" + isDeleted + ", bookingDetail=" + bookingDetail + ", creator=" + creator + '}';
+        return "Review{" + "rating=" + rating + ", comment='" + comment + '\'' + ", created=" + created + ", isDeleted=" + isDeleted + +'}';
     }
 
     public int getRating() {
@@ -86,14 +85,6 @@ public class Review {
 
     public void setBookingId(BookingDetail bookingDetail) {
         this.bookingDetail = bookingDetail;
-    }
-
-    public User getCreator() {
-        return creator;
-    }
-
-    public void setCreator(User creator) {
-        this.creator = creator;
     }
 
 }
