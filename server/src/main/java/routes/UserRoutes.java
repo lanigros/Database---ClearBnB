@@ -26,7 +26,7 @@ public class UserRoutes {
   }
 
   void init() {
-    app.get("/users/:id", (req, res) -> {
+    app.get("rest/users/:id", (req, res) -> {
       try {
         int id = Integer.parseInt(req.params("id"));
         Optional<User> user = userRepository.findById(id);
@@ -35,7 +35,7 @@ public class UserRoutes {
         res.status(500).send(e);
       }
     });
-    app.get("/users", (req, res) -> {
+    app.get("rest/users", (req, res) -> {
       List<User> users = null;
       try {
         users = userRepository.findAll();
@@ -44,5 +44,6 @@ public class UserRoutes {
         res.status(500).send(e);
       }
     });
+    
   }
 }
