@@ -1,6 +1,8 @@
 package model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -46,14 +49,18 @@ public class Home {
     @Column(name = "created_date")
     private Timestamp createdDate;
 
+    @OneToMany
+    private List<BookingDetail> bookingDetails = new ArrayList<>();
+
     public Home(Host host, Address address, String imgUrl, int pricePerNight, Timestamp startDate,
-            Timestamp endDate) {
+            Timestamp endDate, List<BookingDetail> bookingDetails) {
         this.host = host;
         this.address = address;
         this.imgUrl = imgUrl;
         this.pricePerNight = pricePerNight;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.bookingDetails = bookingDetails;
     }
 
     public Home() {
@@ -61,7 +68,7 @@ public class Home {
 
     @Override
     public String toString() {
-        return "Home{" + "id=" + id + ", host=" + host + ", addressId=" + address + ", imgUrl='" + imgUrl + '\'' + ", pricePerNight=" + pricePerNight + ", startDate='" + startDate + '\'' + ", endDate='" + endDate + '\'' + ", updatedDate='" + updatedDate + '\'' + ", createdDate='" + createdDate + '\'' + '}';
+        return "Home{" + "id =" + id + ", host =" + host + ", addressId =" + address + ", imgUrl" + "='" + imgUrl + '\'' + ", pricePerNight=" + pricePerNight + ", startDate='" + startDate + '\'' + ", endDate='" + endDate + '\'' + ", updatedDate='" + updatedDate + '\'' + ", createdDate='" + createdDate + '\'' + '}';
     }
 
     public Host getHost() {
@@ -126,6 +133,14 @@ public class Home {
 
     public void setCreatedDate(Timestamp createdDate) {
         this.createdDate = createdDate;
+    }
+
+    public List<BookingDetail> getBookingDetails() {
+        return bookingDetails;
+    }
+
+    public void setBookingDetails(List<BookingDetail> bookingDetails) {
+        this.bookingDetails = bookingDetails;
     }
 
 }

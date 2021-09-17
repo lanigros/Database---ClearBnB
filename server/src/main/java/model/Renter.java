@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,7 +16,10 @@ public class Renter {
   @GeneratedValue
   private int id;
   @OneToOne
+  @JsonBackReference
   private User user;
+  @OneToOne
+  private BookingDetail bookingDetail;
 
   public Renter() {
   }
@@ -39,5 +43,13 @@ public class Renter {
 
   public void setUser(User user) {
     this.user = user;
+  }
+
+  public BookingDetail getBookingDetail() {
+    return bookingDetail;
+  }
+
+  public void setBookingDetail(BookingDetail bookingDetail) {
+    this.bookingDetail = bookingDetail;
   }
 }

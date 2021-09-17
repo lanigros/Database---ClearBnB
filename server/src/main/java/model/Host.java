@@ -19,7 +19,6 @@ public class Host {
     private int id;
     @OneToOne
     private User user;
-
     @OneToMany(mappedBy = "host", cascade = CascadeType.ALL)
     private List<Home> homes = new ArrayList<>();
 

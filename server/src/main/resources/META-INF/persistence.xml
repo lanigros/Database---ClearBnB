@@ -9,7 +9,28 @@
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <!--      ända db i value -->
             <property name="javax.persistence.jdbc.url"
-                      value="jdbc:mysql://localhost:3306/test"/>
+                      value="jdbc:mysql://localhost:3306/db_mysql"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+            <!--      ändra till era credentials-->
+            <property name="javax.persistence.jdbc.user" value="root"/>
+            <!--      ändra till era credentials-->
+            <property name="javax.persistence.jdbc.password" value="password"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+
+        </properties>
+
+    </persistence-unit>
+
+
+    <persistence-unit name="Review">
+        <class>model.User</class>
+        <properties>
+
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <!--      ända db i value -->
+            <property name="javax.persistence.jdbc.url"
+                      value="jdbc:mysql://localhost:3306/db_mysql"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
             <!--      ändra till era credentials-->
             <property name="javax.persistence.jdbc.user" value="root"/>
@@ -28,7 +49,7 @@
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <!--      ända db i value -->
             <property name="javax.persistence.jdbc.url"
-                      value="jdbc:mysql://localhost:3306/test"/>
+                      value="jdbc:mysql://localhost:3306/db_mysql"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
             <!--      ändra till era credentials-->
             <property name="javax.persistence.jdbc.user" value="root"/>
@@ -39,6 +60,7 @@
         </properties>
 
     </persistence-unit>
+
 
     <persistence-unit name="Home_History_log">
         <class>model.HomeHistoryLog</class>
@@ -46,7 +68,7 @@
             <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
             <!--      ända db i value -->
             <property name="javax.persistence.jdbc.url"
-                      value="jdbc:mysql://localhost:3306/test"/>
+                      value="jdbc:mysql://localhost:3306/db_mysql"/>
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
             <!--      ändra till era credentials-->
             <property name="javax.persistence.jdbc.user" value="root"/>
@@ -58,6 +80,25 @@
 
     </persistence-unit>
 
+    <persistence-unit name="BookingDetail">
+        <class>model.User</class>
+        <properties>
+
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+            <!--      change db name to the local file name -->
+            <property name="javax.persistence.jdbc.url"
+                      value="jdbc:mysql://localhost:3306/db_mysql"/>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/>
+            <!--      change to personal credentials-->
+            <property name="javax.persistence.jdbc.user" value="root"/>
+            <!--      change to personal credentials -->
+            <property name="javax.persistence.jdbc.password" value="password"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+
+        </properties>
+
+    </persistence-unit>
 </persistence>
 
 
