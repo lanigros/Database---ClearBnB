@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
@@ -27,28 +28,29 @@ public class Review {
   private Timestamp created;
   @Column(name = "is_deleted")
   private boolean isDeleted;
-  @OneToOne
-  @JoinColumn(name = "booking_id")
-  private BookingId bookingId;
+  @ManyToOne
+  @JoinColumn(name = "booking_detail_id")
+  private BookingDetail bookingDetail;
   @OneToOne
   @JoinColumn(name = "creator_id")
   private User creator;
 
 
   public Review(int rating, String comment, Timestamp created, boolean isDeleted,
-      BookingId bookingId, User creator) {
+      BookingDetail bookingDetail, User creator) {
     this.rating = rating;
     this.comment = comment;
     this.created = created;
     this.isDeleted = isDeleted;
-    this.bookingId = bookingId;
+    this.bookingDetail = bookingDetail;
     this.creator = creator;
   }
 
   @Override
   public String toString() {
     return "Review{" + "rating=" + rating + ", comment='" + comment + '\'' + ", created=" + created
-        + ", isDeleted=" + isDeleted + ", bookingId=" + bookingId + ", creator=" + creator + '}';
+        + ", isDeleted=" + isDeleted + ", bookingDetail=" + bookingDetail + ", creator=" + creator
+        + '}';
   }
 
   public int getRating() {
@@ -83,12 +85,12 @@ public class Review {
     isDeleted = deleted;
   }
 
-  public BookingId getBookingId() {
-    return bookingId;
+  public BookingDetail getBookingDetail() {
+    return bookingDetail;
   }
 
-  public void setBookingId(BookingId bookingId) {
-    this.bookingId = bookingId;
+  public void setBookingId(BookingDetail bookingDetail) {
+    this.bookingDetail = bookingDetail;
   }
 
   public User getCreator() {

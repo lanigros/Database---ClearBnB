@@ -18,6 +18,8 @@ public class Renter {
   @OneToOne
   @JsonBackReference
   private User user;
+  @OneToOne
+  private BookingDetail bookingDetail;
 
   public Renter() {
   }
@@ -41,5 +43,13 @@ public class Renter {
 
   public void setUser(User user) {
     this.user = user;
+  }
+
+  public BookingDetail getBookingDetail() {
+    return bookingDetail;
+  }
+
+  public void setBookingDetail(BookingDetail bookingDetail) {
+    this.bookingDetail = bookingDetail;
   }
 }

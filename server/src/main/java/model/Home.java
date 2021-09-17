@@ -2,6 +2,8 @@ package model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -24,43 +27,34 @@ public class Home {
   @Id
   @GeneratedValue
   private int id;
-
   @Column(name = "host_id")
   @ManyToOne //MANY homes to ONE host
   private int hostId;
-
   @JsonManagedReference
   @Column(name = "address_id")
   @OneToOne(mappedBy = "home_id") //ONE address to ONE home
   private Address address;
-
-  @Column(name = "img_url")
-  private String imgUrl;
-
   @Column(name = "price_per_night")
   private int pricePerNight;
-
   @Column(name = "start_date")
   private Timestamp startDate;
-
   @Column(name = "end_date")
   private Timestamp endDate;
-
   @Column(name = "updated_date")
   private Timestamp updatedDate;
-
   @Column(name = "created_date")
   private Timestamp createdDate;
+  @OneToMany
+  private List<BookingDetail> bookingDetails = new ArrayList<>();
 
-  public Home(int hostId, Address address, String imgUrl, int pricePerNight,
-      Timestamp startDate, Timestamp endDate) {
+  public Home(int hostId, Address address, int pricePerNight,
+      Timestamp startDate, Timestamp endDate, List<BookingDetail> bookingDetails) {
     this.hostId = hostId;
     this.address = address;
-    this.imgUrl = imgUrl;
     this.pricePerNight = pricePerNight;
     this.startDate = startDate;
     this.endDate = endDate;
-
+    this.bookingDetails = bookingDetails;
   }
 
   public Home() {
@@ -68,8 +62,8 @@ public class Home {
 
   @Override
   public String toString() {
-    return "Home{" + "id=" + id + ", hostId=" + hostId + ", addressId=" + addressId + ", imgUrl='"
-        + imgUrl + '\'' + ", pricePerNight=" + pricePerNight + ", startDate='" + startDate + '\''
+    return "Home{" + "id=" + id + ", hostId=" + hostId + ", address=" + address + '\'' + ", "
+        + "pricePerNight=" + pricePerNight + ", startDate='" + startDate + '\''
         + ", endDate='" + endDate + '\'' + ", updatedDate='" + updatedDate + '\''
         + ", createdDate='" + createdDate + '\'' + '}';
   }
@@ -82,20 +76,16 @@ public class Home {
     this.hostId = hostId;
   }
 
-  public int getAddressId() {
-    return addressId;
+  public Address getAddress() {
+    return address;
   }
 
-  public void setAddressId(int addressId) {
-    this.addressId = addressId;
+  public void setAddress(Address address) {
+    this.address = address;
   }
 
-  public String getImgUrl() {
-    return imgUrl;
-  }
-
-  public void setImgUrl(String imgUrl) {
-    this.imgUrl = imgUrl;
+  public void setAddressId(Address address) {
+    this.address = address;
   }
 
   public int getPricePerNight() {
@@ -113,6 +103,14 @@ public class Home {
   public void setStartDate(Timestamp startDate) {
     this.startDate = startDate;
 
+  }
+
+  public List<BookingDetail> getBookingDetails() {
+    return bookingDetails;
+  }
+
+  public void setBookingDetails(List<BookingDetail> bookingDetails) {
+    this.bookingDetails = bookingDetails;
   }
 
   public Timestamp getEndDate() {
