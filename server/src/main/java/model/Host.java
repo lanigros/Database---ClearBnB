@@ -14,8 +14,9 @@ public class Host {
   @Id
   @GeneratedValue
   private int id;
-  @JsonBackReference
+
   @OneToOne
+  @JsonBackReference
   private User user;
 
   public Host() {
