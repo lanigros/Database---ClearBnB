@@ -28,7 +28,7 @@ public class UserRoutes {
   void init() {
     app.get("rest/users/:id", (req, res) -> {
       try {
-        int id = Integer.parseInt(req.params("id"));
+        String id = req.params("id");
         Optional<User> user = userRepository.findById(id);
         res.status(200).json(user.isPresent() ? user.get() : "No user with that id");
       } catch (Exception e) {
@@ -44,6 +44,6 @@ public class UserRoutes {
         res.status(500).send(e);
       }
     });
-    
+
   }
 }
