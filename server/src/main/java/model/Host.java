@@ -7,6 +7,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -15,51 +17,63 @@ import javax.persistence.Table;
 @Table(name = "host")
 public class Host {
 
-    @Id
-    @GeneratedValue
-    private int id;
-    @OneToOne
-    @JsonBackReference
-    private User user;
-    @OneToMany(mappedBy = "host", cascade = CascadeType.ALL)
-    private List<Home> homes = new ArrayList<>();
+  @Id
+  @GeneratedValue
+  private int id;
+  @OneToOne
+  @JsonBackReference
+  private User user;
+  @OneToMany(mappedBy = "host", cascade = CascadeType.ALL)
+  private List<Home> homes = new ArrayList<>();
+  @OneToMany(cascade = CascadeType.ALL)
+  @JoinTable(
+      name = "host_review",
+      joinColumns = @JoinColumn(name = "host_id", referencedColumnName = "id"),
+      inverseJoinColumns = @JoinColumn(name = "review_id", referencedColumnName = "id")
+  )
+  private List<Review> reviews = new ArrayList<>();
 
-    public Host() {
-    }
+  public Host() {
+  }
 
-    public Host(int id, User user, List<Home> homes) {
-        this.id = id;
-        this.user = user;
-        this.homes = homes;
-    }
+  public Host(int id, User user, List<Home> homes, List<Review> reviews) {
+    this.id = id;
+    this.user = user;
+    this.homes = homes;
+    this.reviews = reviews;
+  }
 
-    public List<Home> getHomes() {
-        return homes;
-    }
+  public List<Review> getReviews() {
+    return reviews;
+  }
 
-    public void setHomes(List<Home> homes) {
-        this.homes = homes;
-    }
+  public void setReviews(List<Review> reviews) {
+    this.reviews = reviews;
+  }
 
-    public int getId() {
-        return id;
-    }
+  public List<Home> getHomes() {
+    return homes;
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  public void setHomes(List<Home> homes) {
+    this.homes = homes;
+  }
 
-    @Override
-    public String toString() {
-        return "Host" + "id=" + id;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public User getUser() {
-        return user;
-    }
+  @Override
+  public String toString() {
+    return "Host" + "id=" + id;
+  }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
 
 }
