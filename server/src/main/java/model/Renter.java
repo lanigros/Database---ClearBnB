@@ -54,6 +54,10 @@ public class Renter {
         "}";
   }
 
+  public int getId() {
+    return id;
+  }
+
   public List<BookingDetail> getBookingDetails() {
     return bookingDetails;
   }

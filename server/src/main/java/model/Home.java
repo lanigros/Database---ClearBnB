@@ -77,6 +77,10 @@ public class Home {
         + ", createdDate='" + createdDate + '\'' + '}';
   }
 
+  public int getId() {
+    return id;
+  }
+
   public Host getHost() {
     return host;
   }

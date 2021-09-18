@@ -59,6 +59,10 @@ public class BookingDetail {
         "}";
   }
 
+  public int getId() {
+    return id;
+  }
+
   public Home getHome() {
     return home;
   }
