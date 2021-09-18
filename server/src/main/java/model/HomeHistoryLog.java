@@ -1,11 +1,15 @@
 package model;
 
-import javax.persistence.*;
 import java.sql.Timestamp;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "Home_History_log")
-@NamedQueries({@NamedQuery(name = "HomeHistory.findAll", query = "SELECT h FROM Home_History_Log")})
 public class HomeHistoryLog {
 
     @Id

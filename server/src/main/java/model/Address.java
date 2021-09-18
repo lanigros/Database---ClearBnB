@@ -1,6 +1,6 @@
 package model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,76 +12,80 @@ import javax.persistence.Table;
 @Table(name = "address")
 public class Address {
 
-  @Id
-  @GeneratedValue
-  private int id;
-  private String city;
-  private String street;
-  private String country;
-  @Column(name = "zip_code")
-  private String zipCode;
-  @JsonBackReference
-  @OneToMany
-  private Home home;
+    @Id
+    @GeneratedValue
+    private int id;
+    private String city;
+    private String street;
+    private String country;
+    @Column(name = "zip_code")
+    private String zipCode;
 
-  public Address() {
-  }
+    @OneToMany
+    private List<Home> homes;
 
-  public Address(String city, String street, String zipCode, String country) {
-    this.city = city;
-    this.street = street;
-    this.zipCode = zipCode;
-    this.country = country;
-  }
+    public Address() {
+    }
 
-  @Override
-  public String toString() {
-    return "Address{" +
-        "id=" + id +
-        ", city='" + city + '\'' +
-        ", street='" + street + '\'' +
-        ", country='" + country + '\'' +
-        ", zipCode='" + zipCode + '\'' +
-        '}';
-  }
+    public Address(String city, String street, String zipCode, String country, List<Home> homes) {
+        this.city = city;
+        this.street = street;
+        this.zipCode = zipCode;
+        this.country = country;
+        this.homes = homes;
+    }
 
-  public int getId() {
-    return id;
-  }
+    public List<Home> getHomes() {
+        return homes;
+    }
 
-  public void setId(int id) {
-    this.id = id;
-  }
+    public void setHomes(List<Home> homes) {
+        this.homes = homes;
+    }
 
-  public String getCity() {
-    return city;
-  }
+    @Override
+    public String toString() {
+        return "Address{" + "id=" + id + ", city='" + city + '\'' + ", street='" + street + '\'' + ", country='" + country + '\'' + ", zipCode='" + zipCode + '\'' + '}';
+    }
 
-  public void setCity(String city) {
-    this.city = city;
-  }
+    public int getId() {
+        return id;
+    }
 
-  public String getStreet() {
-    return street;
-  }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-  public void setStreet(String street) {
-    this.street = street;
-  }
+    public String getCity() {
+        return city;
+    }
 
-  public String getCountry() {
-    return country;
-  }
+    public void setCity(String city) {
+        this.city = city;
+    }
 
-  public void setCountry(String country) {
-    this.country = country;
-  }
+    public String getStreet() {
+        return street;
+    }
 
-  public String getZipCode() {
-    return zipCode;
-  }
+    public void setStreet(String street) {
+        this.street = street;
+    }
 
-  public void setZipCode(String zipCode) {
-    this.zipCode = zipCode;
-  }
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
 }

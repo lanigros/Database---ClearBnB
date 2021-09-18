@@ -1,9 +1,13 @@
 package model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -11,35 +15,51 @@ import javax.persistence.Table;
 @Table(name = "host")
 public class Host {
 
-  @Id
-  @GeneratedValue
-  private int id;
+    @Id
+    @GeneratedValue
+    private int id;
+    @OneToOne
+    @JsonBackReference
+    private User user;
+    @OneToMany(mappedBy = "host", cascade = CascadeType.ALL)
+    private List<Home> homes = new ArrayList<>();
 
-  @OneToOne
-  @JsonBackReference
-  private User user;
+    public Host() {
+    }
 
-  public Host() {
-  }
+    public Host(int id, User user, List<Home> homes) {
+        this.id = id;
+        this.user = user;
+        this.homes = homes;
+    }
 
-  public int getId() {
-    return id;
-  }
+    public List<Home> getHomes() {
+        return homes;
+    }
 
-  public void setId(int id) {
-    this.id = id;
-  }
+    public void setHomes(List<Home> homes) {
+        this.homes = homes;
+    }
 
-  @Override
-  public String toString() {
-    return "Host" + "id=" + id;
-  }
+    public int getId() {
+        return id;
+    }
 
-  public User getUser() {
-    return user;
-  }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-  public void setUser(User user) {
-    this.user = user;
-  }
+    @Override
+    public String toString() {
+        return "Host" + "id=" + id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }
