@@ -1,5 +1,7 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,131 +18,127 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Home")
-@NamedQueries({@NamedQuery(name = "Home.findById", query = "SELECT h FROM Home h WHERE h.id = " + ":id"), @NamedQuery(name = "Home.findAll", query = "SELECT h FROM Home h")})
+@NamedQueries({
+    @NamedQuery(name = "Home.findById", query = "SELECT h FROM Home h WHERE h.id = " + ":id"),
+    @NamedQuery(name = "Home.findAll", query = "SELECT h FROM Home h")})
 public class Home {
 
-    @Id
-    @GeneratedValue
-    private int id;
+  @Id
+  @GeneratedValue
+  private int id;
+  @JsonBackReference
+  @ManyToOne
+  @JoinColumn(name = "host_id")//MANY homes to ONE host
+  private Host host;
+  @JsonManagedReference
+  @ManyToOne
+  @JoinColumn(name = "address_id")
+  private Address address;
+  @JsonManagedReference
+  @OneToMany(mappedBy = "home")
+  private List<BookingDetail> bookingDetails = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "host_id")//MANY homes to ONE host
-    private Host host;
+  //@Column(name = "img_url")
+  //private String imgUrl;
 
-    @ManyToOne
-    @JoinColumn(name = "address_id")
-    private Address address;
+  @Column(name = "price_per_night")
+  private int pricePerNight;
 
-    @Column(name = "img_url")
-    private String imgUrl;
+  @Column(name = "start_date")
+  private Timestamp startDate;
 
-    @Column(name = "price_per_night")
-    private int pricePerNight;
+  @Column(name = "end_date")
+  private Timestamp endDate;
 
-    @Column(name = "start_date")
-    private Timestamp startDate;
+  @Column(name = "updated_date")
+  private Timestamp updatedDate;
 
-    @Column(name = "end_date")
-    private Timestamp endDate;
+  @Column(name = "created_date")
+  private Timestamp createdDate;
 
-    @Column(name = "updated_date")
-    private Timestamp updatedDate;
+  public Home(Host host, Address address, int pricePerNight, Timestamp startDate,
+      Timestamp endDate, List<BookingDetail> bookingDetails) {
+    this.host = host;
+    this.address = address;
+    this.pricePerNight = pricePerNight;
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.bookingDetails = bookingDetails;
+  }
 
-    @Column(name = "created_date")
-    private Timestamp createdDate;
+  public Home() {
+  }
 
-    @OneToMany
-    private List<BookingDetail> bookingDetails = new ArrayList<>();
+  @Override
+  public String toString() {
+    return "Home{" + "id =" + id + ", host =" + host + ", addressId =" + address + '\'' +
+        ", pricePerNight=" + pricePerNight + ", startDate='" + startDate + '\''
+        + ", endDate='" + endDate + '\'' + ", updatedDate='" + updatedDate + '\''
+        + ", createdDate='" + createdDate + '\'' + '}';
+  }
 
-    public Home(Host host, Address address, String imgUrl, int pricePerNight, Timestamp startDate,
-            Timestamp endDate, List<BookingDetail> bookingDetails) {
-        this.host = host;
-        this.address = address;
-        this.imgUrl = imgUrl;
-        this.pricePerNight = pricePerNight;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.bookingDetails = bookingDetails;
-    }
+  public Host getHost() {
+    return host;
+  }
 
-    public Home() {
-    }
+  public void setHost(Host host) {
+    this.host = host;
+  }
 
-    @Override
-    public String toString() {
-        return "Home{" + "id =" + id + ", host =" + host + ", addressId =" + address + ", imgUrl" + "='" + imgUrl + '\'' + ", pricePerNight=" + pricePerNight + ", startDate='" + startDate + '\'' + ", endDate='" + endDate + '\'' + ", updatedDate='" + updatedDate + '\'' + ", createdDate='" + createdDate + '\'' + '}';
-    }
+  public Address getAddress() {
+    return address;
+  }
 
-    public Host getHost() {
-        return host;
-    }
+  public void setAddress(Address address) {
+    this.address = address;
+  }
 
-    public void setHost(Host host) {
-        this.host = host;
-    }
+  public int getPricePerNight() {
+    return pricePerNight;
+  }
 
-    public Address getAddress() {
-        return address;
-    }
+  public void setPricePerNight(int pricePerNight) {
+    this.pricePerNight = pricePerNight;
+  }
 
-    public void setAddress(Address address) {
-        this.address = address;
-    }
+  public Timestamp getStartDate() {
+    return startDate;
+  }
 
-    public String getImgUrl() {
-        return imgUrl;
-    }
+  public void setStartDate(Timestamp startDate) {
+    this.startDate = startDate;
+  }
 
-    public void setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
+  public Timestamp getEndDate() {
+    return endDate;
+  }
 
-    public int getPricePerNight() {
-        return pricePerNight;
-    }
+  public void setEndDate(Timestamp endDate) {
+    this.endDate = endDate;
+  }
 
-    public void setPricePerNight(int pricePerNight) {
-        this.pricePerNight = pricePerNight;
-    }
+  public Timestamp getUpdatedDate() {
+    return updatedDate;
+  }
 
-    public Timestamp getStartDate() {
-        return startDate;
-    }
+  public void setUpdatedDate(Timestamp updatedDate) {
+    this.updatedDate = updatedDate;
+  }
 
-    public void setStartDate(Timestamp startDate) {
-        this.startDate = startDate;
-    }
+  public Timestamp getCreatedDate() {
+    return createdDate;
+  }
 
-    public Timestamp getEndDate() {
-        return endDate;
-    }
+  public void setCreatedDate(Timestamp createdDate) {
+    this.createdDate = createdDate;
+  }
 
-    public void setEndDate(Timestamp endDate) {
-        this.endDate = endDate;
-    }
+  public List<BookingDetail> getBookingDetails() {
+    return bookingDetails;
+  }
 
-    public Timestamp getUpdatedDate() {
-        return updatedDate;
-    }
-
-    public void setUpdatedDate(Timestamp updatedDate) {
-        this.updatedDate = updatedDate;
-    }
-
-    public Timestamp getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Timestamp createdDate) {
-        this.createdDate = createdDate;
-    }
-
-    public List<BookingDetail> getBookingDetails() {
-        return bookingDetails;
-    }
-
-    public void setBookingDetails(List<BookingDetail> bookingDetails) {
-        this.bookingDetails = bookingDetails;
-    }
+  public void setBookingDetails(List<BookingDetail> bookingDetails) {
+    this.bookingDetails = bookingDetails;
+  }
 
 }
