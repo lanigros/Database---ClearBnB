@@ -1,6 +1,7 @@
 package model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -24,8 +25,8 @@ public class Renter {
   @OneToOne
   @JsonBackReference
   private User user;
-  @JsonBackReference
-  @OneToMany
+  @JsonManagedReference
+  @OneToMany(mappedBy = "renter")
   private List<BookingDetail> bookingDetails = new ArrayList<>();
   @OneToMany(cascade = CascadeType.ALL)
   @JoinTable(
