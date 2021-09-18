@@ -19,6 +19,8 @@ import javax.persistence.Table;
     @NamedQuery(name = "Review.findAll", query = "SELECT r FROM Review r")})
 public class Review {
 
+  @Column(name = "creator_id")
+  int creatorId;
   @Id
   @GeneratedValue
   private int id;
@@ -36,12 +38,17 @@ public class Review {
   }
 
   public Review(int rating, String comment, Timestamp created, boolean isDeleted,
-      BookingDetail bookingDetail, User creator) {
+      BookingDetail bookingDetail, int creatorId) {
     this.rating = rating;
     this.comment = comment;
     this.created = created;
     this.isDeleted = isDeleted;
     this.bookingDetail = bookingDetail;
+    this.creatorId = creatorId;
+  }
+
+  public int getCreatorId() {
+    return creatorId;
   }
 
   @Override
