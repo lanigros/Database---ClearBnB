@@ -19,8 +19,7 @@ import javax.persistence.Table;
     @NamedQuery(name = "Review.findAll", query = "SELECT r FROM Review r")})
 public class Review {
 
-  @Column(name = "creator_id")
-  int creatorId;
+
   @Id
   @GeneratedValue
   private int id;
@@ -33,6 +32,8 @@ public class Review {
   @ManyToOne
   @JoinColumn(name = "booking_id")
   private BookingDetail bookingDetail;
+  @Column(name = "creator_id")
+  private int creatorId;
 
   public Review() {
   }
