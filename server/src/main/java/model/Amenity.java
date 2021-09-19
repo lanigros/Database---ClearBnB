@@ -12,6 +12,9 @@ import javax.persistence.Table;
 @Table(name = "amenity_enum")
 public class Amenity {
 
+    public enum amenity {
+        wifi, kitchen, parking, bath
+    }
     @Id
     @GeneratedValue
     private int id;
