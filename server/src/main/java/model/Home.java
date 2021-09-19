@@ -37,9 +37,9 @@ public class Home {
   @JsonManagedReference
   @OneToMany(mappedBy = "home")
   private List<BookingDetail> bookingDetails = new ArrayList<>();
-
-  //@Column(name = "img_url")
-  //private String imgUrl;
+  @JsonManagedReference
+  @OneToMany(mappedBy = "home")
+  private List<HomeImage> images = new ArrayList<>();
 
   @Column(name = "price_per_night")
   private int pricePerNight;
@@ -57,13 +57,14 @@ public class Home {
   private Timestamp createdDate;
 
   public Home(Host host, Address address, int pricePerNight, Timestamp startDate,
-      Timestamp endDate, List<BookingDetail> bookingDetails) {
+      Timestamp endDate, List<BookingDetail> bookingDetails, List<HomeImage> images) {
     this.host = host;
     this.address = address;
     this.pricePerNight = pricePerNight;
     this.startDate = startDate;
     this.endDate = endDate;
     this.bookingDetails = bookingDetails;
+    this.images = images;
   }
 
   public Home() {
@@ -145,4 +146,11 @@ public class Home {
     this.bookingDetails = bookingDetails;
   }
 
+  public List<HomeImage> getImages() {
+    return images;
+  }
+
+  public void setImages(List<HomeImage> images) {
+    this.images = images;
+  }
 }
