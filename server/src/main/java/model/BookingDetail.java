@@ -26,6 +26,7 @@ public class BookingDetail {
   @ManyToOne
   private Renter renter;
   @ManyToOne
+  @JsonBackReference
   private Home home;
   @Column(name = "total_price")
   private int totalPrice;
@@ -56,6 +57,10 @@ public class BookingDetail {
     return "BookingDetail{" + "id=" + id + ",totalPrice=" + totalPrice +
         ", startDate=" + startDate + ", endDate=" + endDate + ", createdDate=" + createdDate +
         "}";
+  }
+
+  public int getId() {
+    return id;
   }
 
   public Home getHome() {

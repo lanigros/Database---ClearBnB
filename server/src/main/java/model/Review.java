@@ -14,77 +14,96 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "review")
-@NamedQueries({@NamedQuery(name = "Review.findById", query = "SELECT r FROM Review r WHERE r.id = :id"), @NamedQuery(name = "Review.findAll", query = "SELECT r FROM Review r")})
+@NamedQueries({
+    @NamedQuery(name = "Review.findById", query = "SELECT r FROM Review r WHERE r.id = :id"),
+    @NamedQuery(name = "Review.findAll", query = "SELECT r FROM Review r")})
 public class Review {
 
-    @Id
-    @GeneratedValue
-    private int id;
-    private int rating;
-    private String comment;
-    @Column(name = "created_date")
-    private Timestamp created;
-    @Column(name = "is_deleted")
-    private boolean isDeleted;
-    @ManyToOne
-    @JoinColumn(name = "booking_id")
-    private BookingDetail bookingDetail;
 
-    public Review() {
-    }
+  @Id
+  @GeneratedValue
+  private int id;
+  private int rating;
+  private String comment;
+  @Column(name = "created_date")
+  private Timestamp created;
+  @Column(name = "is_deleted")
+  private boolean isDeleted;
+  @ManyToOne
+  @JoinColumn(name = "booking_id")
+  private BookingDetail bookingDetail;
+  @Column(name = "creator_id")
+  private int creatorId;
 
-    public Review(int rating, String comment, Timestamp created, boolean isDeleted,
-            BookingDetail bookingDetail, User creator) {
-        this.rating = rating;
-        this.comment = comment;
-        this.created = created;
-        this.isDeleted = isDeleted;
-        this.bookingDetail = bookingDetail;
-    }
+  public Review() {
+  }
 
-    @Override
-    public String toString() {
-        return "Review{" + "rating=" + rating + ", comment='" + comment + '\'' + ", created=" + created + ", isDeleted=" + isDeleted + +'}';
-    }
+  public Review(int rating, String comment, Timestamp created, boolean isDeleted,
+      BookingDetail bookingDetail, int creatorId) {
+    this.rating = rating;
+    this.comment = comment;
+    this.created = created;
+    this.isDeleted = isDeleted;
+    this.bookingDetail = bookingDetail;
+    this.creatorId = creatorId;
+  }
 
-    public int getRating() {
-        return rating;
-    }
+  public int getCreatorId() {
+    return creatorId;
+  }
 
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
+  @Override
+  public String toString() {
+    return "Review{" + "rating=" + rating + ", comment='" + comment + '\'' + ", created=" + created
+        + ", isDeleted=" + isDeleted + +'}';
+  }
 
-    public String getComment() {
-        return comment;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
+  public int getRating() {
+    return rating;
+  }
 
-    public Timestamp getCreated() {
-        return created;
-    }
+  public void setRating(int rating) {
+    this.rating = rating;
+  }
 
-    public void setCreated(Timestamp created) {
-        this.created = created;
-    }
+  public String getComment() {
+    return comment;
+  }
 
-    public boolean isDeleted() {
-        return isDeleted;
-    }
+  public void setComment(String comment) {
+    this.comment = comment;
+  }
 
-    public void setDeleted(boolean deleted) {
-        isDeleted = deleted;
-    }
+  public Timestamp getCreated() {
+    return created;
+  }
 
-    public BookingDetail getBookingDetail() {
-        return bookingDetail;
-    }
+  public void setCreated(Timestamp created) {
+    this.created = created;
+  }
 
-    public void setBookingId(BookingDetail bookingDetail) {
-        this.bookingDetail = bookingDetail;
-    }
+  public boolean isDeleted() {
+    return isDeleted;
+  }
+
+  public void setDeleted(boolean deleted) {
+    isDeleted = deleted;
+  }
+
+  public BookingDetail getBookingDetail() {
+    return bookingDetail;
+  }
+
+  public void setBookingDetail(BookingDetail bookingDetail) {
+    this.bookingDetail = bookingDetail;
+  }
+
+  public void setBookingId(BookingDetail bookingDetail) {
+    this.bookingDetail = bookingDetail;
+  }
 
 }
