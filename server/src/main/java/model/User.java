@@ -1,7 +1,9 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import javax.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -18,7 +20,7 @@ import javax.persistence.Table;
 public class User {
 
   @Id
-  private Integer id;
+  private int id;
   @Column(name = "first_name")
   private String firstName;
   @Column(name = "last_name")
@@ -27,11 +29,13 @@ public class User {
   private String password;
 
   @OneToOne(mappedBy = "user")
-  @JsonManagedReference
+  @JsonManagedReference(value = "user-host")
+  @JsonProperty(access = Access.READ_ONLY)
   private Host hostProfile;
 
-  @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-  @JsonManagedReference
+  @OneToOne(mappedBy = "user")
+  @JsonManagedReference(value = "user-renter")
+  @JsonProperty(access = Access.READ_ONLY)
   private Renter renterProfile;
 
   public User() {
@@ -44,11 +48,11 @@ public class User {
     this.password = password;
   }
 
-  public Integer getId() {
+  public int getId() {
     return id;
   }
 
-  public void setId(Integer id) {
+  public void setId(int id) {
     this.id = id;
   }
 
@@ -90,18 +94,22 @@ public class User {
     this.password = password;
   }
 
+  @JsonProperty
   public Host getHostProfile() {
     return hostProfile;
   }
 
+  @JsonIgnore
   public void setHostProfile(Host hostProfile) {
     this.hostProfile = hostProfile;
   }
 
+  @JsonProperty
   public Renter getRenterProfile() {
     return renterProfile;
   }
 
+  @JsonIgnore
   public void setRenterProfile(Renter renterProfile) {
     this.renterProfile = renterProfile;
   }
