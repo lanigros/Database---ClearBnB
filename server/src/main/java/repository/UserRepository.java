@@ -4,17 +4,18 @@ import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import model.User;
+import repositoryinterface.UserRepositoryInterface;
 
 
-public class UserRepository {
+public class UserRepository implements UserRepositoryInterface {
 
   private final EntityManager entityManager;
-
 
   public UserRepository(EntityManager entityManager) {
     this.entityManager = entityManager;
   }
 
+  @Override
   public Optional<User> findById(String ids) {
     int id = Integer.parseInt(ids);
 
@@ -22,6 +23,7 @@ public class UserRepository {
     return user != null ? Optional.of(user) : Optional.empty();
   }
 
+  @Override
   public User findByEmail(String email) {
     try {
       User user = entityManager.createNamedQuery("User.findByEmail", User.class)
@@ -35,11 +37,12 @@ public class UserRepository {
 
   }
 
+  @Override
   public List<User> findAll() {
-    return entityManager.createQuery("from User").getResultList();
+    return entityManager.createQuery("from User", User.class).getResultList();
   }
 
-
+  @Override
   public Optional<User> save(User user) {
     try {
       entityManager.getTransaction().begin();

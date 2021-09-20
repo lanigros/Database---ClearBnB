@@ -23,9 +23,9 @@ public class Renter {
   @GeneratedValue
   private int id;
   @OneToOne
-  @JsonBackReference
+  @JsonBackReference(value = "user-renter")
   private User user;
-  @JsonManagedReference
+  @JsonManagedReference(value = "renter-booking-details")
   @OneToMany(mappedBy = "renter")
   private List<BookingDetail> bookingDetails = new ArrayList<>();
   @OneToMany(cascade = CascadeType.ALL)
