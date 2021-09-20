@@ -5,17 +5,16 @@ import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import model.User;
 import repository.UserRepository;
+import utility.ManagerFactory;
 
 public class UserRoutes {
 
   private final Express app;
 
   //this should probably be a singelton instance somewhere else
-  private final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(
-      "User");
+  private final EntityManagerFactory entityManagerFactory = ManagerFactory.getEntityManagerFactory("User");
   private final EntityManager entityManager = entityManagerFactory.createEntityManager();
   private final UserRepository userRepository = new UserRepository(entityManager);
 

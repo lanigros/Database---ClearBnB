@@ -39,7 +39,7 @@ public class UserRepository implements UserRepositoryInterface {
 
   @Override
   public List<User> findAll() {
-    return entityManager.createQuery("from User").getResultList();
+    return entityManager.createQuery("from User", User.class).getResultList();
   }
 
   @Override
