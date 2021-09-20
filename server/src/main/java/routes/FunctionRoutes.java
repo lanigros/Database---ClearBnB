@@ -8,13 +8,13 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import model.User;
 import repository.UserRepository;
+import utility.ManagerFactory;
 import utility.Utility;
 
 public class FunctionRoutes {
 
   private final Express app;
-  private final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(
-      "User");
+  private final EntityManagerFactory entityManagerFactory = ManagerFactory.getEntityManagerFactory("User");
   private final EntityManager entityManager = entityManagerFactory.createEntityManager();
   private final UserRepository userRepository = new UserRepository(entityManager);
 
