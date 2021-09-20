@@ -1,5 +1,6 @@
 package repository;
 
+import datatransforobject.UserCoreDTO;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
@@ -51,7 +52,20 @@ public class UserRepository implements UserRepositoryInterface {
       return Optional.of(user);
     } catch (Exception e) {
       e.printStackTrace();
+      return Optional.empty();
     }
-    return Optional.empty();
+  }
+
+  public UserCoreDTO login(String email) {
+    try {
+      User user = entityManager.createNamedQuery("User.findByEmail", User.class)
+          .setParameter("email", email).getSingleResult();
+
+      return user.convertToUserCoreDTO();
+    } catch (Exception e) {
+      System.out.println(e);
+      return null;
+    }
+
   }
 }
