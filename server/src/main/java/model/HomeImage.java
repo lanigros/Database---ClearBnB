@@ -11,7 +11,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "image")
+@Table(name = "home_image")
 @NamedQueries({
     @NamedQuery(name = "HomeImage.findById", query = "SELECT h FROM HomeImage h WHERE h.id = :id"),
     @NamedQuery(name = "HomeImage.findAll", query = "SELECT h FROM HomeImage h")
@@ -23,7 +23,7 @@ public class HomeImage {
   private int id;
   @Column(name = "image_url")
   private String imageUrl;
-  @JsonBackReference
+  @JsonBackReference(value = "home-images-home")
   @ManyToOne
   private Home home;
 

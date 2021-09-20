@@ -21,7 +21,7 @@ public class Host {
   @GeneratedValue
   private int id;
   @OneToOne
-  @JsonBackReference
+  @JsonBackReference(value = "user-host")
   private User user;
   @OneToMany(mappedBy = "host", cascade = CascadeType.ALL)
   private List<Home> homes = new ArrayList<>();
