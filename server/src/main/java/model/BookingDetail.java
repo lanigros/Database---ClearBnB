@@ -22,11 +22,11 @@ public class BookingDetail {
   @Id
   @GeneratedValue
   private int id;
-  @JsonBackReference
+  @JsonBackReference(value = "renter-booking-details")
   @ManyToOne
   private Renter renter;
   @ManyToOne
-  @JsonBackReference
+  @JsonBackReference(value = "home-booking-details")
   private Home home;
   @Column(name = "total_price")
   private int totalPrice;

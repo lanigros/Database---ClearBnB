@@ -21,7 +21,7 @@ public class Address {
   private String country;
   @Column(name = "zip_code")
   private String zipCode;
-  @JsonBackReference
+  @JsonBackReference(value = "homes-address")
   @OneToMany
   private List<Home> homes;
 

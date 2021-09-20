@@ -26,18 +26,18 @@ public class Home {
   @Id
   @GeneratedValue
   private int id;
-  @JsonBackReference
+  @JsonBackReference(value = "host-home")
   @ManyToOne
   @JoinColumn(name = "host_id")//MANY homes to ONE host
   private Host host;
-  @JsonManagedReference
+  @JsonManagedReference(value = "homes-address")
   @ManyToOne
   @JoinColumn(name = "address_id")
   private Address address;
-  @JsonManagedReference
+  @JsonManagedReference(value = "home-booking-details")
   @OneToMany(mappedBy = "home")
   private List<BookingDetail> bookingDetails = new ArrayList<>();
-  @JsonManagedReference
+  @JsonManagedReference(value = "home-images")
   @OneToMany(mappedBy = "home")
   private List<HomeImage> images = new ArrayList<>();
 
