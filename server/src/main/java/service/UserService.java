@@ -1,4 +1,4 @@
-package Service;
+package service;
 
 import datatransforobject.UserCoreDTO;
 import java.util.List;

@@ -1,6 +1,6 @@
 package routes;
 
-import Service.UserService;
+import service.UserService;
 import datatransforobject.UserCoreDTO;
 import express.Express;
 import java.util.List;
