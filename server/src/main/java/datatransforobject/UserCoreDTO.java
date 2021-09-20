@@ -1,6 +1,5 @@
 package datatransforobject;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import model.User;
 
 public class UserCoreDTO {
@@ -11,7 +10,7 @@ public class UserCoreDTO {
   private String email;
   private String password;
 
-  public UserCoreDTO(){
+  public UserCoreDTO() {
 
   }
 
@@ -63,8 +62,8 @@ public class UserCoreDTO {
     this.password = password;
   }
 
-  public User convertToUser(){
-    return new User(this.firstName, this.lastName, this.email, this.password );
+  public User convertToUser() {
+    return new User(this.firstName, this.lastName, this.email, this.password);
   }
 
 
