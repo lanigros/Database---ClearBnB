@@ -40,7 +40,7 @@ public class Home {
   @JsonManagedReference(value = "home-images")
   @OneToMany(mappedBy = "home")
   private List<HomeImage> images = new ArrayList<>();
-  @JsonManagedReference(value = "home_history")
+  @JsonManagedReference(value = "home-histories")
   @OneToMany(mappedBy = "home")
   private List<HomeHistoryLog> historyLogs = new ArrayList<>();
 

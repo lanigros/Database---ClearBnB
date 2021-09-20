@@ -21,10 +21,10 @@ public class HomeHistoryLog {
   @GeneratedValue
   private int id;
 
-  @JsonBackReference(value = "home_history")
+  @JsonBackReference(value = "home-histories")
   @ManyToOne
   private Home home;
-  @JsonManagedReference(value = "home_image_history")
+  @JsonManagedReference(value = "home-image-histories")
   @OneToMany(mappedBy = "homeHistoryLog")
   private List<HomeImageHistory> images = new ArrayList<>();
   @Column(name = "price_per_night")

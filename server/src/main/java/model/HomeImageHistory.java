@@ -17,7 +17,7 @@ public class HomeImageHistory {
   @GeneratedValue
   private int id;
 
-  @JsonBackReference(value = "home_image_history")
+  @JsonBackReference(value = "home-image-histories")
   @JoinColumn(name = "home_history_log_id")
   @ManyToOne
   private HomeHistoryLog homeHistoryLog;
