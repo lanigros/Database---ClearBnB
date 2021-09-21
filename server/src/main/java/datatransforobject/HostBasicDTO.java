@@ -13,10 +13,11 @@ public class HostBasicDTO {
   public HostBasicDTO() {
   }
 
-  public HostBasicDTO(String fullName, List<Review> reviews, int averageRating) {
+  public HostBasicDTO(String fullName, List<Review> reviews, int userId) {
+
+    this.userID = userId;
     this.fullName = fullName;
     this.reviews = reviews;
-    this.averageRating = averageRating;
   }
 
   public int getUserID() {
