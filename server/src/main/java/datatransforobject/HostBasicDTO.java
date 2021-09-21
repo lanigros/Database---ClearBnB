@@ -7,17 +7,16 @@ public class HostBasicDTO {
 
   private int userID;
   private String fullName;
-  private List<Review> reviews;
   private int averageRating;
 
   public HostBasicDTO() {
   }
 
-  public HostBasicDTO(String fullName, List<Review> reviews, int userId) {
+  public HostBasicDTO(String fullName, int userId) {
 
     this.userID = userId;
     this.fullName = fullName;
-    this.reviews = reviews;
+
   }
 
   public int getUserID() {
@@ -30,8 +29,8 @@ public class HostBasicDTO {
 
   @Override
   public String toString() {
-    return "HostBasicDTO{" + "fullName='" + fullName + '\'' + ", reviews=" + reviews
-        + ", averageRating=" + averageRating + '}';
+    return "HostBasicDTO{" + "fullName='" + fullName + '\'' + ", reviews=" + ", averageRating="
+        + averageRating + '}';
   }
 
   public String getFullName() {
@@ -42,17 +41,17 @@ public class HostBasicDTO {
     this.fullName = firstName + " " + lastName;
   }
 
-  public List<Review> getReviews() {
-    return reviews;
+  public int getAverageRating() {
+    return averageRating;
   }
 
-  public void setReviews(List<Review> reviews) {
-    this.reviews = reviews;
+  public void setAvgRating(List<Review> reviews) {
     float tempTotal = 0;
     for (Review re : reviews) {
       tempTotal += re.getRating();
     }
     float tempAvg = tempTotal / reviews.size();
     this.averageRating = (int) Math.floor(tempAvg);
+    System.out.println("Snitt " + averageRating);
   }
 }
