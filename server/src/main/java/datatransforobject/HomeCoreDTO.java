@@ -9,7 +9,7 @@ import model.Host;
 public class HomeCoreDTO {
 
   private int id;
-  private Host host;
+  private HostBasicDTO host;
   private Address address;
   private List<HomeImage> images;
   private int pricePerNight;
@@ -18,7 +18,7 @@ public class HomeCoreDTO {
   private Timestamp createdDate;
 
 
-  public HomeCoreDTO(int id, Host host, Address address, List<HomeImage> images, int pricePerNight,
+  public HomeCoreDTO(int id, HostBasicDTO host, Address address, List<HomeImage> images, int pricePerNight,
       Timestamp startDate, Timestamp endDate, Timestamp createdDate) {
     this.id = id;
     this.host = host;
@@ -49,11 +49,11 @@ public class HomeCoreDTO {
     this.id = id;
   }
 
-  public Host getHost() {
+  public HostBasicDTO getHost() {
     return host;
   }
 
-  public void setHost(Host host) {
+  public void setHost(HostBasicDTO host) {
     this.host = host;
   }
 

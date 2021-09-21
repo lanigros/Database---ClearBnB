@@ -1,5 +1,6 @@
 package mapper;
 
+
 import datatransforobject.HomeCoreDTO;
 import model.Home;
 
@@ -9,7 +10,7 @@ public class HomeMapper {
     HomeCoreDTO dto = new HomeCoreDTO();
     dto.setId(home.getId());
     dto.setAddress(home.getAddress());
-    dto.setHost(home.getHost());
+    dto.setHost(HostMapper.convertToHostBasic(home.getHost()));
     dto.setPricePerNight(home.getPricePerNight());
     dto.setImages(home.getImages());
     dto.setStartDate(home.getStartDate());
