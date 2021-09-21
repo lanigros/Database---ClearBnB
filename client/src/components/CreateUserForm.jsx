@@ -1,6 +1,6 @@
 import React from 'react'
 import { useForm } from '../customhooks/useForm'
-import { createUser } from '../services/userAPI'
+import { createUser } from '../api/userAPI'
 
 const CreateUserMenu = () => {
   const [user, handleChange] = useForm({
@@ -27,9 +27,9 @@ const CreateUserMenu = () => {
 
         <input type="text" placeholder="Email" name="email" value={user.email} onChange={handleChange} />
 
-        <input type="text" placeholder="Password" name="password" value={user.password} onChange={handleChange} />
+        <input type="password" placeholder="Password" name="password" value={user.password} onChange={handleChange} />
 
-        <input type="text" placeholder="Repeat password" name="repeatedPassword" value={user.repeatedPassword} onChange={handleChange} />
+        <input type="password" placeholder="Repeat password" name="repeatedPassword" value={user.repeatedPassword} onChange={handleChange} />
 
         {user.password === user.repeatedPassword && user.password !== '' && <input type="submit" value="Submit" />}
       </form>
