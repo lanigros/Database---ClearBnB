@@ -23,7 +23,7 @@ public class HomeImage {
   private int id;
   @Column(name = "image_url")
   private String imageUrl;
-  @JsonBackReference(value = "home-images-home")
+  @JsonBackReference(value = "home-images")
   @ManyToOne
   private Home home;
 
