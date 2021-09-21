@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import UserCard from './UserCard'
-import { fetchUsers } from '../services/userAPI'
+import { fetchUsers } from '../api/userAPI'
 
 const UserList = () => {
   const [users, setUsers] = useState([])
