@@ -40,7 +40,7 @@ public class Home {
     private List<HomeImage> images = new ArrayList<>();
 
     @JsonManagedReference(value = "home-amenity")
-    @OneToMany
+    @OneToMany(mappedBy = "home")
     private List<Amenity> amenities = new ArrayList<>();
 
     @Column(name = "price_per_night")
