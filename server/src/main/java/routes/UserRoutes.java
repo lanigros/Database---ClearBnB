@@ -1,46 +1,39 @@
 package routes;
 
+import service.UserService;
+import datatransforobject.UserCoreDTO;
 import express.Express;
 import java.util.List;
 import java.util.Optional;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import model.User;
-import repository.UserRepository;
-import utility.ManagerFactory;
 
 public class UserRoutes {
 
   private final Express app;
-
-  //this should probably be a singelton instance somewhere else
-  private final EntityManagerFactory entityManagerFactory = ManagerFactory.getEntityManagerFactory("User");
-  private final EntityManager entityManager = entityManagerFactory.createEntityManager();
-  private final UserRepository userRepository = new UserRepository(entityManager);
+  private final UserService userService;
 
   public UserRoutes(Express app) {
     this.app = app;
+    this.userService = new UserService();
     this.init();
-
   }
 
   void init() {
-    app.get("rest/users/:id", (req, res) -> {
+    app.get("rest/user/:id", (req, res) -> {
       try {
         String id = req.params("id");
-        Optional<User> user = userRepository.findById(id);
+        Optional<UserCoreDTO> user = userService.getById(id);
         res.status(200).json(user.isPresent() ? user.get() : "No user with that id");
       } catch (Exception e) {
         res.status(500).send(e);
       }
     });
     app.get("rest/users", (req, res) -> {
-      List<User> users = null;
       try {
-        users = userRepository.findAll();
-        res.status(200).json(users);
+        List<User> users = userService.getAllWithEverything();
+        res.json(users);
       } catch (Exception e) {
-        res.status(500).send(e);
+        res.status(500).json("internal error");
       }
     });
 
