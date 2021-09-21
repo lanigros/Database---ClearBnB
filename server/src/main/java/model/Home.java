@@ -40,6 +40,9 @@ public class Home {
   @JsonManagedReference(value = "home-images")
   @OneToMany(mappedBy = "home")
   private List<HomeImage> images = new ArrayList<>();
+  @JsonManagedReference(value = "home-histories")
+  @OneToMany(mappedBy = "home")
+  private List<HomeHistoryLog> historyLogs = new ArrayList<>();
 
   @Column(name = "price_per_night")
   private int pricePerNight;
@@ -57,7 +60,8 @@ public class Home {
   private Timestamp createdDate;
 
   public Home(Host host, Address address, int pricePerNight, Timestamp startDate,
-      Timestamp endDate, List<BookingDetail> bookingDetails, List<HomeImage> images) {
+      Timestamp endDate, List<BookingDetail> bookingDetails, List<HomeImage> images,
+      List<HomeHistoryLog> homeHistoryLogs) {
     this.host = host;
     this.address = address;
     this.pricePerNight = pricePerNight;
@@ -65,6 +69,7 @@ public class Home {
     this.endDate = endDate;
     this.bookingDetails = bookingDetails;
     this.images = images;
+    this.historyLogs = homeHistoryLogs;
   }
 
   public Home() {
@@ -152,5 +157,13 @@ public class Home {
 
   public void setImages(List<HomeImage> images) {
     this.images = images;
+  }
+
+  public List<HomeHistoryLog> getHistoryLogs() {
+    return historyLogs;
+  }
+
+  public void setHistoryLogs(List<HomeHistoryLog> historyLogs) {
+    this.historyLogs = historyLogs;
   }
 }
