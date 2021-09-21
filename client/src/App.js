@@ -1,12 +1,17 @@
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import Store from './store/Store';
 import CreateUserForm from './components/CreateUserForm';
 import Header from './components/Header';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import UserList from './components/UserList';
 import HomeList from './components/HomeList'
+import LoginForm from './components/LoginForm';
 import { Normalize } from 'styled-normalize'
+
+
 
 function App() {
   return (
+    <Store>
     <Router>
       <Normalize />
       <Header />
@@ -14,9 +19,11 @@ function App() {
         <Route exact path='/' component={HomeList} />
         <Route path='/create-user' component={CreateUserForm} />
         <Route path='/users' component={UserList} />
-        <Route path="/homes" component={HomeList} />
+          <Route path="/homes" component={HomeList} />
+          <Route path="/login" component={LoginForm}/>
       </Switch>
     </Router>
+    </Store>
   );
 }
 
