@@ -19,7 +19,7 @@ public class UserRoutes {
   }
 
   void init() {
-    app.get("rest/users/:id", (req, res) -> {
+    app.get("rest/user/:id", (req, res) -> {
       try {
         String id = req.params("id");
         Optional<UserCoreDTO> user = userService.getById(id);

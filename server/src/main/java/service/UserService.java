@@ -3,6 +3,7 @@ package service;
 import datatransforobject.UserCoreDTO;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import mapper.UserMapper;
@@ -25,11 +26,13 @@ public class UserService {
       return Optional.empty();
     }
 
-    return Optional.of(UserMapper.withoutPassword(userDO.get()));
+    return Optional.of(UserMapper.convertToCoreDTOWithoutPassword(userDO.get()));
   }
 
   public List<User> getAllWithEverything() {
-    return userRepository.findAll();
+    List<User> users = userRepository.findAll();
+    users.forEach(UserMapper::hidePasswordFromUser);
+    return users;
   }
 
 }
