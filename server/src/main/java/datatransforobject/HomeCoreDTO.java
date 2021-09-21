@@ -3,23 +3,23 @@ package datatransforobject;
 import java.sql.Timestamp;
 import java.util.List;
 import model.Address;
+import model.Amenity;
 import model.HomeImage;
-import model.Host;
 
 public class HomeCoreDTO {
 
   private int id;
-  private Host host;
+  private HostBasicDTO host;
   private Address address;
   private List<HomeImage> images;
   private int pricePerNight;
   private Timestamp startDate;
   private Timestamp endDate;
   private Timestamp createdDate;
+  private List<Amenity> amenities;
 
-
-  public HomeCoreDTO(int id, Host host, Address address, List<HomeImage> images, int pricePerNight,
-      Timestamp startDate, Timestamp endDate, Timestamp createdDate) {
+  public HomeCoreDTO(int id, HostBasicDTO host, Address address, List<HomeImage> images,
+      int pricePerNight, Timestamp startDate, Timestamp endDate, Timestamp createdDate) {
     this.id = id;
     this.host = host;
     this.address = address;
@@ -28,9 +28,18 @@ public class HomeCoreDTO {
     this.startDate = startDate;
     this.endDate = endDate;
     this.createdDate = createdDate;
+
   }
 
   public HomeCoreDTO() {
+  }
+
+  public List<Amenity> getAmenities() {
+    return amenities;
+  }
+
+  public void setAmenities(List<Amenity> amenities) {
+    this.amenities = amenities;
   }
 
   public Timestamp getCreatedDate() {
@@ -49,11 +58,11 @@ public class HomeCoreDTO {
     this.id = id;
   }
 
-  public Host getHost() {
+  public HostBasicDTO getHost() {
     return host;
   }
 
-  public void setHost(Host host) {
+  public void setHost(HostBasicDTO host) {
     this.host = host;
   }
 
