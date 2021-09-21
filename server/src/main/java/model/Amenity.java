@@ -2,20 +2,20 @@ package model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import utility.AmenityConverter;
 
 @Entity
 @Table(name = "amenity_enum")
 public class Amenity {
 
-    public enum AMENITY_ENUM {
+    public enum AmenityEnum {
         WIFI, KITCHEN, PARKING, BATH
     }
 
@@ -28,13 +28,13 @@ public class Amenity {
     private Home home;
 
     @Column(name = "amenity")
-    @Enumerated(EnumType.STRING)
-    private AMENITY_ENUM AMENITY;
+    @Convert(converter = AmenityConverter.class)
+    private AmenityEnum amenityEnum;
 
-    public Amenity(int id, Home home, AMENITY_ENUM AMENITY) {
+    public Amenity(int id, Home home, AmenityEnum amenityEnum) {
         this.id = id;
         this.home = home;
-        this.AMENITY = AMENITY;
+        this.amenityEnum = amenityEnum;
     }
 
     public Amenity() {
@@ -56,17 +56,17 @@ public class Amenity {
         this.home = home;
     }
 
-    public AMENITY_ENUM getAmenity() {
-        return AMENITY;
+    public AmenityEnum getAmenity() {
+        return amenityEnum;
     }
 
-    public void setAmenity(AMENITY_ENUM AMENITY) {
-        this.AMENITY = AMENITY;
+    public void setAmenity(AmenityEnum amenityEnum) {
+        this.amenityEnum = amenityEnum;
     }
 
     @Override
     public String toString() {
-        return "Amenity{" + "id=" + id + ", amenity='" + AMENITY + '\'' + '}';
+        return "Amenity{" + "id=" + id + ", amenity='" + amenityEnum + '\'' + '}';
     }
 
 }
