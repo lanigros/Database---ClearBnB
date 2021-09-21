@@ -15,7 +15,8 @@ public class HomeRepository implements HomeRepositoryInterface {
   }
 
   @Override
-  public Optional<Home> findById(String id) {
+  public Optional<Home> findById(String ids) {
+    int id = Integer.parseInt(ids);
     Home home = entityManager.find(Home.class, id);
     return home != null ? Optional.of(home) : Optional.empty();
   }
