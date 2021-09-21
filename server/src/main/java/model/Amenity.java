@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import utility.AmenityConverter;
+import utility.AmenityEnumConverter;
 
 @Entity
 @Table(name = "amenity_enum")
@@ -28,7 +28,7 @@ public class Amenity {
     private Home home;
 
     @Column(name = "amenity")
-    @Convert(converter = AmenityConverter.class)
+    @Convert(converter = AmenityEnumConverter.class)
     private AmenityEnum amenityEnum;
 
     public Amenity(int id, Home home, AmenityEnum amenityEnum) {

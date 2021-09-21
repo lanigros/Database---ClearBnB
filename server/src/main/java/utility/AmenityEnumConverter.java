@@ -5,7 +5,7 @@ import javax.persistence.Converter;
 import model.Amenity.AmenityEnum;
 
 @Converter(autoApply = true)
-public class AmenityConverter implements AttributeConverter<AmenityEnum, String> {
+public class AmenityEnumConverter implements AttributeConverter<AmenityEnum, String> {
 
     @Override
     public String convertToDatabaseColumn(AmenityEnum amenities) {
