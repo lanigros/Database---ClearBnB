@@ -30,6 +30,11 @@
       <groupId>org.hibernate</groupId>
       <version>5.5.7.Final</version>
     </dependency>
+    <dependency>
+      <groupId>io.github.cdimascio</groupId>
+      <artifactId>java-dotenv</artifactId>
+      <version>5.2.2</version>
+    </dependency>
   </dependencies>
   <groupId>org.example</groupId>
   <modelVersion>4.0.0</modelVersion>
