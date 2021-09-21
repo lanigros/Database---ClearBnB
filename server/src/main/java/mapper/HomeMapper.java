@@ -17,6 +17,7 @@ public class HomeMapper {
     dto.setStartDate(home.getStartDate());
     dto.setEndDate(home.getEndDate());
     dto.setCreatedDate(home.getCreatedDate());
+    dto.setAmenities(home.getAmenities());
     return dto;
 
   }
