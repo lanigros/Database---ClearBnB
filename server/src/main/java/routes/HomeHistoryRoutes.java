@@ -1,29 +1,42 @@
 package routes;
 
-import datatransforobject.HomeCoreDTO;
 import datatransforobject.HomeHistoryDTO;
 import express.Express;
+import java.util.List;
 import java.util.Optional;
+import model.Home;
+import model.HomeHistoryLog;
 import service.HomeHistoryService;
 import service.HomeService;
 
 public class HomeHistoryRoutes {
     private final Express app;
     private final HomeHistoryService homeHistoryService;
+    private final HomeService homeService;
+    private final Home home;
+    private final HomeHistoryLog homeHistoryLog;
+
+
 
     public HomeHistoryRoutes(Express app){
         this.app = app;
         this.homeHistoryService= new HomeHistoryService();
+        this.homeService = new HomeService();
+        this.home = new Home();
+        this.homeHistoryLog = new HomeHistoryLog();
         this.init();
     }
 
+
+
     private void init(){
         app.get("rest/home/:id/history", (req, res) -> {
-
-              String id = req.params("id");
-              Optional<HomeHistoryDTO> history = homeHistoryService.getById(id);
-              res.json(history.isPresent() ? history.get() : "No history on that specific home");
-
+            String id = req.params("id");
+            List<HomeHistoryLog> history = homeHistoryService.getByHomeId(id);
+            if(history.isEmpty()){
+                res.send("Wrong input, check ID again.");
+            }
+            res.json(history);
         });
     }
 
