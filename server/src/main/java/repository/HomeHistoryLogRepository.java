@@ -15,13 +15,23 @@ public class HomeHistoryLogRepository implements HomeHistoryLogRepositoryInterfa
     }
 
     @Override
-    public Optional<HomeHistoryLog> findById(String id) {
-        return Optional.empty();
+    public Optional<HomeHistoryLog> findById(String ids) {
+        int id = Integer.parseInt(ids);
+        HomeHistoryLog homeHistoryLog = entityManager.find(HomeHistoryLog.class, id);
+        return homeHistoryLog != null ? Optional.of(homeHistoryLog) : Optional.empty();
     }
 
     @Override
     public List<HomeHistoryLog> findAll() {
         return null;
+    }
+
+    public List<HomeHistoryLog> findByHomeId(String homeId) {
+
+            List<HomeHistoryLog> homeHistoryLog = entityManager.createNamedQuery("HomeHistoryLog" +
+                                                                            ".findByHomeId", HomeHistoryLog.class)
+                                                         .setParameter("id", homeId).getResultList();
+            return homeHistoryLog;
     }
 
     @Override

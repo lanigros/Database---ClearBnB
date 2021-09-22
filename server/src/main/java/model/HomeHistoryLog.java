@@ -10,11 +10,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Home_history_log")
+@NamedQueries({
+  @NamedQuery( name = "HomeHistoryLog.findByHomeId", query = "SELECT h from HomeHistoryLog h " +
+                                                             "WHERE home_id = :id")
+})
+
 public class HomeHistoryLog {
 
   @Id

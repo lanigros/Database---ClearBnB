@@ -2,13 +2,17 @@ package routes;
 
 import datatransforobject.HomeCoreDTO;
 import express.Express;
+import java.util.List;
 import java.util.Optional;
+import model.HomeHistoryLog;
+
 import service.HomeService;
 
 public class HomeRoutes {
 
   private final Express app;
   private final HomeService homeService;
+
 
 
   public HomeRoutes(Express app){
@@ -27,8 +31,13 @@ public class HomeRoutes {
         res.status(500).send("Internal error");
       }
     });
-  }
+      app.get("rest/home/:id/history", (req, res) -> {
+          String id = req.params("id");
+          List<HomeHistoryLog> history = homeService.getByHomeId(id);
+          res.json(history);
+  });
 
 
 
+}
 }
