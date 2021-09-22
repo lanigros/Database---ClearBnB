@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import HeaderStyle from './Header.styles'
 import { Context } from '../store/Store'
@@ -16,7 +16,7 @@ const Header = () => {
       }
     }
     performLogout()
-    
+
   }
 
   return (
@@ -24,7 +24,7 @@ const Header = () => {
       <header>
         <nav>
           <Link to={'/'}>Home</Link>
-          <Link to={'/create-user'}>Create user</Link>
+          {!state.currentUser && <Link to={'/create-user'}>Create user</Link>}
           <Link to={'/users'}>See users</Link>
           <Link to={'/homes'}>See Homes</Link>
         </nav>
