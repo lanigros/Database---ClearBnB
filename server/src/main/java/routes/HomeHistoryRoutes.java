@@ -24,17 +24,8 @@ public class HomeHistoryRoutes {
         this.homeService = new HomeService();
         this.home = new Home();
         this.homeHistoryLog = new HomeHistoryLog();
-        this.init();
+    }
+
     }
 
 
-
-    private void init(){
-        app.get("rest/home/:id/history", (req, res) -> {
-            String id = req.params("id");
-            List<HomeHistoryLog> history = homeHistoryService.getByHomeId(id);
-            res.json(history);
-        });
-    }
-
-}
