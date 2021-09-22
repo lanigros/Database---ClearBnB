@@ -1,6 +1,7 @@
 package routes;
 
 import datatransforobject.UserCoreDTO;
+import datatransforobject.UserCoreDTOWithSession;
 import datatransforobject.UserLoginDTO;
 import express.Express;
 import java.util.Map;
@@ -45,7 +46,6 @@ public class FunctionRoutes {
         String hashedPassword = Utility.hash(user.getPassword());
         user.setPassword(hashedPassword);
         Optional<User> newUser = userRepository.save(user.convertToUser());
-        req.session("current-user", user.getId());
         //To send a json
         res.status(201).json(Map.of("id", newUser.get().getId()));
       } catch (Exception e) {
@@ -56,11 +56,10 @@ public class FunctionRoutes {
 
     app.delete("/api/logout", (req, res) -> {
       try {
-        UserCoreDTO userCoreDTO = req.body(UserCoreDTO.class);
-        int sessionId = sessions.get(userCoreDTO.getId());
-        activeSessionRepository.deleteActiveSessionById(sessionId);
-        sessions.remove(sessionId);
-        res.json("Ok");
+        String sessionId = req.cookie("sessionID");
+        activeSessionRepository.deleteActiveSessionById(Integer.parseInt(sessionId));
+        sessions.remove(Integer.parseInt(sessionId));
+        res.json("OK");
       } catch (Exception e) {
         res.status(500);
       }
@@ -71,8 +70,6 @@ public class FunctionRoutes {
       try {
         UserLoginDTO userCred = req.body(UserLoginDTO.class);
         UserCoreDTO exist = userRepository.login(userCred.getEmail());
-        System.out.println(
-            exist.getId() + exist.getFirstName() + exist.getLastName() + exist.getPassword());
 
         if (exist == null) {
           res.status(500).send("Error, check credentials");
@@ -83,12 +80,14 @@ public class FunctionRoutes {
           exist.setPassword("***");
           int userId = exist.getId();
 
-          if (sessions.get(userId) == null) {
+          if (!sessions.containsValue(userId)) {
             ActiveSession activeSession = activeSessionRepository.insertActiveSession(
-                exist.getId());
-            sessions.put(activeSession.getUserId(), activeSession.getId());
-            System.out.println(sessions.get(exist.getId()));
-            res.json(exist);
+                userId);
+            sessions.put(activeSession.getId(), activeSession.getUserId());
+            System.out.println(activeSession.getId());
+            UserCoreDTOWithSession userCoreDTOWithSession = exist.convertToUserCoreDTOWithSession(
+                activeSession.getId());
+            res.json(userCoreDTOWithSession);
           }
         } else {
           res.status(500).send("Error, check credentials");
@@ -103,9 +102,11 @@ public class FunctionRoutes {
     app.get("/api/whoami", (req, res) -> {
       try {
         String sessionId = req.cookie("sessionID");
-        System.out.println(sessionId);
-        Optional<User> user = userRepository.findById(sessionId);
-        UserCoreDTO userCoreDTO = user.get().convertToUserCoreDTO();
+        int sessionID = Integer.parseInt(sessionId);
+        String userId = String.valueOf(sessions.get(sessionID));
+        Optional<User> user = userRepository.findById(userId);
+        UserCoreDTO userCoreDTO = user.get()
+            .convertToUserCoreDTO();
         userCoreDTO.setPassword("***");
         res.json(userCoreDTO);
       } catch (Exception e) {
