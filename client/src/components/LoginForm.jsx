@@ -1,7 +1,9 @@
-import { useEffect, useContext } from 'react'
+import { useContext } from 'react'
 import { useHistory } from 'react-router'
 import { useForm } from '../customhooks/useForm'
-import {Context} from '../store/Store'
+import { Context } from '../store/Store'
+import { loginUser } from '../api/userAPI'
+
 const LoginForm = (props) => {
   const [state, dispatch] = useContext(Context)
   const [userLogin, handleChange] = useForm({
@@ -10,15 +12,19 @@ const LoginForm = (props) => {
   })
   const history = useHistory()
 
-  const loginUser = (e) => {
+  const login = (e) => {
     e.preventDefault()
-    //login through backend here
-    dispatch({ type: 'SET_USER', payload: 'user.firstName from api' })
-    history.push('/my-profile')
+    const tryLogin = async () => {
+        const user = await loginUser(userLogin)
+        dispatch({ type: 'SET_USER', payload: user.firstName })
+        history.push('/my-profile')
+      return null
+    }
+    tryLogin()
   }
 
   return (
-    <form onSubmit={loginUser}>
+    <form onSubmit={login}>
       <input type="text" placeholder="email" name="email" value={userLogin.email} onChange={handleChange} />
       <input type="password" placeholder="password" name="password" value={userLogin.password} onChange={handleChange} />
       <button type="submit">Login</button>
