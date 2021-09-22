@@ -2,15 +2,13 @@ package service;
 
 import datatransforobject.HomeCoreDTO;
 import datatransforobject.HomeHistoryDTO;
+import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import mapper.HomeHistoryLogMapper;
-import mapper.HomeMapper;
-import model.Home;
 import model.HomeHistoryLog;
 import repository.HomeHistoryLogRepository;
-import repository.HomeRepository;
 import utility.ManagerFactory;
 
 public class HomeHistoryService {
@@ -30,4 +28,12 @@ public class HomeHistoryService {
         return Optional.of(HomeHistoryLogMapper.convertToCore(homeHistoryDO.get()));
 
     }
-}
+
+    public List<HomeHistoryLog> getByHomeId(String homeId) {
+        List<HomeHistoryLog> homeHistoryHomeId =
+                homeHistoryLogRepository.findByHomeId(homeId);
+        return homeHistoryHomeId;
+
+    }
+    }
+
