@@ -8,6 +8,7 @@ public class HomeHistoryLogMapper {
 
             HomeHistoryDTO dto = new HomeHistoryDTO();
             dto.setId(historyLog.getId());
+            dto.setAddress(historyLog.getHome().getAddress());
             dto.setPricePerNight(historyLog.getPricePerNight());
             dto.setImages(historyLog.getImages());
             dto.setStartDate(historyLog.getStartDate());
