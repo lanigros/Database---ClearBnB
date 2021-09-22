@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import mapper.UserMapper;
 import model.ActiveSession;
 import model.User;
 import repository.ActiveSessionRepository;
@@ -45,8 +46,21 @@ public class FunctionRoutes {
         String hashedPassword = Utility.hash(user.getPassword());
         user.setPassword(hashedPassword);
         Optional<User> newUser = userRepository.save(user.convertToUser());
-        //To send a json
-        res.status(201).json(Map.of("id", newUser.get().getId()));
+        System.out.println("before");
+        if (newUser.isPresent()) {
+          System.out.println("After if");
+          ActiveSession activeSession = activeSessionRepository.insertActiveSession(
+              newUser.get().getId(), Utility.createRandomAlphanumeric()
+          );
+          System.out.println(activeSession.getId() + " " + newUser.get().getId());
+          sessions.put(activeSession.getId(), newUser.get().getId());
+          //To send a json
+          UserCoreDTO newUserCoreDTO = UserMapper.convertToCoreDTOWithoutPassword(newUser.get());
+          System.out.println(newUserCoreDTO);
+          res.json(newUserCoreDTO)
+              .cookie(Utility.generateCookie("userName", newUser.get().getFirstName()))
+              .cookie(Utility.generateCookie("sessionID", activeSession.getId()));
+        }
       } catch (Exception e) {
         System.out.println(e);
         res.status(500).json(Map.of("error", "internal error"));

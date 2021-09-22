@@ -1,8 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { useHistory } from 'react-router'
 import { useForm } from '../customhooks/useForm'
 import { createUser } from '../api/userAPI'
+import { Context } from '../store/Store'
 
 const CreateUserMenu = () => {
+  const [state, dispatch] = useContext(Context)
+  const history = useHistory()
+
   const [user, handleChange] = useForm({
     firstName: '',
     lastName: '',
@@ -12,10 +17,17 @@ const CreateUserMenu = () => {
   })
 
   const postUser = (e) => {
-    e.preventDefault()
-    let createdUser = { ...user }
-    delete createdUser['repeatedPassword']
-    createUser(createdUser)
+    const createAndLogin = async () => {
+      e.preventDefault()
+      let createdUser = { ...user }
+      delete createdUser['repeatedPassword']
+      const newUser = await createUser(createdUser)
+      if (!newUser) return
+      dispatch({ type: 'SET_USER', payload: newUser.firstName })
+      history.push("/my-profile")
+    }
+    createAndLogin()
+
   }
 
   return (
