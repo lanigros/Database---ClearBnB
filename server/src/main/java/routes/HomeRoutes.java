@@ -5,20 +5,19 @@ import express.Express;
 import java.util.List;
 import java.util.Optional;
 import model.HomeHistoryLog;
-import service.HomeHistoryService;
+
 import service.HomeService;
 
 public class HomeRoutes {
 
   private final Express app;
   private final HomeService homeService;
-  private final HomeHistoryService homeHistoryService;
+
 
 
   public HomeRoutes(Express app){
     this.app = app;
     this.homeService = new HomeService();
-    this.homeHistoryService = new HomeHistoryService();
     this.init();
   }
 
@@ -34,7 +33,7 @@ public class HomeRoutes {
     });
       app.get("rest/home/:id/history", (req, res) -> {
           String id = req.params("id");
-          List<HomeHistoryLog> history = homeHistoryService.getByHomeId(id);
+          List<HomeHistoryLog> history = homeService.getByHomeId(id);
           res.json(history);
   });
 
