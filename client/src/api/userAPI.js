@@ -3,9 +3,9 @@ export const createUser = async (userObject) => {
     method: 'POST',
     body: JSON.stringify(userObject)
   })
-  if (response.ok)
-    return await response.json()
-  return
+  if (!response.ok) return null
+  const user = await response.json()
+  return user
 }
 
 export const fetchUsers = async () => {
@@ -36,7 +36,6 @@ export const loginUser = async (userLogin) => {
   })
   if (!response.ok) return null
   const user = await response.json()
-  localStorage.getItem('current-user')
   return user
 }
 
