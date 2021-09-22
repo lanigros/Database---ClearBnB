@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS `active_session`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `active_session` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `id` varchar(60) NOT NULL,
   `user_id` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `active_session_user_id_idx` (`user_id`),
@@ -37,6 +37,7 @@ CREATE TABLE `active_session` (
 
 LOCK TABLES `active_session` WRITE;
 /*!40000 ALTER TABLE `active_session` DISABLE KEYS */;
+INSERT INTO `active_session` VALUES ('9T0DMW4yBs8I6vf1ymes4B8rkpYp9dVJsX46aS3qdt5axg8VtW',11);
 /*!40000 ALTER TABLE `active_session` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -90,7 +91,7 @@ CREATE TABLE `amenity_enum` (
 
 LOCK TABLES `amenity_enum` WRITE;
 /*!40000 ALTER TABLE `amenity_enum` DISABLE KEYS */;
-INSERT INTO `amenity_enum` VALUES (1,1,'WIFI'),(2,1,'KITCHEN');
+INSERT INTO `amenity_enum` VALUES (1,1,'WIFI'),(2,1,'BATH'),(3,1,'PARKING');
 /*!40000 ALTER TABLE `amenity_enum` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -204,7 +205,7 @@ CREATE TABLE `home_history_log` (
   PRIMARY KEY (`id`),
   KEY `home_history_log_id_idx` (`home_id`),
   CONSTRAINT `home_history_log_id` FOREIGN KEY (`home_id`) REFERENCES `home` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -213,6 +214,7 @@ CREATE TABLE `home_history_log` (
 
 LOCK TABLES `home_history_log` WRITE;
 /*!40000 ALTER TABLE `home_history_log` DISABLE KEYS */;
+INSERT INTO `home_history_log` VALUES (1,1,1234,'2021-01-11 23:00:00','2021-11-13 12:00:00','2021-01-01 13:15:09');
 /*!40000 ALTER TABLE `home_history_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -228,8 +230,8 @@ CREATE TABLE `home_image` (
   `home_id` int NOT NULL,
   `image_url` varchar(300) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `home_image_id_idx` (`home_id`),
-  CONSTRAINT `home_image_id` FOREIGN KEY (`home_id`) REFERENCES `home` (`id`)
+  KEY `image_home_id_idx` (`home_id`),
+  CONSTRAINT `image_home_id` FOREIGN KEY (`home_id`) REFERENCES `home` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -253,11 +255,11 @@ DROP TABLE IF EXISTS `home_image_history_log`;
 CREATE TABLE `home_image_history_log` (
   `id` int NOT NULL AUTO_INCREMENT,
   `home_history_log_id` int NOT NULL,
-  `image_url` varchar(45) NOT NULL,
+  `image_url` varchar(300) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `home_history_image_history_id_idx` (`home_history_log_id`),
-  CONSTRAINT `home_history_image_history_id` FOREIGN KEY (`home_history_log_id`) REFERENCES `home_history_log` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `image_history_home_history_id_idx` (`home_history_log_id`),
+  CONSTRAINT `image_history_home_history_id` FOREIGN KEY (`home_history_log_id`) REFERENCES `home_history_log` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -266,6 +268,7 @@ CREATE TABLE `home_image_history_log` (
 
 LOCK TABLES `home_image_history_log` WRITE;
 /*!40000 ALTER TABLE `home_image_history_log` DISABLE KEYS */;
+INSERT INTO `home_image_history_log` VALUES (1,1,'oldUrl');
 /*!40000 ALTER TABLE `home_image_history_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -322,58 +325,6 @@ LOCK TABLES `host_review` WRITE;
 /*!40000 ALTER TABLE `host_review` DISABLE KEYS */;
 INSERT INTO `host_review` VALUES (1,1,1);
 /*!40000 ALTER TABLE `host_review` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `image`
---
-
-DROP TABLE IF EXISTS `image`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `image` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `home_id` int NOT NULL,
-  `image_url` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `image_home_id_idx` (`home_id`),
-  CONSTRAINT `image_home_id` FOREIGN KEY (`home_id`) REFERENCES `home` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `image`
---
-
-LOCK TABLES `image` WRITE;
-/*!40000 ALTER TABLE `image` DISABLE KEYS */;
-/*!40000 ALTER TABLE `image` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `image_history_log`
---
-
-DROP TABLE IF EXISTS `image_history_log`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `image_history_log` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `home_history_log_id` int NOT NULL,
-  `image_url` varchar(45) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `image_history_home_history_id_idx` (`home_history_log_id`),
-  CONSTRAINT `image_history_home_history_id` FOREIGN KEY (`home_history_log_id`) REFERENCES `home_history_log` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `image_history_log`
---
-
-LOCK TABLES `image_history_log` WRITE;
-/*!40000 ALTER TABLE `image_history_log` DISABLE KEYS */;
-/*!40000 ALTER TABLE `image_history_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -473,12 +424,12 @@ DROP TABLE IF EXISTS `user`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `user` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `first_name` varchar(45) NOT NULL,
-  `last_name` varchar(45) NOT NULL,
-  `email` varchar(45) NOT NULL,
-  `password` varchar(45) NOT NULL,
+  `first_name` varchar(100) NOT NULL,
+  `last_name` varchar(100) NOT NULL,
+  `email` varchar(200) NOT NULL,
+  `password` varchar(400) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -487,7 +438,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Kamilla','Johansson','kam@gmail.com','123');
+INSERT INTO `user` VALUES (1,'Kamilla','Johansson','kam@gmail.com','123'),(2,'Andrew','Hamish','anha@gmail.com','a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67'),(3,'Robert','Linder','rolling@gmail.com','09d8409dfa0ba399cf95c6510b579542aba7b6230c6354dfb7090e9a9c0fe3d1'),(4,'Anders','SJ','asj@mail.com','a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67'),(5,'Wendy','Arnoldsson','wean@mail.com','a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67'),(8,'Hamish','Washington','hawa@mail.com','a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67'),(9,'Arnold','Arnoldsson','arn@mail.com','a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67'),(10,'Joey','Quatryl','jq@mail.com','a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67'),(11,'Karen','Boomer','iwanttotalktoyourmanager@me.com','a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -526,4 +477,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-09-21 10:17:49
+-- Dump completed on 2021-09-23  0:08:12
