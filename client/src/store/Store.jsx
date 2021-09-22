@@ -9,12 +9,12 @@ const initialState = {
 
 const Store = ({ children }) => {
   const [state, dispatch] = useReducer(storeReducer, initialState)
-    
+
   useEffect(() => {
-    async function checkLoggedIn(){
+    async function checkLoggedIn() {
       const user = await getActiveUser()
-      if (user !== null) {
-        dispatch({ type: 'SET_USER', payload: user.firstName})
+      if (user != null) {
+        dispatch({ type: 'SET_USER', payload: user.firstName })
       }
     }
     checkLoggedIn()
