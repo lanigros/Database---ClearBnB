@@ -15,7 +15,7 @@ import javax.transaction.Transactional;
 @Transactional
 @NamedQueries({
     @NamedQuery(name = "ActiveSession.getActiveSession", query = "SELECT a FROM ActiveSession a WHERE a.userId = :userId"),
-    @NamedQuery(name = "ActiveSession.deleteByUserId", query = "DELETE ActiveSession a WHERE a.id = :sessionId"),
+    @NamedQuery(name = "ActiveSession.deleteBySessionId", query = "DELETE ActiveSession a WHERE a.id = :sessionId"),
     @NamedQuery(name = "ActiveSession.getAllActiveSessions", query = "SELECT a FROM ActiveSession a")
 })
 
