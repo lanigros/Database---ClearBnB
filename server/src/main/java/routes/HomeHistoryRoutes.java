@@ -33,9 +33,6 @@ public class HomeHistoryRoutes {
         app.get("rest/home/:id/history", (req, res) -> {
             String id = req.params("id");
             List<HomeHistoryLog> history = homeHistoryService.getByHomeId(id);
-            if(history.isEmpty()){
-                res.send("Wrong input, check ID again.");
-            }
             res.json(history);
         });
     }
