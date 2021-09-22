@@ -3,6 +3,7 @@ package routes;
 import datatransforobject.HomeCoreDTO;
 import express.Express;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import model.Home;
 import service.HomeService;
@@ -32,7 +33,8 @@ public class HomeRoutes {
 
     app.get("rest/homes", (req, res) -> {
       try {
-        List<Home> homes = homeService.getAllWithEverything();
+        Map<String,List<String>> filters = req.query();
+        List<Home> homes = homeService.getAll(filters);
         res.json(homes);
       } catch (Exception e) {
         System.out.println(e);
