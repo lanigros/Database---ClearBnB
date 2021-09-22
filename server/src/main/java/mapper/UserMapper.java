@@ -20,4 +20,14 @@ public class UserMapper {
     return user;
   }
 
+  public static User convertToUser(UserCoreDTO dto){
+
+    User userDO = new User();
+    userDO.setFirstName(dto.getFirstName());
+    userDO.setLastName(dto.getLastName());
+    userDO.setEmail(dto.getEmail());
+    userDO.setPassword(dto.getPassword());
+    return userDO;
+  }
+
 }

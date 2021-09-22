@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import model.User;
 import repository.UserRepository;
+import service.UserService;
 import utility.ManagerFactory;
 import utility.Utility;
 
@@ -19,9 +20,12 @@ public class FunctionRoutes {
       "User");
   private final EntityManager entityManager = entityManagerFactory.createEntityManager();
   private final UserRepository userRepository = new UserRepository(entityManager);
+  private final UserService userService;
+
 
   public FunctionRoutes(Express app) {
     this.app = app;
+    this.userService = new UserService();
     init();
   }
 
@@ -29,21 +33,17 @@ public class FunctionRoutes {
     app.post("/api/register", (req, res) -> {
       try {
         UserCoreDTO user = req.body(UserCoreDTO.class);
-        User exist = userRepository.findByEmail(user.getEmail());
+        Optional<User> createdUser = userService.registerUser(user);
 
-        if (exist != null) {
-          res.status(500).json(Map.of("error", "email already exist"));
+        if (createdUser.isPresent()) {
+          req.session("current-user", createdUser.get().getId());
+          res.status(201).json(Map.of("id", createdUser.get().getId()));
           return;
         }
-        //hashing password
-        String hashedPassword = Utility.hash(user.getPassword());
-        user.setPassword(hashedPassword);
-        Optional<User> newUser = userRepository.save(user.convertToUser());
-        req.session("current-user", user.getId());
-        //To send a json
-        res.status(201).json(Map.of("id", newUser.get().getId()));
+        res.status(409).json(Map.of("error", "email already exist"));
+
       } catch (Exception e) {
-        System.out.println(e);
+        e.printStackTrace();
         res.status(500).json(Map.of("error", "internal error"));
       }
     });
