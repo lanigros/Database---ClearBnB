@@ -31,9 +31,13 @@ public class HomeRoutes {
       }
     });
 
+// Filer by price or by date.
+// price=?
+// start_date=d/M/yyyy
+// end_date = d/M/yyyy
     app.get("rest/homes", (req, res) -> {
       try {
-        Map<String,List<String>> filters = req.query();
+        Map<String, List<String>> filters = req.query();
         List<Home> homes = homeService.getAll(filters);
         res.json(homes);
       } catch (Exception e) {

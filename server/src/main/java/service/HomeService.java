@@ -45,9 +45,9 @@ public class HomeService {
       Filter filter2 = session.enableFilter("priceFilter");
       filter2.setParameter("price_per_night", price);
     }
-    if (filters.containsKey("dateStart")) {
-      Timestamp start = Utility.convertToTimestamp(filters.get("dateStart").get(0));
-      Timestamp end = Utility.convertToTimestamp(filters.get("dateEnd").get(0));
+    if (filters.containsKey("start_date")) {
+      Timestamp start = Utility.convertToTimestamp(filters.get("start_date").get(0));
+      Timestamp end = Utility.convertToTimestamp(filters.get("end_date").get(0));
 
       Filter filter = session.enableFilter("dateFilter");
       filter.setParameter("start_date", start);
