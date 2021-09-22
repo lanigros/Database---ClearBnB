@@ -3,8 +3,14 @@ package utility;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Utility {
+
+  static final SimpleDateFormat formatter = new SimpleDateFormat("d/M/yyyy");
 
   public static boolean match(String password, String hashedPassword) {
     return hash(password).equals(hashedPassword);
@@ -31,6 +37,11 @@ public class Utility {
       hexString.append(hex);
     }
     return hexString.toString();
+  }
+
+  public static Timestamp convertToTimestamp(String date) throws ParseException {
+    Date a = formatter.parse(date);
+    return new Timestamp(a.getTime());
   }
 
 }
