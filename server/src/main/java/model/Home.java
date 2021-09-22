@@ -15,163 +15,175 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import org.hibernate.annotations.Filter;
+
 
 @Entity
 @Table(name = "Home")
-@NamedQueries({@NamedQuery(name = "Home.findById", query = "SELECT h FROM Home h WHERE h.id = " + ":id"), @NamedQuery(name = "Home.findAll", query = "SELECT h FROM Home h")})
+@Filter(name = "dateFilter", condition = "start_date <= :start_date and end_date >= :end_date")
+@Filter(name = "priceFilter", condition = "price_per_night <= :price_per_night")
+@Filter(name = "countryFilter", condition = "address0_.country = :country")
+@NamedQueries({
+    @NamedQuery(name = "Home.findById", query = "SELECT h FROM Home h WHERE h.id = " + ":id"),
+    @NamedQuery(name = "Home.findAll", query = "SELECT h FROM Home h")})
 public class Home {
 
-    @Id
-    @GeneratedValue
-    private int id;
-    @JsonBackReference(value = "host-home")
-    @ManyToOne
-    @JoinColumn(name = "host_id")//MANY homes to ONE host
-    private Host host;
-    @JsonManagedReference(value = "homes-address")
-    @ManyToOne
-    @JoinColumn(name = "address_id")
-    private Address address;
-    @JsonManagedReference(value = "home-booking-details")
-    @OneToMany(mappedBy = "home")
-    private List<BookingDetail> bookingDetails = new ArrayList<>();
-    @JsonManagedReference(value = "home-images")
-    @OneToMany(mappedBy = "home")
-    private List<HomeImage> images = new ArrayList<>();
-    @JsonManagedReference(value = "home-histories")
-    @OneToMany(mappedBy = "home")
-    private List<HomeHistoryLog> historyLogs = new ArrayList<>();
-    @JsonManagedReference(value = "home-amenity")
-    @OneToMany(mappedBy = "home")
-    private List<Amenity> amenities = new ArrayList<>();
+  @Id
+  @GeneratedValue
+  private int id;
+  @JsonBackReference(value = "host-home")
+  @ManyToOne
+  @JoinColumn(name = "host_id")//MANY homes to ONE host
+  private Host host;
 
-    @Column(name = "price_per_night")
-    private int pricePerNight;
+  @JsonManagedReference(value = "homes-address")
+  @ManyToOne
+  @JoinColumn(name = "address_id")
+  private Address address;
 
-    @Column(name = "start_date")
-    private Timestamp startDate;
+  @JsonManagedReference(value = "home-booking-details")
+  @OneToMany(mappedBy = "home")
+  private List<BookingDetail> bookingDetails = new ArrayList<>();
+  @JsonManagedReference(value = "home-images")
+  @OneToMany(mappedBy = "home")
+  private List<HomeImage> images = new ArrayList<>();
+  @JsonManagedReference(value = "home-histories")
+  @OneToMany(mappedBy = "home")
+  private List<HomeHistoryLog> historyLogs = new ArrayList<>();
+  @JsonManagedReference(value = "home-amenity")
+  @OneToMany(mappedBy = "home")
+  private List<Amenity> amenities = new ArrayList<>();
 
-    @Column(name = "end_date")
-    private Timestamp endDate;
+  @Column(name = "price_per_night")
+  private int pricePerNight;
 
-    @Column(name = "updated_date")
-    private Timestamp updatedDate;
+  @Column(name = "start_date")
+  private Timestamp startDate;
 
-    @Column(name = "created_date")
-    private Timestamp createdDate;
+  @Column(name = "end_date")
+  private Timestamp endDate;
 
-    public Home(Host host, Address address, int pricePerNight, Timestamp startDate,
-            Timestamp endDate, List<BookingDetail> bookingDetails, List<HomeImage> images,
-            List<HomeHistoryLog> homeHistoryLogs, List<Amenity> amenities) {
-        this.host = host;
-        this.address = address;
-        this.pricePerNight = pricePerNight;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.bookingDetails = bookingDetails;
-        this.images = images;
-        this.historyLogs = homeHistoryLogs;
-        this.amenities = amenities;
-    }
+  @Column(name = "updated_date")
+  private Timestamp updatedDate;
 
-    public Home() {
-    }
+  @Column(name = "created_date")
+  private Timestamp createdDate;
 
-    @Override
-    public String toString() {
-        return "Home{" + "id =" + id + ", host =" + host + ", addressId =" + address + '\'' + ", pricePerNight=" + pricePerNight + ", startDate='" + startDate + '\'' + ", endDate='" + endDate + '\'' + ", updatedDate='" + updatedDate + '\'' + ", createdDate='" + createdDate + '\'' + ", amenities= " + amenities + '}';
-    }
+  public Home(Host host, Address address, int pricePerNight, Timestamp startDate, Timestamp endDate,
+      List<BookingDetail> bookingDetails, List<HomeImage> images,
+      List<HomeHistoryLog> homeHistoryLogs, List<Amenity> amenities) {
+    this.host = host;
+    this.address = address;
+    this.pricePerNight = pricePerNight;
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.bookingDetails = bookingDetails;
+    this.images = images;
+    this.historyLogs = homeHistoryLogs;
+    this.amenities = amenities;
+  }
 
-    public int getId() {
-        return id;
-    }
+  public Home() {
+  }
 
-    public Host getHost() {
-        return host;
-    }
+  @Override
+  public String toString() {
+    return "Home{" + "id =" + id + ", host =" + host + ", addressId =" + address + '\''
+        + ", pricePerNight=" + pricePerNight + ", startDate='" + startDate + '\'' + ", endDate='"
+        + endDate + '\'' + ", updatedDate='" + updatedDate + '\'' + ", createdDate='" + createdDate
+        + '\'' + ", amenities= " + amenities + '}';
+  }
 
-    public void setHost(Host host) {
-        this.host = host;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public Address getAddress() {
-        return address;
-    }
+  public Host getHost() {
+    return host;
+  }
 
-    public void setAddress(Address address) {
-        this.address = address;
-    }
+  public void setHost(Host host) {
+    this.host = host;
+  }
 
-    public int getPricePerNight() {
-        return pricePerNight;
-    }
+  public Address getAddress() {
+    return address;
+  }
 
-    public void setPricePerNight(int pricePerNight) {
-        this.pricePerNight = pricePerNight;
-    }
+  public void setAddress(Address address) {
+    this.address = address;
+  }
 
-    public Timestamp getStartDate() {
-        return startDate;
-    }
+  public int getPricePerNight() {
+    return pricePerNight;
+  }
 
-    public void setStartDate(Timestamp startDate) {
-        this.startDate = startDate;
-    }
+  public void setPricePerNight(int pricePerNight) {
+    this.pricePerNight = pricePerNight;
+  }
 
-    public Timestamp getEndDate() {
-        return endDate;
-    }
+  public Timestamp getStartDate() {
+    return startDate;
+  }
 
-    public void setEndDate(Timestamp endDate) {
-        this.endDate = endDate;
-    }
+  public void setStartDate(Timestamp startDate) {
+    this.startDate = startDate;
+  }
 
-    public Timestamp getUpdatedDate() {
-        return updatedDate;
-    }
+  public Timestamp getEndDate() {
+    return endDate;
+  }
 
-    public void setUpdatedDate(Timestamp updatedDate) {
-        this.updatedDate = updatedDate;
-    }
+  public void setEndDate(Timestamp endDate) {
+    this.endDate = endDate;
+  }
 
-    public Timestamp getCreatedDate() {
-        return createdDate;
-    }
+  public Timestamp getUpdatedDate() {
+    return updatedDate;
+  }
 
-    public void setCreatedDate(Timestamp createdDate) {
-        this.createdDate = createdDate;
-    }
+  public void setUpdatedDate(Timestamp updatedDate) {
+    this.updatedDate = updatedDate;
+  }
 
-    public List<BookingDetail> getBookingDetails() {
-        return bookingDetails;
-    }
+  public Timestamp getCreatedDate() {
+    return createdDate;
+  }
 
-    public void setBookingDetails(List<BookingDetail> bookingDetails) {
-        this.bookingDetails = bookingDetails;
-    }
+  public void setCreatedDate(Timestamp createdDate) {
+    this.createdDate = createdDate;
+  }
 
-    public List<HomeImage> getImages() {
-        return images;
-    }
+  public List<BookingDetail> getBookingDetails() {
+    return bookingDetails;
+  }
 
-    public void setImages(List<HomeImage> images) {
-        this.images = images;
-    }
+  public void setBookingDetails(List<BookingDetail> bookingDetails) {
+    this.bookingDetails = bookingDetails;
+  }
 
-    public List<HomeHistoryLog> getHistoryLogs() {
-        return historyLogs;
-    }
+  public List<HomeImage> getImages() {
+    return images;
+  }
 
-    public void setHistoryLogs(List<HomeHistoryLog> historyLogs) {
-        this.historyLogs = historyLogs;
-    }
+  public void setImages(List<HomeImage> images) {
+    this.images = images;
+  }
 
-    public List<Amenity> getAmenities() {
-        return amenities;
-    }
+  public List<HomeHistoryLog> getHistoryLogs() {
+    return historyLogs;
+  }
 
-    public void setAmenities(List<Amenity> amenities) {
-        this.amenities = amenities;
-    }
+  public void setHistoryLogs(List<HomeHistoryLog> historyLogs) {
+    this.historyLogs = historyLogs;
+  }
+
+  public List<Amenity> getAmenities() {
+    return amenities;
+  }
+
+  public void setAmenities(List<Amenity> amenities) {
+    this.amenities = amenities;
+  }
 
 }
