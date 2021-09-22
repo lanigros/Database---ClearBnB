@@ -1,10 +1,13 @@
 package repository;
 
+import java.util.Map;
+import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import model.ActiveSession;
 import repositoryinterface.ActiveSessionRepositoryInterface;
 
 public class ActiveSessionRepository implements ActiveSessionRepositoryInterface {
+
   private final EntityManager entityManager;
 
   public ActiveSessionRepository(EntityManager entityManager) {
@@ -12,27 +15,39 @@ public class ActiveSessionRepository implements ActiveSessionRepositoryInterface
   }
 
   @Override
-  public int insertActiveSession(int userId){
+  public ActiveSession insertActiveSession(int userId) {
     entityManager.getTransaction().begin();
-    entityManager.persist(new ActiveSession(userId));
+    ActiveSession activeSession = entityManager.merge(new ActiveSession(userId));
     entityManager.getTransaction().commit();
-    return userId;
+    return activeSession;
   }
 
   @Override
-  public ActiveSession getActiveSession(int userId){
+  public ActiveSession getActiveSession(int userId) {
     return entityManager.createNamedQuery(
-        "ActiveSession.getActiveSession", ActiveSession.class)
+            "ActiveSession.getActiveSession", ActiveSession.class)
         .setParameter("userId", userId).getSingleResult();
   }
 
   @Override
-  public void deleteActiveSessionByUserId(int userId){
+  public void deleteActiveSessionById(int sessionId) {
     entityManager.getTransaction().begin();
     entityManager.createNamedQuery(
-        "ActiveSession.deleteByUserId")
-        .setParameter("userId", userId).executeUpdate();
+            "ActiveSession.deleteBySessionId")
+        .setParameter("sessionId", sessionId).executeUpdate();
     entityManager.getTransaction().commit();
+  }
+
+  @Override
+  public Map<Integer, Integer> getAllActiveSessions() {
+    Map<Integer, Integer> sessions = entityManager.createNamedQuery(
+            "ActiveSession.getAllActiveSessions", ActiveSession.class
+        ).getResultStream()
+        .collect(Collectors.toMap(
+            activeSession -> activeSession.getUserId(),
+            activeSession -> activeSession.getId()
+        ));
+    return sessions;
   }
 
 }

@@ -21,10 +21,14 @@ public class FunctionRoutes {
       "User");
   private final EntityManager entityManager = entityManagerFactory.createEntityManager();
   private final UserRepository userRepository = new UserRepository(entityManager);
-  private final ActiveSessionRepository activeSessionRepository = new ActiveSessionRepository(entityManager);
+  private final ActiveSessionRepository activeSessionRepository = new ActiveSessionRepository(
+      entityManager);
+  private Map<Integer, Integer> sessions;
+
 
   public FunctionRoutes(Express app) {
     this.app = app;
+    sessions = activeSessionRepository.getAllActiveSessions();
     init();
   }
 
@@ -33,7 +37,6 @@ public class FunctionRoutes {
       try {
         UserCoreDTO user = req.body(UserCoreDTO.class);
         User exist = userRepository.findByEmail(user.getEmail());
-
         if (exist != null) {
           res.status(500).json(Map.of("error", "email already exist"));
           return;
@@ -52,12 +55,13 @@ public class FunctionRoutes {
     });
 
     app.delete("/api/logout", (req, res) -> {
-      try{
+      try {
         UserCoreDTO userCoreDTO = req.body(UserCoreDTO.class);
-        activeSessionRepository.deleteActiveSessionByUserId(userCoreDTO.getId());
-        req.session("current-user-id", null);
+        int sessionId = sessions.get(userCoreDTO.getId());
+        activeSessionRepository.deleteActiveSessionById(sessionId);
+        sessions.remove(sessionId);
         res.json("Ok");
-      }catch(Exception e){
+      } catch (Exception e) {
         res.status(500);
       }
     });
@@ -67,7 +71,8 @@ public class FunctionRoutes {
       try {
         UserLoginDTO userCred = req.body(UserLoginDTO.class);
         UserCoreDTO exist = userRepository.login(userCred.getEmail());
-        System.out.println(exist.getId() + exist.getFirstName() + exist.getLastName() + exist.getPassword());
+        System.out.println(
+            exist.getId() + exist.getFirstName() + exist.getLastName() + exist.getPassword());
 
         if (exist == null) {
           res.status(500).send("Error, check credentials");
@@ -76,10 +81,15 @@ public class FunctionRoutes {
 
         if (Utility.match(userCred.getPassword(), exist.getPassword())) {
           exist.setPassword("***");
-          req.session("current-user-id", exist.getId());
-          activeSessionRepository.deleteActiveSessionByUserId(exist.getId());
-          activeSessionRepository.insertActiveSession(exist.getId());
-          res.json(exist);
+          int userId = exist.getId();
+
+          if (sessions.get(userId) == null) {
+            ActiveSession activeSession = activeSessionRepository.insertActiveSession(
+                exist.getId());
+            sessions.put(activeSession.getUserId(), activeSession.getId());
+            System.out.println(sessions.get(exist.getId()));
+            res.json(exist);
+          }
         } else {
           res.status(500).send("Error, check credentials");
         }
@@ -92,17 +102,15 @@ public class FunctionRoutes {
     //check current user
     app.get("/api/whoami", (req, res) -> {
       try {
-        ActiveSession activeSession = activeSessionRepository.getActiveSession(
-            req.session("current-user-id"));
-        System.out.println((int)req.session("current-user-id"));
-        Optional<User> user = userRepository.findById(String.valueOf(activeSession.getUserId()));
+        String sessionId = req.cookie("sessionID");
+        System.out.println(sessionId);
+        Optional<User> user = userRepository.findById(sessionId);
         UserCoreDTO userCoreDTO = user.get().convertToUserCoreDTO();
         userCoreDTO.setPassword("***");
         res.json(userCoreDTO);
-      }catch(Exception e){
+      } catch (Exception e) {
         res.status(500);
       }
-
     });
 
   }

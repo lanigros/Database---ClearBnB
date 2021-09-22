@@ -1,12 +1,16 @@
 package repositoryinterface;
 
+import java.util.Map;
 import model.ActiveSession;
-import model.User;
 
 public interface ActiveSessionRepositoryInterface {
-  public int insertActiveSession(int userId);
+
+  public ActiveSession insertActiveSession(int userId);
 
   public ActiveSession getActiveSession(int userId);
 
-  public void deleteActiveSessionByUserId(int userId);
+  public void deleteActiveSessionById(int sessionId);
+
+  public Map<Integer, Integer> getAllActiveSessions();
+
 }

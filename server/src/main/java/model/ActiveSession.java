@@ -11,18 +11,20 @@ import javax.persistence.Table;
 import javax.transaction.Transactional;
 
 @Entity
-@Table(name="active_session")
+@Table(name = "active_session")
 @Transactional
 @NamedQueries({
-    @NamedQuery(name="ActiveSession.getActiveSession", query = "SELECT a FROM ActiveSession a WHERE a.userId = :userId"),
-    @NamedQuery(name="ActiveSession.deleteByUserId", query = "DELETE ActiveSession a WHERE a.userId = :userId")
+    @NamedQuery(name = "ActiveSession.getActiveSession", query = "SELECT a FROM ActiveSession a WHERE a.userId = :userId"),
+    @NamedQuery(name = "ActiveSession.deleteByUserId", query = "DELETE ActiveSession a WHERE a.id = :sessionId"),
+    @NamedQuery(name = "ActiveSession.getAllActiveSessions", query = "SELECT a FROM ActiveSession a")
 })
 
 public class ActiveSession {
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
-  @Column(name="user_id")
+  @Column(name = "user_id")
   private int userId;
 
   public ActiveSession() {
