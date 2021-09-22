@@ -2,12 +2,21 @@ import React, {useContext} from 'react'
 import { Link } from 'react-router-dom'
 import HeaderStyle from './Header.styles'
 import { Context } from '../store/Store'
+import { logoutUser } from '../api/userAPI'
 
 const Header = () => {
   const [state, dispatch] = useContext(Context)
 
   const logout = () => {
-    dispatch({ type: 'SET_USER', payload: ''})
+    const performLogout = async () => {
+      const result = await logoutUser()
+      if (result != null) {
+        dispatch({ type: 'SET_USER', payload: '' })
+        localStorage.setItem('current-user', null)
+      }
+    }
+    performLogout()
+    
   }
 
   return (
