@@ -1,12 +1,11 @@
 package service;
 
-import datatransforobject.HomeCoreDTO;
 import datatransforobject.HomeHistoryDTO;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import mapper.HomeHistoryLogMapper;
+import mapper.HomeMapper;
 import model.HomeHistoryLog;
 import repository.HomeHistoryLogRepository;
 import utility.ManagerFactory;
@@ -25,7 +24,7 @@ public class HomeHistoryService {
             return Optional.empty();
         }
 
-        return Optional.of(HomeHistoryLogMapper.convertToCore(homeHistoryDO.get()));
+        return Optional.of(HomeMapper.convertToCore(homeHistoryDO.get()));
 
     }
 
