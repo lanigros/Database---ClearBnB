@@ -15,29 +15,15 @@ public class ActiveSessionRepository implements ActiveSessionRepositoryInterface
   }
 
   @Override
-  public ActiveSession insertActiveSession(int userId) {
+  public ActiveSession insertActiveSession(int userId, String sessionId) {
     entityManager.getTransaction().begin();
-    ActiveSession activeSession = entityManager.merge(new ActiveSession(userId));
-    entityManager.getTransaction().commit();
-    return activeSession;
-  }
-
-  public ActiveSession insertActiveSession(int userId, String cookieString) {
-    entityManager.getTransaction().begin();
-    ActiveSession activeSession = entityManager.merge(new ActiveSession(userId));
+    ActiveSession activeSession = entityManager.merge(new ActiveSession(userId, sessionId));
     entityManager.getTransaction().commit();
     return activeSession;
   }
 
   @Override
-  public ActiveSession getActiveSession(int userId) {
-    return entityManager.createNamedQuery(
-            "ActiveSession.getActiveSession", ActiveSession.class)
-        .setParameter("userId", userId).getSingleResult();
-  }
-
-  @Override
-  public void deleteActiveSessionById(int sessionId) {
+  public void deleteActiveSessionById(String sessionId) {
     entityManager.getTransaction().begin();
     entityManager.createNamedQuery(
             "ActiveSession.deleteBySessionId")
@@ -46,8 +32,17 @@ public class ActiveSessionRepository implements ActiveSessionRepositoryInterface
   }
 
   @Override
-  public Map<Integer, Integer> getAllActiveSessions() {
-    Map<Integer, Integer> sessions = entityManager.createNamedQuery(
+  public void deleteActiveSessionByUserId(int userId) {
+    entityManager.getTransaction().begin();
+    entityManager.createNamedQuery(
+            "ActiveSession.deleteByUserId")
+        .setParameter("userId", userId).executeUpdate();
+    entityManager.getTransaction().commit();
+  }
+
+  @Override
+  public Map<String, Integer> getAllActiveSessions() {
+    Map<String, Integer> sessions = entityManager.createNamedQuery(
             "ActiveSession.getAllActiveSessions", ActiveSession.class
         ).getResultStream()
         .collect(Collectors.toMap(

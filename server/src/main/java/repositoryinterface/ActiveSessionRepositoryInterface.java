@@ -5,12 +5,12 @@ import model.ActiveSession;
 
 public interface ActiveSessionRepositoryInterface {
 
-  public ActiveSession insertActiveSession(int userId);
+  public ActiveSession insertActiveSession(int userId, String sessionId);
 
-  public ActiveSession getActiveSession(int userId);
+  public void deleteActiveSessionById(String sessionId);
 
-  public void deleteActiveSessionById(int sessionId);
+  public Map<String, Integer> getAllActiveSessions();
 
-  public Map<Integer, Integer> getAllActiveSessions();
+  public void deleteActiveSessionByUserId(int userId);
 
 }
