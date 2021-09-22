@@ -2,8 +2,9 @@ package service;
 
 import datatransforobject.HomeCoreDTO;
 import java.sql.Timestamp;
-import java.util.Date;
+import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -13,13 +14,14 @@ import org.hibernate.Filter;
 import org.hibernate.Session;
 import repository.HomeRepository;
 import utility.ManagerFactory;
+import utility.Utility;
 
 public class HomeService {
+
 
   private final EntityManagerFactory entityManagerFactory = ManagerFactory.getEntityManagerFactory(
       "Home");
   private final EntityManager entityManager = entityManagerFactory.createEntityManager();
-  Session session = entityManager.unwrap(Session.class);
 
   private final HomeRepository homeRepository = new HomeRepository(entityManager);
 
@@ -35,23 +37,29 @@ public class HomeService {
 
   }
 
-  public List<Home> getAllWithEverything() {
-    Filter filter = session.enableFilter("dateFilter");
-    Filter filter2 = session.enableFilter("priceFilter");
-    Filter filter3 = session.enableFilter("countryFilter");
-    Date date = new Date();
-    Timestamp ts1 = new Timestamp(date.getTime());
-    long a = 1635909136530L;
-    Timestamp ts2 = new Timestamp(a);
+  public List<Home> getAll(Map<String, List<String>> filters) throws ParseException {
+    Session session = entityManager.unwrap(Session.class);
 
-    System.out.println(ts1.toLocalDateTime() + " " + ts2.toLocalDateTime());
-    filter.setParameter("start_date", ts1);
-    filter.setParameter("end_date", ts2);
-    filter2.setParameter("price_per_night", 1000);
-    filter3.setParameter("country", "AAAAA");
+    if (filters.containsKey("price")) {
+      int price = Integer.parseInt(filters.get("price").get(0));
+      Filter filter2 = session.enableFilter("priceFilter");
+      filter2.setParameter("price_per_night", price);
+    }
+    if (filters.containsKey("dateStart")) {
+      Timestamp start = Utility.convertToTimestamp(filters.get("dateStart").get(0));
+      Timestamp end = Utility.convertToTimestamp(filters.get("dateEnd").get(0));
+
+      Filter filter = session.enableFilter("dateFilter");
+      filter.setParameter("start_date", start);
+      filter.setParameter("end_date", end);
+    }
 
     List<Home> homes = homeRepository.findAll();
+    session.disableFilter("priceFilter");
+    session.disableFilter("dateFilter");
     return homes;
   }
+
+
 }
 
