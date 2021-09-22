@@ -15,10 +15,11 @@ const LoginForm = (props) => {
   const login = (e) => {
     e.preventDefault()
     const tryLogin = async () => {
-        const user = await loginUser(userLogin)
+      const user = await loginUser(userLogin)
+      if (user != null) {
         dispatch({ type: 'SET_USER', payload: user.firstName })
         history.push('/my-profile')
-      return null
+      }
     }
     tryLogin()
   }
