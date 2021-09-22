@@ -3,7 +3,6 @@ package repository;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
-import model.Home;
 import model.HomeHistoryLog;
 import repositoryinterface.HomeHistoryLogRepositoryInterface;
 
@@ -25,6 +24,14 @@ public class HomeHistoryLogRepository implements HomeHistoryLogRepositoryInterfa
     @Override
     public List<HomeHistoryLog> findAll() {
         return null;
+    }
+
+    public List<HomeHistoryLog> findByHomeId(String homeId) {
+
+            List<HomeHistoryLog> homeHistoryLog = entityManager.createNamedQuery("HomeHistoryLog" +
+                                                                            ".findByHomeId", HomeHistoryLog.class)
+                                                         .setParameter("id", homeId).getResultList();
+            return homeHistoryLog;
     }
 
     @Override
