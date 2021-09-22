@@ -77,9 +77,4 @@ public class UserCoreDTO {
         '}';
   }
 
-  public UserCoreDTOWithSession convertToUserCoreDTOWithSession(int sessionId) {
-    return new UserCoreDTOWithSession(this.id, this.firstName, this.lastName, this.email,
-        this.password, sessionId);
-  }
-
 }
