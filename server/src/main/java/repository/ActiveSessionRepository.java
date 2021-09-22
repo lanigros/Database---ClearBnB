@@ -22,6 +22,13 @@ public class ActiveSessionRepository implements ActiveSessionRepositoryInterface
     return activeSession;
   }
 
+  public ActiveSession insertActiveSession(int userId, String cookieString) {
+    entityManager.getTransaction().begin();
+    ActiveSession activeSession = entityManager.merge(new ActiveSession(userId));
+    entityManager.getTransaction().commit();
+    return activeSession;
+  }
+
   @Override
   public ActiveSession getActiveSession(int userId) {
     return entityManager.createNamedQuery(
@@ -44,8 +51,8 @@ public class ActiveSessionRepository implements ActiveSessionRepositoryInterface
             "ActiveSession.getAllActiveSessions", ActiveSession.class
         ).getResultStream()
         .collect(Collectors.toMap(
-            activeSession -> activeSession.getUserId(),
-            activeSession -> activeSession.getId()
+            activeSession -> activeSession.getId(),
+            activeSession -> activeSession.getUserId()
         ));
     return sessions;
   }
