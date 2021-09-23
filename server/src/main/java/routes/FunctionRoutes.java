@@ -42,7 +42,7 @@ public class FunctionRoutes {
         Optional<UserCoreDTO> createdUserCoreDTO = userService.registerUser(user);
         if(createdUserCoreDTO.isEmpty()) throw new Exception();
         String activeSessionId = activeSessionService.createActiveSession(createdUserCoreDTO.get());
-        res.json(createdUserCoreDTO)
+        res.json(createdUserCoreDTO.get())
             .cookie(Utility.generateCookie("userName", createdUserCoreDTO.get().getFirstName()))
             .cookie(Utility.generateCookie("sessionID", activeSessionId));
       } catch (Exception e) {
