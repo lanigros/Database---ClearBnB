@@ -40,7 +40,10 @@ public class FunctionRoutes {
       try {
         UserCoreDTO user = req.body(UserCoreDTO.class);
         Optional<UserCoreDTO> createdUserCoreDTO = userService.registerUser(user);
-        if(createdUserCoreDTO.isEmpty()) throw new Exception();
+        if(createdUserCoreDTO.isEmpty()){
+          res.status(409).send("User already exists");
+          return;
+        }
         String activeSessionId = activeSessionService.createActiveSession(createdUserCoreDTO.get());
         res.json(createdUserCoreDTO.get())
             .cookie(Utility.generateCookie("userName", createdUserCoreDTO.get().getFirstName()))
