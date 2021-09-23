@@ -1,6 +1,7 @@
 package mapper;
 
 import datatransforobject.UserCoreDTO;
+import datatransforobject.UserNameIdDTO;
 import model.User;
 
 public class UserMapper {
@@ -15,12 +16,12 @@ public class UserMapper {
     return dto;
   }
 
-  public static User hidePasswordFromUser(User user){
+  public static User hidePasswordFromUser(User user) {
     user.setPassword("***");
     return user;
   }
 
-  public static User convertToUser(UserCoreDTO dto){
+  public static User convertToUser(UserCoreDTO dto) {
 
     User userDO = new User();
     userDO.setFirstName(dto.getFirstName());
@@ -28,6 +29,14 @@ public class UserMapper {
     userDO.setEmail(dto.getEmail());
     userDO.setPassword(dto.getPassword());
     return userDO;
+  }
+
+  public static UserNameIdDTO convertToNameAndId(User user) {
+    UserNameIdDTO dto = new UserNameIdDTO();
+    dto.setFullName(user.getFirstName(), user.getLastName());
+    dto.setId(user.getId());
+    return dto;
+
   }
 
 }
