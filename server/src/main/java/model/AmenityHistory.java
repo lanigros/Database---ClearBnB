@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -8,29 +9,29 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import model.Amenity.AmenityEnum;
 import utility.AmenityEnumConverter;
 
 @Entity
 @Table(name = "amenity_enum_history_log")
 public class AmenityHistory {
 
-    public enum AmenityEnum {
-        WIFI, KITCHEN, PARKING, BATH
-    }
-
     @Id
     @GeneratedValue
     private int id;
+
+    @JsonBackReference(value = "home-history-amenities")
     @ManyToOne
     @JoinColumn(name = "home_history_log_id")
-    private HomeHistoryLog homeHistoryLogId;
+    private HomeHistoryLog homeHistoryLog;
+
     @Column(name = "amenity")
     @Convert(converter = AmenityEnumConverter.class)
     private AmenityEnum amenityEnum;
 
-    public AmenityHistory(int id, HomeHistoryLog homeHistoryLogId, AmenityEnum amenityEnum) {
+    public AmenityHistory(int id, HomeHistoryLog homeHistoryLog, AmenityEnum amenityEnum) {
         this.id = id;
-        this.homeHistoryLogId = homeHistoryLogId;
+        this.homeHistoryLog = homeHistoryLog;
         this.amenityEnum = amenityEnum;
     }
 
@@ -45,12 +46,12 @@ public class AmenityHistory {
         this.id = id;
     }
 
-    public HomeHistoryLog getHomeHistoryLogId() {
-        return homeHistoryLogId;
+    public HomeHistoryLog getHomeHistoryLog() {
+        return homeHistoryLog;
     }
 
-    public void setHomeHistoryLogId(HomeHistoryLog homeHistoryLogId) {
-        this.homeHistoryLogId = homeHistoryLogId;
+    public void setHomeHistoryLogId(HomeHistoryLog homeHistoryLog) {
+        this.homeHistoryLog = homeHistoryLog;
     }
 
     public AmenityEnum getAmenityEnum() {
@@ -63,7 +64,7 @@ public class AmenityHistory {
 
     @Override
     public String toString() {
-        return "AmenityHistory{" + "id=" + id + ", homeHistoryLogId=" + homeHistoryLogId + ", amenityEnum=" + amenityEnum + '}';
+        return "AmenityHistory{" + "id=" + id + ", amenityEnum=" + amenityEnum + '}';
     }
 
 }
