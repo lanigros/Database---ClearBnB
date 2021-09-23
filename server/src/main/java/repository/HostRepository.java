@@ -32,7 +32,7 @@ public class HostRepository implements HostRepositoryInterface {
   public Optional<Host> findByUserId(int id) {
     try {
       return Optional.of(entityManager.createNamedQuery("Host.findByUserId", Host.class)
-          .setParameter("user_id", id).getSingleResult());
+          .setParameter("userId", id).getSingleResult());
 
     } catch (Exception e) {
       return Optional.empty();

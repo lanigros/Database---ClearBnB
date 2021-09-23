@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "host")
 @NamedQueries({
-    @NamedQuery(name = "Host.findByUserId", query = "SELECT h FROM Host h WHERE user_id = :user_id")})
+    @NamedQuery(name = "Host.findByUserId", query = "SELECT h FROM Host h WHERE h.user = (SELECT u FROM User u WHERE u.id=:userId)")})
 public class Host {
 
   @Id
@@ -28,7 +28,7 @@ public class Host {
   @OneToOne
   @JsonBackReference(value = "user-host")
   private User user;
-  @OneToMany(mappedBy = "host", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "host", cascade = CascadeType.MERGE)
   private List<Home> homes = new ArrayList<>();
   @OneToMany(cascade = CascadeType.ALL)
   @JoinTable(
