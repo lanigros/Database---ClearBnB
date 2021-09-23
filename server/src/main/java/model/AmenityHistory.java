@@ -5,6 +5,7 @@ import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import utility.AmenityEnumConverter;
@@ -21,13 +22,13 @@ public class AmenityHistory {
     @GeneratedValue
     private int id;
     @ManyToOne
-    @Column(name = "home_history_log_id")
-    private int homeHistoryLogId;
+    @JoinColumn(name = "home_history_log_id")
+    private HomeHistoryLog homeHistoryLogId;
     @Column(name = "amenity")
     @Convert(converter = AmenityEnumConverter.class)
     private AmenityEnum amenityEnum;
 
-    public AmenityHistory(int id, int homeHistoryLogId, AmenityEnum amenityEnum) {
+    public AmenityHistory(int id, HomeHistoryLog homeHistoryLogId, AmenityEnum amenityEnum) {
         this.id = id;
         this.homeHistoryLogId = homeHistoryLogId;
         this.amenityEnum = amenityEnum;
@@ -44,11 +45,11 @@ public class AmenityHistory {
         this.id = id;
     }
 
-    public int getHomeHistoryLogId() {
+    public HomeHistoryLog getHomeHistoryLogId() {
         return homeHistoryLogId;
     }
 
-    public void setHomeHistoryLogId(int homeHistoryLogId) {
+    public void setHomeHistoryLogId(HomeHistoryLog homeHistoryLogId) {
         this.homeHistoryLogId = homeHistoryLogId;
     }
 
