@@ -1,10 +1,12 @@
 package mapper;
 
 
+import datatransforobject.HomeAddressDTO;
 import datatransforobject.HomeCoreDTO;
 import datatransforobject.HomeHistoryDTO;
 import model.Home;
 import model.HomeHistoryLog;
+import model.Host;
 
 public class HomeMapper {
 
@@ -24,19 +26,27 @@ public class HomeMapper {
 
   }
 
-    public static HomeHistoryDTO convertToCore(HomeHistoryLog historyLog) {
+  public static HomeHistoryDTO convertToCore(HomeHistoryLog historyLog) {
+    HomeHistoryDTO dto = new HomeHistoryDTO();
+    dto.setId(historyLog.getId());
+    dto.setAddress(historyLog.getHome().getAddress());
+    dto.setPricePerNight(historyLog.getPricePerNight());
+    dto.setImages(historyLog.getImages());
+    dto.setStartDate(historyLog.getStartDate());
+    dto.setEndDate(historyLog.getEndDate());
+    dto.setCreatedDate(historyLog.getCreatedDate());
 
-        HomeHistoryDTO dto = new HomeHistoryDTO();
-        dto.setId(historyLog.getId());
-        dto.setAddress(historyLog.getHome().getAddress());
-        dto.setPricePerNight(historyLog.getPricePerNight());
-        dto.setImages(historyLog.getImages());
-        dto.setStartDate(historyLog.getStartDate());
-        dto.setEndDate(historyLog.getEndDate());
-        dto.setCreatedDate(historyLog.getCreatedDate());
+    return dto;
 
-        return dto;
+  }
 
-    }
+  public static Home convertToHome(HomeAddressDTO dto, Host host){
+    Home home = new Home();
+    home.setPricePerNight(dto.getPricePerNight());
+    home.setStartDate(dto.getStartDate());
+    home.setEndDate(dto.getEndDate());
+
+    return home;
+  }
 
 }

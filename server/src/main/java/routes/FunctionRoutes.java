@@ -31,7 +31,7 @@ public class FunctionRoutes {
   public FunctionRoutes(Express app) {
     this.app = app;
     this.userService = new UserService();
-    this.activeSessionService = new ActiveSessionService(userService);
+    this.activeSessionService = new ActiveSessionService();
     init();
   }
 

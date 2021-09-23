@@ -14,12 +14,12 @@ public class ActiveSessionService {
       "ActiveSession");
   private final EntityManager entityManager = entityManagerFactory.createEntityManager();
   private final ActiveSessionRepository activeSessionRepository = new ActiveSessionRepository(entityManager);
-  private UserService userService;
   private Map<String, Integer> sessions;
 
-  public ActiveSessionService(UserService userService){
-    this.userService = userService;
+
+  public ActiveSessionService(){
     this.sessions = activeSessionRepository.getAllActiveSessions();
+
   }
 
   public String createActiveSession(UserCoreDTO userCoreDTO) {

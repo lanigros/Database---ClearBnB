@@ -1,5 +1,6 @@
 package routes;
 
+import datatransforobject.HomeAddressDTO;
 import datatransforobject.HomeCoreDTO;
 import express.Express;
 import java.util.List;
@@ -52,6 +53,14 @@ public class HomeRoutes {
         System.out.println(e);
         res.status(500).json("internal error");
       }
+    });
+
+    app.post("rest/home", (req, res) -> {
+      String sessionID = req.cookie("sessionID");
+      HomeAddressDTO dto = req.body(HomeAddressDTO.class);
+      Optional<Home> home = homeService.createHome(sessionID, dto);
+      res.json(home.get());
+
     });
 
 
