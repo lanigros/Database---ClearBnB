@@ -25,16 +25,26 @@ const UserCard = () => {
           <h4>{`Avg rating as host ${user.avgRatingHost}`}</h4>
           <h4>{`Avg rating as renter ${user.avgRatingRenter}`}</h4>
           <h1>Homes</h1>
-          {user.homes.map((home) => {
+          {user.homes.map((home, idx) => {
             return (
               <>
-                <h3>Price per night: {home.pricePerNight}</h3>
-                <h3>
+                <h3 key={idx}>Price per night: {home.pricePerNight}</h3>
+                <h3 key={idx}>
                   Start date: {new Date(home.startDate).toLocaleDateString()}
                 </h3>
-                <h3>End date: {new Date(home.endDate).toLocaleDateString()}</h3>
-                {home.amenities.map((am) => {
-                  return <h3>Got {am.amenity}</h3>
+                <h3 key={idx}>
+                  End date: {new Date(home.endDate).toLocaleDateString()}
+                </h3>
+                {home.amenities.map((am, idx) => {
+                  return <h3 key={idx}>Got {am.amenity}</h3>
+                })}
+                <h3 key={idx}>Street: {home.address.street}</h3>
+                <h3 key={idx}>City: {home.address.city}</h3>
+                <h3 key={idx}>Country: {home.address.country}</h3>
+                <h3 key={idx}>zip code: {home.address.zipCode}</h3>
+                {home.images.map((img, idx) => {
+                  // eslint-disable-next-line jsx-a11y/alt-text
+                  return <img key={idx} src={img.imageUrl}></img>
                 })}
               </>
             )
