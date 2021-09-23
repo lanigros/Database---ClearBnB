@@ -25,6 +25,7 @@ const Header = () => {
         <nav>
           <Link to={'/'}>Home</Link>
           {!state.currentUser && <Link to={'/create-user'}>Create user</Link>}
+          {state.currentUser && <Link to={'/create-home'}>Create Home</Link>}
           <Link to={'/users'}>See users</Link>
           <Link to={'/homes'}>See Homes</Link>
         </nav>

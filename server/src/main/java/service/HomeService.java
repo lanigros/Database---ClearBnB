@@ -101,7 +101,6 @@ public class HomeService {
   public Optional<Home> createHome(String sessionID, HomeAddressDTO dto) {
     int userId = activeSessionService.getActiveSessionUserId(sessionID);
     Optional<Host> host = hostRepository.findByUserId(userId);
-    System.out.println(host);
     if(host.isEmpty()){
       return Optional.empty();
     }
