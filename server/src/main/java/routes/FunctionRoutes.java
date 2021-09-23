@@ -68,7 +68,10 @@ public class FunctionRoutes {
       try {
         UserLoginDTO userCred = req.body(UserLoginDTO.class);
         UserCoreDTO userCoreDTO = userService.checkUserCredentials(userCred);
-        if(userCoreDTO == null) throw new Exception();
+        if(userCoreDTO == null){
+          res.status(401).send("Bad credentials");
+          return;
+        }
         String activeSessionId = activeSessionService.createActiveSession(userCoreDTO);
           res.json(userCoreDTO)
               .cookie(
