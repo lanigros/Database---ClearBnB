@@ -24,16 +24,13 @@ public class UserRepository implements UserRepositoryInterface {
     return user != null ? Optional.of(user) : Optional.empty();
   }
 
-  @Override
-  public User findByEmail(String email) {
+  public Optional<User> findByEmail(String email) {
     try {
-      User user = entityManager.createNamedQuery("User.findByEmail", User.class)
-          .setParameter("email", email).getSingleResult();
-      System.out.println(user);
-      return user;
+      return Optional.of(
+          entityManager.createNamedQuery("User.findByEmail", User.class)
+              .setParameter("email", email).getSingleResult());
     } catch (Exception e) {
-      System.out.println(e);
-      return null;
+      return Optional.empty();
     }
 
   }
