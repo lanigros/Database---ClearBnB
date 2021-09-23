@@ -44,9 +44,9 @@ public class UserRepository implements UserRepositoryInterface {
   public Optional<User> save(User user) {
     try {
       entityManager.getTransaction().begin();
-      entityManager.persist(user);
+      User savedUser = entityManager.merge(user);
       entityManager.getTransaction().commit();
-      return Optional.of(user);
+      return Optional.of(savedUser);
     } catch (Exception e) {
       e.printStackTrace();
       return Optional.empty();
