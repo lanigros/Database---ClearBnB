@@ -23,14 +23,18 @@ public class Renter {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
-  @OneToOne
+  @OneToOne(cascade = CascadeType.MERGE)
   @JsonBackReference(value = "user-renter")
   private User user;
   @JsonManagedReference(value = "renter-booking-details")
   @OneToMany(mappedBy = "renter")
   private List<BookingDetail> bookingDetails = new ArrayList<>();
   @OneToMany(cascade = CascadeType.ALL)
-  @JoinTable(name = "renter_review", joinColumns = @JoinColumn(name = "renter_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "review_id", referencedColumnName = "id"))
+  @JoinTable(
+      name = "renter_review",
+      joinColumns = @JoinColumn(name = "renter_id", referencedColumnName = "id"),
+      inverseJoinColumns = @JoinColumn(name = "review_id", referencedColumnName = "id")
+  )
   private List<Review> reviews = new ArrayList<>();
 
   public Renter() {

@@ -25,7 +25,7 @@ public class Host {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
-  @OneToOne
+  @OneToOne(cascade = CascadeType.MERGE)
   @JsonBackReference(value = "user-host")
   private User user;
   @OneToMany(mappedBy = "host", cascade = CascadeType.MERGE)

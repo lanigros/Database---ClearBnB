@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import datatransforobject.UserCoreDTO;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,12 +33,12 @@ public class User {
   private String email;
   private String password;
 
-  @OneToOne(mappedBy = "user")
+  @OneToOne(mappedBy = "user", cascade = CascadeType.MERGE)
   @JsonManagedReference(value = "user-host")
   @JsonProperty(access = Access.READ_ONLY)
   private Host hostProfile;
 
-  @OneToOne(mappedBy = "user")
+  @OneToOne(mappedBy = "user", cascade = CascadeType.MERGE)
   @JsonManagedReference(value = "user-renter")
   @JsonProperty(access = Access.READ_ONLY)
   private Renter renterProfile;

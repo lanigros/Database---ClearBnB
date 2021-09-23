@@ -1,6 +1,7 @@
 package model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -24,7 +25,7 @@ public class Amenity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @JsonBackReference(value = "home-amenity")
-    @ManyToOne()
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "home_id")
     private Home home;
 

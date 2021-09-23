@@ -99,15 +99,15 @@ public class HomeService {
   }
 
   public Optional<Home> createHome(String sessionID, HomeAddressDTO dto) {
-//    int userId = activeSessionService.getActiveSessionUserId(sessionID);
-    int userId = 1;
+    int userId = activeSessionService.getActiveSessionUserId(sessionID);
     Optional<Host> host = hostRepository.findByUserId(userId);
-
+    System.out.println(host);
     if(host.isEmpty()){
       return Optional.empty();
     }
     Home home = HomeMapper.convertToHome(dto, host.get());
     Address address = AddressMapper.convertToAddress(dto, home);
+    home.setAddress(address);
 
     Optional<Home> savedHome = homeRepository.save(home);
     return savedHome;

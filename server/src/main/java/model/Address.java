@@ -2,6 +2,7 @@ package model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,7 +24,7 @@ public class Address {
   @Column(name = "zip_code")
   private String zipCode;
   @JsonBackReference(value = "homes-address")
-  @OneToMany
+  @OneToMany(mappedBy = "address", cascade = CascadeType.MERGE)
   private List<Home> homes;
 
   public Address() {

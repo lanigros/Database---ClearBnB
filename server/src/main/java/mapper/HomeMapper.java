@@ -45,7 +45,7 @@ public class HomeMapper {
     home.setPricePerNight(dto.getPricePerNight());
     home.setStartDate(dto.getStartDate());
     home.setEndDate(dto.getEndDate());
-
+    home.setHost(host);
     return home;
   }
 
