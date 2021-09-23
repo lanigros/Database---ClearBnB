@@ -8,20 +8,25 @@ import repositoryinterface.AmenityHistoryRepositoryInterface;
 
 public class AmenityHistoryRepository implements AmenityHistoryRepositoryInterface {
 
-    EntityManager entityManager;
+  EntityManager entityManager;
 
-    public AmenityHistoryRepository(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
+  public AmenityHistoryRepository(EntityManager entityManager) {
+    this.entityManager = entityManager;
+  }
 
-    @Override
-    public Optional<AmenityHistory> findById(String id) {
-        return Optional.empty();
-    }
+  @Override
+  public Optional<AmenityHistory> findById(String ids) {
+    int id = Integer.parseInt(ids);
+    AmenityHistory amenityHistory = entityManager.find(AmenityHistory.class, id);
+    return amenityHistory != null ? Optional.of(amenityHistory) : Optional.empty();
+  }
 
-    @Override
-    public List<AmenityHistory> findAll() {
-        return null;
-    }
+  public List<AmenityHistory> findByHomeHistoryId(String homeHistoryId) {
+    List<AmenityHistory> amenityHistory = entityManager.createNamedQuery(
+                                                           "AmenityHistory" + ".findByHomeHistoryId", AmenityHistory.class)
+                                                       .setParameter("id", homeHistoryId)
+                                                       .getResultList();
+    return amenityHistory;
+  }
 
 }
