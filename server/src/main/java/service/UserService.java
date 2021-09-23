@@ -55,13 +55,12 @@ public class UserService {
 
   public Optional<UserCoreDTO> registerUser(UserCoreDTO user) {
     Optional<User> exist = userRepository.findByEmail(user.getEmail());
-    if (exist.isPresent()) {
+    if (exist.isEmpty()) {
       String hashedPassword = Utility.hash(user.getPassword());
       user.setPassword(hashedPassword);
-      Optional<User> createdUser = userRepository.save(exist.get());
+      Optional<User> createdUser = userRepository.save(user.convertToUser());
 
       if (createdUser.isPresent()) {
-
         //To send a json
         UserCoreDTO createdUserCoreDTO = UserMapper.convertToCoreDTOWithoutPassword(
             createdUser.get());
