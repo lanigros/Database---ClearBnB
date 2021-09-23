@@ -3,7 +3,10 @@ package mapper;
 
 import datatransforobject.HomeAddressDTO;
 import datatransforobject.HomeCoreDTO;
+import datatransforobject.HomeCoreNoHostDTO;
 import datatransforobject.HomeHistoryDTO;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import model.Amenity;
@@ -54,7 +57,29 @@ public class HomeMapper {
     List<String> amenityStrings =  dto.getAmenities();
     List<Amenity> amenities = amenityEnumConverter.getAmenitiesAsAmenityList(amenityStrings, home);
     home.setAmenities(amenities);
+    home.setCreatedDate(new Timestamp(Instant.now().toEpochMilli()));
     return home;
+
+  }
+
+  public static List<HomeCoreNoHostDTO> convertToNoHost(List<Home> homes) {
+    List<HomeCoreNoHostDTO> list = new ArrayList<>();
+
+    homes.forEach(home -> {
+      HomeCoreNoHostDTO dto = new HomeCoreNoHostDTO();
+      dto.setAddress(home.getAddress());
+      dto.setAmenities(home.getAmenities());
+      dto.setId(home.getId());
+      dto.setImages(home.getImages());
+      dto.setCreatedDate(home.getCreatedDate());
+      dto.setEndDate(home.getEndDate());
+      dto.setStartDate(home.getStartDate());
+      dto.setPricePerNight(home.getPricePerNight());
+      list.add(dto);
+    });
+
+    return list;
+
   }
 
 }
