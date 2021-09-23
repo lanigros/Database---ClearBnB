@@ -29,11 +29,7 @@ public class Renter {
   @OneToMany(mappedBy = "renter")
   private List<BookingDetail> bookingDetails = new ArrayList<>();
   @OneToMany(cascade = CascadeType.ALL)
-  @JoinTable(
-      name = "renter_review",
-      joinColumns = @JoinColumn(name = "renter_id", referencedColumnName = "id"),
-      inverseJoinColumns = @JoinColumn(name = "review_id", referencedColumnName = "id")
-  )
+  @JoinTable(name = "renter_review", joinColumns = @JoinColumn(name = "renter_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "review_id", referencedColumnName = "id"))
   private List<Review> reviews = new ArrayList<>();
 
   public Renter() {
@@ -49,9 +45,7 @@ public class Renter {
 
   @Override
   public String toString() {
-    return "Renter{" +
-        "id=" + id +
-        "}";
+    return "Renter{" + "id=" + id + "}";
   }
 
   public int getId() {
