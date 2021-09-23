@@ -6,10 +6,8 @@ const UserCard = () => {
   const userID = useParams()
   useEffect(() => {
     const getUserProfile = async () => {
-      console.log('userID :>> ', userID)
       const res = await fetch(`/rest/user/${userID.id}/profile`)
       const response = await res.json()
-      console.log('response :>> ', response)
       setUser(response)
     }
     getUserProfile()
