@@ -2,7 +2,9 @@ package mapper;
 
 
 import datatransforobject.HomeCoreDTO;
+import datatransforobject.HomeHistoryDTO;
 import model.Home;
+import model.HomeHistoryLog;
 
 public class HomeMapper {
 
@@ -21,5 +23,20 @@ public class HomeMapper {
     return dto;
 
   }
+
+    public static HomeHistoryDTO convertToCore(HomeHistoryLog historyLog) {
+
+        HomeHistoryDTO dto = new HomeHistoryDTO();
+        dto.setId(historyLog.getId());
+        dto.setAddress(historyLog.getHome().getAddress());
+        dto.setPricePerNight(historyLog.getPricePerNight());
+        dto.setImages(historyLog.getImages());
+        dto.setStartDate(historyLog.getStartDate());
+        dto.setEndDate(historyLog.getEndDate());
+        dto.setCreatedDate(historyLog.getCreatedDate());
+
+        return dto;
+
+    }
 
 }

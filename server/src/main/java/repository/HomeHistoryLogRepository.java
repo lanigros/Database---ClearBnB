@@ -8,24 +8,34 @@ import repositoryinterface.HomeHistoryLogRepositoryInterface;
 
 public class HomeHistoryLogRepository implements HomeHistoryLogRepositoryInterface {
 
-    private final EntityManager entityManager;
+  private final EntityManager entityManager;
 
-    public HomeHistoryLogRepository(EntityManager entityManager) {
-        this.entityManager = entityManager;
-    }
+  public HomeHistoryLogRepository(EntityManager entityManager) {
+    this.entityManager = entityManager;
+  }
 
-    @Override
-    public Optional<HomeHistoryLog> findById(String id) {
-        return Optional.empty();
-    }
+  @Override
+  public Optional<HomeHistoryLog> findById(String ids) {
+    int id = Integer.parseInt(ids);
+    HomeHistoryLog homeHistoryLog = entityManager.find(HomeHistoryLog.class, id);
+    return homeHistoryLog != null ? Optional.of(homeHistoryLog) : Optional.empty();
+  }
 
-    @Override
-    public List<HomeHistoryLog> findAll() {
-        return null;
-    }
+  @Override
+  public List<HomeHistoryLog> findAll() {
+    return null;
+  }
 
-    @Override
-    public Optional<HomeHistoryLog> save(HomeHistoryLog homeHistoryLog) {
-        return Optional.empty();
-    }
+  public List<HomeHistoryLog> findByHomeId(String homeId) {
+
+    List<HomeHistoryLog> homeHistoryLog = entityManager.createNamedQuery(
+            "HomeHistoryLog" + ".findByHomeId", HomeHistoryLog.class).setParameter("id", homeId)
+        .getResultList();
+    return homeHistoryLog;
+  }
+
+  @Override
+  public Optional<HomeHistoryLog> save(HomeHistoryLog homeHistoryLog) {
+    return Optional.empty();
+  }
 }

@@ -15,8 +15,7 @@ import javax.persistence.Table;
 @Table(name = "booking_detail")
 @NamedQueries({
     @NamedQuery(name = "BookingDetail.findById", query = "SELECT b FROM BookingDetail b WHERE b.id = :id"),
-    @NamedQuery(name = "BookingDetail.findAll", query = "SELECT b FROM BookingDetail b")
-})
+    @NamedQuery(name = "BookingDetail.findAll", query = "SELECT b FROM BookingDetail b")})
 public class BookingDetail {
 
   @Id
@@ -41,8 +40,8 @@ public class BookingDetail {
 
   }
 
-  public BookingDetail(Home home, int totalPrice, Timestamp startDate,
-      Timestamp endDate, Timestamp createdDate, Renter renter) {
+  public BookingDetail(Home home, int totalPrice, Timestamp startDate, Timestamp endDate,
+      Timestamp createdDate, Renter renter) {
     this.home = home;
     this.totalPrice = totalPrice;
     this.startDate = startDate;
@@ -54,9 +53,8 @@ public class BookingDetail {
 
   @Override
   public String toString() {
-    return "BookingDetail{" + "id=" + id + ",totalPrice=" + totalPrice +
-        ", startDate=" + startDate + ", endDate=" + endDate + ", createdDate=" + createdDate +
-        "}";
+    return "BookingDetail{" + "id=" + id + ",totalPrice=" + totalPrice + ", startDate=" + startDate
+        + ", endDate=" + endDate + ", createdDate=" + createdDate + "}";
   }
 
   public int getId() {

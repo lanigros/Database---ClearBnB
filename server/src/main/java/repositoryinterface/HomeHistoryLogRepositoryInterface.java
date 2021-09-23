@@ -10,5 +10,7 @@ public interface HomeHistoryLogRepositoryInterface {
 
   public List<HomeHistoryLog> findAll();
 
+  public List<HomeHistoryLog> findByHomeId(String homeId);
+
   public Optional<HomeHistoryLog> save(HomeHistoryLog homeHistoryLog);
 }

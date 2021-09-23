@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import model.Home;
+import model.HomeHistoryLog;
 import service.HomeService;
 
 public class HomeRoutes {
@@ -31,10 +32,17 @@ public class HomeRoutes {
       }
     });
 
-// Filer by price or by date.
-// price=?
-// start_date=d/M/yyyy
-// end_date = d/M/yyyy
+    app.get("rest/home/:id/history", (req, res) -> {
+      String id = req.params("id");
+      List<HomeHistoryLog> history = homeService.getByHomeId(id);
+      res.json(history);
+    });
+
+    /* Filer by price or by date.
+     ** price=?
+     ** start_date=d/M/yyyy
+     ** end_date = d/M/yyyy
+     */
     app.get("rest/homes", (req, res) -> {
       try {
         Map<String, List<String>> filters = req.query();
@@ -49,3 +57,4 @@ public class HomeRoutes {
 
   }
 }
+
