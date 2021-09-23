@@ -1,9 +1,12 @@
 package service;
 
+import static java.util.stream.Collectors.toList;
+
 import datatransforobject.UserCoreDTO;
 import datatransforobject.UserLoginDTO;
 import java.util.ArrayList;
 import java.util.HashMap;
+import datatransforobject.UserNameIdDTO;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -40,6 +43,13 @@ public class UserService {
     List<User> users = userRepository.findAll();
     users.forEach(UserMapper::hidePasswordFromUser);
     return users;
+  }
+
+  public List<UserNameIdDTO> getAllNames() {
+    List<User> users = userRepository.findAll();
+    List<UserNameIdDTO> list = users.stream().map(UserMapper::convertToNameAndId).collect(toList());
+
+    return list;
   }
 
 
