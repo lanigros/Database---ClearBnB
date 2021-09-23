@@ -2,6 +2,7 @@ package mapper;
 
 import datatransforobject.UserCoreDTO;
 import datatransforobject.UserNameIdDTO;
+import datatransforobject.UserProfileDTO;
 import model.User;
 
 public class UserMapper {
@@ -38,5 +39,20 @@ public class UserMapper {
     return dto;
 
   }
+
+  public static UserProfileDTO convertToProfile(User user) {
+    UserProfileDTO dto = new UserProfileDTO();
+    dto.setHomes(HomeMapper.convertToNoHost(user.getHostProfile().getHomes()));
+
+    dto.setId(user.getId());
+    dto.setEmail(user.getEmail());
+    dto.setFirstName(user.getFirstName());
+    dto.setLastName(user.getFirstName());
+    dto.setAvgRatingHost(user.getHostProfile().getReviews());
+    dto.setAvgRatingRenter(user.getRenterProfile().getReviews());
+    System.out.println(dto.toString());
+    return dto;
+  }
+
 
 }

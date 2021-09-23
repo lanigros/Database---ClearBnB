@@ -26,9 +26,8 @@ public class UserRepository implements UserRepositoryInterface {
 
   public Optional<User> findByEmail(String email) {
     try {
-      return Optional.of(
-          entityManager.createNamedQuery("User.findByEmail", User.class)
-              .setParameter("email", email).getSingleResult());
+      return Optional.of(entityManager.createNamedQuery("User.findByEmail", User.class)
+          .setParameter("email", email).getSingleResult());
     } catch (Exception e) {
       return Optional.empty();
     }
