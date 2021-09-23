@@ -11,6 +11,24 @@ public class UserProfileDTO {
   private String email;
   private int avgRatingHost;
   private int avgRatingRenter;
+  private List<Review> hostReview;
+  private List<Review> renterReview;
+
+  public List<Review> getHostReview() {
+    return hostReview;
+  }
+
+  public void setHostReview(List<Review> hostReview) {
+    this.hostReview = hostReview;
+  }
+
+  public List<Review>getRenterReview() {
+    return renterReview;
+  }
+
+  public void setRenterReview(List<Review> renterReview) {
+    this.renterReview = renterReview;
+  }
 
   private List<HomeCoreNoHostDTO> homes;
 

@@ -8,6 +8,7 @@ const UserCard = () => {
     const getUserProfile = async () => {
       const res = await fetch(`/rest/user/${userID.id}/profile`)
       const response = await res.json()
+      console.log('response :>> ', response)
       setUser(response)
     }
     getUserProfile()
@@ -22,6 +23,8 @@ const UserCard = () => {
           <h4>{user.email}</h4>
           <h4>{`Avg rating as host ${user.avgRatingHost}`}</h4>
           <h4>{`Avg rating as renter ${user.avgRatingRenter}`}</h4>
+          <h4>{JSON.stringify(user.hostReview)}</h4>
+          <h4>{JSON.stringify(user.renterReview)}</h4>
           <h1>Homes</h1>
           {user.homes.map((home, idx) => {
             return (
