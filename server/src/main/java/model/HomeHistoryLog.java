@@ -32,13 +32,18 @@ public class HomeHistoryLog {
     private List<HomeImageHistory> images = new ArrayList<>();
     @Column(name = "price_per_night")
     private int pricePerNight;
+
     @Column(name = "start_date")
     private Timestamp startDate;
+
     @Column(name = "end_date")
     private Timestamp endDate;
+
     @Column(name = "created_date")
     private Timestamp createdDate;
-    @OneToMany(mappedBy = "amenityEnum")
+
+    @JsonManagedReference(value = "home-history-amenities")
+    @OneToMany(mappedBy = "homeHistoryLog")
     private List<AmenityHistory> amenities;
 
     public HomeHistoryLog(int id, Home home, int pricePerNight, Timestamp startDate,
