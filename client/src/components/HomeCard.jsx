@@ -1,19 +1,5 @@
-import styled from 'styled-components';
+import React from 'react'
 
-const HeaderStyle = styled.div`
-
-header{
-  display: flex;
-  flex-direction: row;
-  height: 6vh;
-  font-size: 2rem;
-  color: white;
+export default function HomeCard(home) {
+  return <div></div>
 }
-
-a {
-  text-decoration: none;
-  margin: 10px;
-}
-`
-
-export default HeaderStyle
