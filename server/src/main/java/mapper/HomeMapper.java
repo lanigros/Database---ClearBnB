@@ -4,11 +4,16 @@ package mapper;
 import datatransforobject.HomeAddressDTO;
 import datatransforobject.HomeCoreDTO;
 import datatransforobject.HomeHistoryDTO;
+import java.util.ArrayList;
+import java.util.List;
+import model.Amenity;
+import utility.AmenityEnumConverter;
 import model.Home;
 import model.HomeHistoryLog;
 import model.Host;
 
 public class HomeMapper {
+  private static final AmenityEnumConverter amenityEnumConverter = new AmenityEnumConverter();
 
   public static HomeCoreDTO convertToCore(Home home) {
     System.out.println(home.getHost());
@@ -46,6 +51,9 @@ public class HomeMapper {
     home.setStartDate(dto.getStartDate());
     home.setEndDate(dto.getEndDate());
     home.setHost(host);
+    List<String> amenityStrings =  dto.getAmenities();
+    List<Amenity> amenities = amenityEnumConverter.getAmenitiesAsAmenityList(amenityStrings, home);
+    home.setAmenities(amenities);
     return home;
   }
 
