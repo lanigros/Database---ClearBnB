@@ -63,6 +63,12 @@ public class Utility {
     return cookie;
   }
 
+  public static Cookie generateCookie(String cookieName, String cookieValue, int maxAge) {
+    Cookie cookie = generateCookie(cookieName, cookieValue);
+    cookie.setMaxAge(maxAge);
+    return cookie;
+  }
+
   public static Timestamp convertToTimestamp(String date) throws ParseException {
     Date a = formatter.parse(date);
     return new Timestamp(a.getTime());

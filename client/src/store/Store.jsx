@@ -12,6 +12,7 @@ const Store = ({ children }) => {
 
   useEffect(() => {
     async function checkLoggedIn() {
+      if(!document.cookie) return
       const user = await getActiveUser()
       if (user != null) {
         dispatch({ type: 'SET_USER', payload: user.firstName })

@@ -58,7 +58,10 @@ public class FunctionRoutes {
       try {
         String sessionId = req.cookie("sessionID");
         activeSessionService.removeActiveSession(sessionId);
-        res.json("OK");
+        res.json("OK")
+            .cookie(Utility.generateCookie("userName", "none", 0))
+            .cookie(Utility.generateCookie("sessionID", "none", 0)
+        );
       } catch (Exception e) {
         res.status(500);
       }
