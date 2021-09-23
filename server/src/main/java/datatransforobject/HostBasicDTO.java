@@ -52,6 +52,5 @@ public class HostBasicDTO {
     }
     float tempAvg = tempTotal / reviews.size();
     this.averageRating = (int) Math.floor(tempAvg);
-    System.out.println("Snitt " + averageRating);
   }
 }

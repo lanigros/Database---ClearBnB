@@ -2,7 +2,10 @@ package mapper;
 
 
 import datatransforobject.HomeCoreDTO;
+import datatransforobject.HomeCoreNoHostDTO;
 import datatransforobject.HomeHistoryDTO;
+import java.util.ArrayList;
+import java.util.List;
 import model.Home;
 import model.HomeHistoryLog;
 
@@ -24,19 +27,39 @@ public class HomeMapper {
 
   }
 
-    public static HomeHistoryDTO convertToCore(HomeHistoryLog historyLog) {
+  public static HomeHistoryDTO convertToCore(HomeHistoryLog historyLog) {
 
-        HomeHistoryDTO dto = new HomeHistoryDTO();
-        dto.setId(historyLog.getId());
-        dto.setAddress(historyLog.getHome().getAddress());
-        dto.setPricePerNight(historyLog.getPricePerNight());
-        dto.setImages(historyLog.getImages());
-        dto.setStartDate(historyLog.getStartDate());
-        dto.setEndDate(historyLog.getEndDate());
-        dto.setCreatedDate(historyLog.getCreatedDate());
+    HomeHistoryDTO dto = new HomeHistoryDTO();
+    dto.setId(historyLog.getId());
+    dto.setAddress(historyLog.getHome().getAddress());
+    dto.setPricePerNight(historyLog.getPricePerNight());
+    dto.setImages(historyLog.getImages());
+    dto.setStartDate(historyLog.getStartDate());
+    dto.setEndDate(historyLog.getEndDate());
+    dto.setCreatedDate(historyLog.getCreatedDate());
 
-        return dto;
+    return dto;
 
-    }
+  }
+
+  public static List<HomeCoreNoHostDTO> convertToNoHost(List<Home> homes) {
+    List<HomeCoreNoHostDTO> list = new ArrayList<>();
+
+    homes.forEach(home -> {
+      HomeCoreNoHostDTO dto = new HomeCoreNoHostDTO();
+      dto.setAddress(home.getAddress());
+      dto.setAmenities(home.getAmenities());
+      dto.setId(home.getId());
+      dto.setImages(home.getImages());
+      dto.setCreatedDate(home.getCreatedDate());
+      dto.setEndDate(home.getEndDate());
+      dto.setStartDate(home.getStartDate());
+      dto.setPricePerNight(home.getPricePerNight());
+      list.add(dto);
+    });
+
+    return list;
+
+  }
 
 }
