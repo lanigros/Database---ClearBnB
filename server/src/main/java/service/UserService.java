@@ -4,21 +4,18 @@ import static java.util.stream.Collectors.toList;
 
 import datatransforobject.UserCoreDTO;
 import datatransforobject.UserLoginDTO;
-import java.util.ArrayList;
-import java.util.HashMap;
 import datatransforobject.UserNameIdDTO;
+import datatransforobject.UserProfileDTO;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import mapper.UserMapper;
-import model.ActiveSession;
 import model.User;
+import repository.ActiveSessionRepository;
 import repository.UserRepository;
 import utility.ManagerFactory;
 import utility.Utility;
-import repository.ActiveSessionRepository;
 
 public class UserService {
 
@@ -27,7 +24,8 @@ public class UserService {
       "User");
   private final EntityManager entityManager = entityManagerFactory.createEntityManager();
   private final UserRepository userRepository = new UserRepository(entityManager);
-  private final ActiveSessionRepository activeSessionRepository = new ActiveSessionRepository(entityManager);
+  private final ActiveSessionRepository activeSessionRepository = new ActiveSessionRepository(
+      entityManager);
 
   public Optional<UserCoreDTO> getById(String id) {
     Optional<User> userDO = userRepository.findById(id);
@@ -73,11 +71,15 @@ public class UserService {
     return Optional.empty();
   }
 
-  public UserCoreDTO checkUserCredentials(UserLoginDTO userLoginDTO){
+  public UserCoreDTO checkUserCredentials(UserLoginDTO userLoginDTO) {
     UserCoreDTO userCoreDTO = userRepository.login(userLoginDTO.getEmail());
-    if (userCoreDTO == null) return null;
+    if (userCoreDTO == null) {
+      return null;
+    }
 
-    if (!Utility.match(userLoginDTO.getPassword(), userCoreDTO.getPassword())) return null;
+    if (!Utility.match(userLoginDTO.getPassword(), userCoreDTO.getPassword())) {
+      return null;
+    }
 
     userCoreDTO.setPassword("***");
     return userCoreDTO;
@@ -85,11 +87,21 @@ public class UserService {
 
   public UserCoreDTO findByIdAndReturnUserCoreDTO(String userId) throws Exception {
     Optional<User> user = userRepository.findById(userId);
-    if(user.isEmpty()) throw new Exception();
-    UserCoreDTO userCoreDTO = user.get()
-        .convertToUserCoreDTO();
+    if (user.isEmpty()) {
+      throw new Exception();
+    }
+    UserCoreDTO userCoreDTO = user.get().convertToUserCoreDTO();
     userCoreDTO.setPassword("***");
     return userCoreDTO;
+  }
+
+  public UserProfileDTO getUserProfile(String userId) {
+    Optional<User> user = userRepository.findById(userId);
+    if (user.isEmpty()) {
+      return null;
+    }
+    return UserMapper.convertToProfile(user.get());
+
   }
 
 }
