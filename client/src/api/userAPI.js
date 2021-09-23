@@ -51,7 +51,8 @@ export const logoutUser = async (userLogout) => {
 export const getAllUsersAsNames = async () => {
   const res = await fetch('/rest/users/name')
   const response = await res.json()
+  console.log('response :>> ', response)
 
-  if (!response.ok) return null
+  if (!res.ok) return null
   return response
 }

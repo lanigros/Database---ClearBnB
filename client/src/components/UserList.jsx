@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import UserCard from './UserCard'
-import { getAllUsersAsNames } from '../api/userAPI'
+import { useHistory } from 'react-router'
 
+import { getAllUsersAsNames } from '../api/userAPI'
 const UserList = () => {
   const [users, setUsers] = useState([])
+  const history = useHistory()
 
   useEffect(() => {
     async function getUsers() {
@@ -15,13 +16,15 @@ const UserList = () => {
 
   const displayProfile = (e) => {
     e.preventDefault()
+    const id = e.target.value
+    history.push(`/profile/${id}`)
   }
   return (
     <>
       {users &&
         users.map((user) => (
-          <button onClick={(e) => displayProfile(e)}>
-            <UserCard user={user} key={user.id} />
+          <button value={user.id} onClick={(e) => displayProfile(e)}>
+            {user.fullName}
           </button>
         ))}
     </>
