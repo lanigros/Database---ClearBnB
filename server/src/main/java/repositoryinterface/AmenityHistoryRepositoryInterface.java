@@ -8,6 +8,6 @@ public interface AmenityHistoryRepositoryInterface {
 
     public Optional<AmenityHistory> findById(String id);
 
-    public List<AmenityHistory> findAll();
+    public List<AmenityHistory> findByHomeHistoryId(String id);
 
 }
