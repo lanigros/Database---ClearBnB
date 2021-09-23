@@ -1,6 +1,7 @@
 package service;
 
 import datatransforobject.HomeCoreDTO;
+import datatransforobject.HomeHistoryDTO;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.List;
@@ -10,8 +11,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import mapper.HomeMapper;
 import model.Home;
+import model.HomeHistoryLog;
 import org.hibernate.Filter;
 import org.hibernate.Session;
+import repository.HomeHistoryLogRepository;
 import repository.HomeRepository;
 import utility.ManagerFactory;
 import utility.Utility;
@@ -24,6 +27,8 @@ public class HomeService {
   private final EntityManager entityManager = entityManagerFactory.createEntityManager();
 
   private final HomeRepository homeRepository = new HomeRepository(entityManager);
+  private final HomeHistoryLogRepository homeHistoryLogRepository = new HomeHistoryLogRepository(
+      entityManager);
 
   public Optional<HomeCoreDTO> getById(String id) {
 
@@ -61,5 +66,21 @@ public class HomeService {
   }
 
 
+  public Optional<HomeHistoryDTO> getId(String id) {
+
+    Optional<HomeHistoryLog> homeHistoryDO = homeHistoryLogRepository.findById(id);
+    if (homeHistoryDO.isEmpty()) {
+      return Optional.empty();
+    }
+
+    return Optional.of(HomeMapper.convertToCore(homeHistoryDO.get()));
+
+  }
+
+  public List<HomeHistoryLog> getByHomeId(String homeId) {
+    List<HomeHistoryLog> homeHistoryHomeId = homeHistoryLogRepository.findByHomeId(homeId);
+    return homeHistoryHomeId;
+
+  }
 }
 

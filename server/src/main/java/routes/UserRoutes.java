@@ -1,11 +1,11 @@
 package routes;
 
-import service.UserService;
 import datatransforobject.UserCoreDTO;
 import express.Express;
 import java.util.List;
 import java.util.Optional;
 import model.User;
+import service.UserService;
 
 public class UserRoutes {
 
