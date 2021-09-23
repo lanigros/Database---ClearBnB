@@ -14,7 +14,6 @@ public class HomeRoutes {
   private final Express app;
   private final HomeService homeService;
 
-
   public HomeRoutes(Express app) {
     this.app = app;
     this.homeService = new HomeService();
@@ -31,11 +30,14 @@ public class HomeRoutes {
         res.status(500).send("Internal error");
       }
     });
-
     app.get("rest/home/:id/history", (req, res) -> {
-      String id = req.params("id");
-      List<HomeHistoryLog> history = homeService.getByHomeId(id);
-      res.json(history);
+      try {
+        String id = req.params("id");
+        List<HomeHistoryLog> history = homeService.getByHomeId(id);
+        res.json(history);
+      } catch (Exception e) {
+        res.status(500).json("internal error");
+      }
     });
 
     /* Filer by price or by date.
@@ -53,8 +55,7 @@ public class HomeRoutes {
         res.status(500).json("internal error");
       }
     });
-
-
   }
+
 }
 
