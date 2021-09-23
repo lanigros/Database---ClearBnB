@@ -3,11 +3,15 @@ package utility;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 import javax.servlet.http.Cookie;
 
 public class Utility {
-
+  static final SimpleDateFormat formatter = new SimpleDateFormat("d/M/yyyy");
   private static Random random = new Random();
 
   public static boolean match(String password, String hashedPassword) {
@@ -57,6 +61,11 @@ public class Utility {
     Cookie cookie = new Cookie(cookieName, cookieValue);
     cookie.setMaxAge(800000);
     return cookie;
+  }
+
+  public static Timestamp convertToTimestamp(String date) throws ParseException {
+    Date a = formatter.parse(date);
+    return new Timestamp(a.getTime());
   }
 
 }

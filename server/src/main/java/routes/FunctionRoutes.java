@@ -3,6 +3,7 @@ package routes;
 import datatransforobject.UserCoreDTO;
 import datatransforobject.UserLoginDTO;
 import express.Express;
+import java.io.EOFException;
 import java.util.Map;
 import java.util.Optional;
 import javax.persistence.EntityManager;
@@ -12,6 +13,8 @@ import model.ActiveSession;
 import model.User;
 import repository.ActiveSessionRepository;
 import repository.UserRepository;
+import service.ActiveSessionService;
+import service.UserService;
 import utility.ManagerFactory;
 import utility.Utility;
 
@@ -22,14 +25,13 @@ public class FunctionRoutes {
       "User");
   private final EntityManager entityManager = entityManagerFactory.createEntityManager();
   private final UserRepository userRepository = new UserRepository(entityManager);
-  private final ActiveSessionRepository activeSessionRepository = new ActiveSessionRepository(
-      entityManager);
-  private Map<String, Integer> sessions;
-
+  private final UserService userService;
+  private final ActiveSessionService activeSessionService;
 
   public FunctionRoutes(Express app) {
     this.app = app;
-    sessions = activeSessionRepository.getAllActiveSessions();
+    this.userService = new UserService();
+    this.activeSessionService = new ActiveSessionService(userService);
     init();
   }
 
@@ -37,32 +39,14 @@ public class FunctionRoutes {
     app.post("/api/register", (req, res) -> {
       try {
         UserCoreDTO user = req.body(UserCoreDTO.class);
-        User exist = userRepository.findByEmail(user.getEmail());
-        if (exist != null) {
-          res.status(500).json(Map.of("error", "email already exist"));
-          return;
-        }
-        //hashing password
-        String hashedPassword = Utility.hash(user.getPassword());
-        user.setPassword(hashedPassword);
-        Optional<User> newUser = userRepository.save(user.convertToUser());
-        System.out.println("before");
-        if (newUser.isPresent()) {
-          System.out.println("After if");
-          ActiveSession activeSession = activeSessionRepository.insertActiveSession(
-              newUser.get().getId(), Utility.createRandomAlphanumeric()
-          );
-          System.out.println(activeSession.getId() + " " + newUser.get().getId());
-          sessions.put(activeSession.getId(), newUser.get().getId());
-          //To send a json
-          UserCoreDTO newUserCoreDTO = UserMapper.convertToCoreDTOWithoutPassword(newUser.get());
-          System.out.println(newUserCoreDTO);
-          res.json(newUserCoreDTO)
-              .cookie(Utility.generateCookie("userName", newUser.get().getFirstName()))
-              .cookie(Utility.generateCookie("sessionID", activeSession.getId()));
-        }
+        Optional<UserCoreDTO> createdUserCoreDTO = userService.registerUser(user);
+        if(createdUserCoreDTO.isEmpty()) throw new Exception();
+        String activeSessionId = activeSessionService.createActiveSession(createdUserCoreDTO.get());
+        res.json(createdUserCoreDTO)
+            .cookie(Utility.generateCookie("userName", createdUserCoreDTO.get().getFirstName()))
+            .cookie(Utility.generateCookie("sessionID", activeSessionId));
       } catch (Exception e) {
-        System.out.println(e);
+        e.printStackTrace();
         res.status(500).json(Map.of("error", "internal error"));
       }
     });
@@ -70,8 +54,7 @@ public class FunctionRoutes {
     app.delete("/api/logout", (req, res) -> {
       try {
         String sessionId = req.cookie("sessionID");
-        activeSessionRepository.deleteActiveSessionById(sessionId);
-        sessions.remove(sessionId);
+        activeSessionService.removeActiveSession(sessionId);
         res.json("OK");
       } catch (Exception e) {
         res.status(500);
@@ -79,37 +62,18 @@ public class FunctionRoutes {
     });
 
     app.post("/api/login", (req, res) -> {
-
       try {
         UserLoginDTO userCred = req.body(UserLoginDTO.class);
-        UserCoreDTO exist = userRepository.login(userCred.getEmail());
-
-        if (exist == null) {
-          res.status(500).send("Error, check credentials");
-          return;
-        }
-
-        if (Utility.match(userCred.getPassword(), exist.getPassword())) {
-          exist.setPassword("***");
-          int userId = exist.getId();
-
-          if (sessions.containsValue(userId)) {
-            activeSessionRepository.deleteActiveSessionByUserId(userId);
-          }
-          ActiveSession activeSession = activeSessionRepository.insertActiveSession(
-              userId, Utility.createRandomAlphanumeric()
-          );
-          sessions.put(activeSession.getId(), activeSession.getUserId());
-          res.json(exist)
+        UserCoreDTO userCoreDTO = userService.checkUserCredentials(userCred);
+        if(userCoreDTO == null) throw new Exception();
+        String activeSessionId = activeSessionService.createActiveSession(userCoreDTO);
+          res.json(userCoreDTO)
               .cookie(
-                  Utility.generateCookie("userName", exist.getFirstName())
+                  Utility.generateCookie("userName", userCoreDTO.getFirstName())
               )
               .cookie(
-                  Utility.generateCookie("sessionID", activeSession.getId())
+                  Utility.generateCookie("sessionID", activeSessionId)
               );
-        } else {
-          res.status(500).send("Error, check credentials");
-        }
       } catch (Exception e) {
         System.out.println(e);
         res.status(500).send("Internal error");
@@ -117,16 +81,11 @@ public class FunctionRoutes {
     });
 
     //check current user
-    app.get("/api/whoami", (req, res) ->
-
-    {
+    app.get("/api/whoami", (req, res) -> {
       try {
         String sessionId = req.cookie("sessionID");
-        String userId = String.valueOf(sessions.get(sessionId));
-        Optional<User> user = userRepository.findById(userId);
-        UserCoreDTO userCoreDTO = user.get()
-            .convertToUserCoreDTO();
-        userCoreDTO.setPassword("***");
+        String userId = String.valueOf(activeSessionService.getActiveSessionUserId(sessionId));
+        UserCoreDTO userCoreDTO = userService.findByIdAndReturnUserCoreDTO(userId);
         res.json(userCoreDTO)
             .cookie(
                 Utility.generateCookie("userName", userCoreDTO.getFirstName())

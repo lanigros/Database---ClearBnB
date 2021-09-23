@@ -3,13 +3,13 @@ package service;
 import datatransforobject.UserCoreDTO;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import mapper.UserMapper;
 import model.User;
 import repository.UserRepository;
 import utility.ManagerFactory;
+import utility.Utility;
 
 public class UserService {
 
@@ -33,6 +33,20 @@ public class UserService {
     List<User> users = userRepository.findAll();
     users.forEach(UserMapper::hidePasswordFromUser);
     return users;
+  }
+
+
+  public Optional<User> registerUser(UserCoreDTO user) {
+    Optional<User> exist = userRepository.findByEmail(user.getEmail());
+    if (exist.isPresent()) {
+      return Optional.empty();
+    }
+
+    String hashedPassword = Utility.hash(user.getPassword());
+    user.setPassword(hashedPassword);
+    Optional<User> newUser = userRepository.save(UserMapper.convertToUser(user));
+    return newUser.isPresent() ? newUser : Optional.empty();
+
   }
 
 }

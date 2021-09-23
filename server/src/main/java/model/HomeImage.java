@@ -14,8 +14,7 @@ import javax.persistence.Table;
 @Table(name = "home_image")
 @NamedQueries({
     @NamedQuery(name = "HomeImage.findById", query = "SELECT h FROM HomeImage h WHERE h.id = :id"),
-    @NamedQuery(name = "HomeImage.findAll", query = "SELECT h FROM HomeImage h")
-})
+    @NamedQuery(name = "HomeImage.findAll", query = "SELECT h FROM HomeImage h")})
 public class HomeImage {
 
   @Id
@@ -39,10 +38,7 @@ public class HomeImage {
 
   @Override
   public String toString() {
-    return "HomeImage{" +
-        "id=" + id +
-        ", imageUrl='" + imageUrl +
-        '}';
+    return "HomeImage{" + "id=" + id + ", imageUrl='" + imageUrl + '}';
   }
 
   public int getId() {
