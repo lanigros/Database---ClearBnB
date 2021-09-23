@@ -55,7 +55,7 @@ public class HomeRoutes {
       }
     });
 
-    app.post("rest/home", (req, res) -> {
+    app.post("rest/homes", (req, res) -> {
       String sessionID = req.cookie("sessionID");
       HomeAddressDTO dto = req.body(HomeAddressDTO.class);
       Optional<Home> home = homeService.createHome(sessionID, dto);

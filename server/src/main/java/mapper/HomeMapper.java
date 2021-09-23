@@ -10,6 +10,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import model.Amenity;
+import model.HomeImage;
 import utility.AmenityEnumConverter;
 import model.Home;
 import model.HomeHistoryLog;
@@ -54,9 +55,10 @@ public class HomeMapper {
     home.setStartDate(dto.getStartDate());
     home.setEndDate(dto.getEndDate());
     home.setHost(host);
-    List<String> amenityStrings =  dto.getAmenities();
-    List<Amenity> amenities = amenityEnumConverter.getAmenitiesAsAmenityList(amenityStrings, home);
+    List<Amenity> amenities = amenityEnumConverter.getAmenitiesAsAmenityList(dto.getAmenities(), home);
+    List<HomeImage>homeImages = HomeImageMapper.convertToHomeImages(dto.getImages(), home);
     home.setAmenities(amenities);
+    home.setImages(homeImages);
     home.setCreatedDate(new Timestamp(Instant.now().toEpochMilli()));
     return home;
 

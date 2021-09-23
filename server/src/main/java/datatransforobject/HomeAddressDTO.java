@@ -1,6 +1,7 @@
 package datatransforobject;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 public class HomeAddressDTO {
@@ -12,13 +13,15 @@ public class HomeAddressDTO {
   private int pricePerNight;
   private Timestamp startDate;
   private Timestamp endDate;
-  private List<String> amenities;
+  private List<String> amenities = new ArrayList<>();
+  private List<String>images = new ArrayList<>();
 
   public HomeAddressDTO() {
   }
 
   public HomeAddressDTO(String city, String street, String zipCode, String country,
-      int pricePerNight, Timestamp startDate, Timestamp endDate, List<String> amenities) {
+      int pricePerNight, Timestamp startDate, Timestamp endDate, List<String> amenities,
+      List<String>images) {
     this.city = city;
     this.street = street;
     this.zipCode = zipCode;
@@ -27,13 +30,22 @@ public class HomeAddressDTO {
     this.startDate = startDate;
     this.endDate = endDate;
     this.amenities = amenities;
+    this.images = images;
   }
 
   @Override
   public String toString() {
-    return "HomeAddressDTO{" + "city='" + city + '\'' + ", street='" + street + '\'' + ", zipCode='"
-        + zipCode + '\'' + ", country='" + country + '\'' + ", pricePerNight=" + pricePerNight
-        + ", startDate=" + startDate + ", endDate=" + endDate + ", amenities=" + amenities + '}';
+    return "HomeAddressDTO{" +
+        "city='" + city + '\'' +
+        ", street='" + street + '\'' +
+        ", zipCode='" + zipCode + '\'' +
+        ", country='" + country + '\'' +
+        ", pricePerNight=" + pricePerNight +
+        ", startDate=" + startDate +
+        ", endDate=" + endDate +
+        ", amenities=" + amenities +
+        ", images=" + images +
+        '}';
   }
 
   public String getCity() {
@@ -98,5 +110,13 @@ public class HomeAddressDTO {
 
   public void setAmenities(List<String> amenities) {
     this.amenities = amenities;
+  }
+
+  public List<String> getImages() {
+    return images;
+  }
+
+  public void setImages(List<String> imageUrls) {
+    this.images = imageUrls;
   }
 }

@@ -48,7 +48,7 @@ public class Home {
   @OneToMany(mappedBy = "home")
   private List<BookingDetail> bookingDetails = new ArrayList<>();
   @JsonManagedReference(value = "home-images")
-  @OneToMany(mappedBy = "home")
+  @OneToMany(mappedBy = "home", cascade = CascadeType.MERGE)
   private List<HomeImage> images = new ArrayList<>();
   @JsonManagedReference(value = "home-histories")
   @OneToMany(mappedBy = "home")
