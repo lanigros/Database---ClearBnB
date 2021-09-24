@@ -28,6 +28,14 @@ public class HomeRepository implements HomeRepositoryInterface {
 
   @Override
   public Optional<Home> save(Home home) {
-    return Optional.empty();
+    try {
+      entityManager.getTransaction().begin();
+      entityManager.merge(home);
+      entityManager.getTransaction().commit();
+      return Optional.of(home);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return Optional.empty();
+    }
   }
 }

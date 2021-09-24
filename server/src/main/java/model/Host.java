@@ -6,24 +6,29 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "host")
+@NamedQueries({
+    @NamedQuery(name = "Host.findByUserId", query = "SELECT h FROM Host h WHERE h.user = (SELECT u FROM User u WHERE u.id=:userId)")})
 public class Host {
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
-  @OneToOne
+  @OneToOne(cascade = CascadeType.MERGE)
   @JsonBackReference(value = "user-host")
   private User user;
-  @OneToMany(mappedBy = "host", cascade = CascadeType.ALL)
+  @OneToMany(mappedBy = "host", cascade = CascadeType.MERGE)
   private List<Home> homes = new ArrayList<>();
   @OneToMany(cascade = CascadeType.ALL)
   @JoinTable(

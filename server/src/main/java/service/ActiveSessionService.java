@@ -14,12 +14,12 @@ public class ActiveSessionService {
       "ActiveSession");
   private final EntityManager entityManager = entityManagerFactory.createEntityManager();
   private final ActiveSessionRepository activeSessionRepository = new ActiveSessionRepository(entityManager);
-  private UserService userService;
-  private Map<String, Integer> sessions;
+  private static Map<String, Integer> sessions;
 
-  public ActiveSessionService(UserService userService){
-    this.userService = userService;
-    this.sessions = activeSessionRepository.getAllActiveSessions();
+
+  public ActiveSessionService(){
+    sessions = activeSessionRepository.getAllActiveSessions();
+
   }
 
   public String createActiveSession(UserCoreDTO userCoreDTO) {
@@ -27,8 +27,9 @@ public class ActiveSessionService {
         userCoreDTO.getId(), Utility.createRandomAlphanumeric()
     );
     if(activeSession == null) return null;
-    System.out.println(activeSession.getId() + " " + userCoreDTO.getId());
-    sessions.put(activeSession.getId(), userCoreDTO.getId());
+    System.out.println("ActiveSessionService: " + activeSession.getId() + " " + userCoreDTO.getId());
+    sessions.putIfAbsent(activeSession.getId(), userCoreDTO.getId());
+    System.out.println("ActiveSessionService after put: " + sessions.get(activeSession.getId()));
     return activeSession.getId();
   }
 
@@ -39,5 +40,9 @@ public class ActiveSessionService {
 
   public int getActiveSessionUserId(String activeSessionId){
     return sessions.get(activeSessionId);
+  }
+
+  public static void addActiveSession(String sessionId, int userId){
+    sessions.putIfAbsent(sessionId, userId);
   }
 }

@@ -5,9 +5,11 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,18 +28,19 @@ import org.hibernate.annotations.Filter;
 @NamedQueries({
     @NamedQuery(name = "Home.findById", query = "SELECT h FROM Home h WHERE h.id = " + ":id"),
     @NamedQuery(name = "Home.findAll", query = "SELECT h FROM Home h")})
+
 public class Home {
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private int id;
   @JsonBackReference(value = "host-home")
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.MERGE)
   @JoinColumn(name = "host_id")//MANY homes to ONE host
   private Host host;
 
   @JsonManagedReference(value = "homes-address")
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.MERGE)
   @JoinColumn(name = "address_id")
   private Address address;
 
@@ -45,13 +48,13 @@ public class Home {
   @OneToMany(mappedBy = "home")
   private List<BookingDetail> bookingDetails = new ArrayList<>();
   @JsonManagedReference(value = "home-images")
-  @OneToMany(mappedBy = "home")
+  @OneToMany(mappedBy = "home", cascade = CascadeType.MERGE)
   private List<HomeImage> images = new ArrayList<>();
   @JsonManagedReference(value = "home-histories")
   @OneToMany(mappedBy = "home")
   private List<HomeHistoryLog> historyLogs = new ArrayList<>();
   @JsonManagedReference(value = "home-amenity")
-  @OneToMany(mappedBy = "home")
+  @OneToMany(mappedBy = "home", cascade= CascadeType.MERGE)
   private List<Amenity> amenities = new ArrayList<>();
 
   @Column(name = "price_per_night")
@@ -93,7 +96,6 @@ public class Home {
         + endDate + '\'' + ", updatedDate='" + updatedDate + '\'' + ", createdDate='" + createdDate
         + '\'' + ", amenities= " + amenities + '}';
   }
-
   public int getId() {
     return id;
   }

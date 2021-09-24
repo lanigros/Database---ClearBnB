@@ -1,5 +1,6 @@
 package service;
 
+import datatransforobject.HomeAddressDTO;
 import datatransforobject.HomeCoreDTO;
 import datatransforobject.HomeHistoryDTO;
 import java.sql.Timestamp;
@@ -9,15 +10,19 @@ import java.util.Map;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import mapper.AddressMapper;
 import mapper.HomeMapper;
+import model.Address;
 import model.AmenityHistory;
 import model.Home;
 import model.HomeHistoryLog;
+import model.Host;
 import org.hibernate.Filter;
 import org.hibernate.Session;
 import repository.AmenityHistoryRepository;
 import repository.HomeHistoryLogRepository;
 import repository.HomeRepository;
+import repository.HostRepository;
 import utility.ManagerFactory;
 import utility.Utility;
 
@@ -26,13 +31,23 @@ public class HomeService {
   private final EntityManagerFactory entityManagerFactory = ManagerFactory.getEntityManagerFactory(
       "Home");
   private final EntityManager entityManager = entityManagerFactory.createEntityManager();
-
   private final HomeRepository homeRepository = new HomeRepository(entityManager);
     
   private final HomeHistoryLogRepository homeHistoryLogRepository = new HomeHistoryLogRepository(
       entityManager);
   private final AmenityHistoryRepository amenityHistoryRepository = new AmenityHistoryRepository(
       entityManager);
+
+
+  private final HostRepository hostRepository = new HostRepository(entityManager);
+
+  private final ActiveSessionService activeSessionService;
+
+
+  public HomeService() {
+    this.activeSessionService = new ActiveSessionService();
+
+  }
 
   public Optional<HomeCoreDTO> getById(String id) {
     Optional<Home> homeDO = homeRepository.findById(id);
@@ -80,6 +95,30 @@ public class HomeService {
         homeHistoryId);
     return amenityHistoryList;
   }
+
+  public Optional<Home> createHome(String sessionID, HomeAddressDTO dto) {
+    int userId = activeSessionService.getActiveSessionUserId(sessionID);
+    Optional<Host> host = hostRepository.findByUserId(userId);
+    if(host.isEmpty()){
+      return Optional.empty();
+    }
+    Home home = HomeMapper.convertToHome(dto, host.get());
+    Address address = AddressMapper.convertToAddress(dto, home);
+    home.setAddress(address);
+
+    Optional<Home> savedHome = homeRepository.save(home);
+    return savedHome;
+
+
+
+
+    //fixa en host from userID
+
+
+
+
+  }
+
 
 }
 

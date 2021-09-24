@@ -1,14 +1,23 @@
 package mapper;
 
+
+import datatransforobject.HomeAddressDTO;
 import datatransforobject.HomeCoreDTO;
 import datatransforobject.HomeCoreNoHostDTO;
 import datatransforobject.HomeHistoryDTO;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
+import model.Amenity;
+import model.HomeImage;
+import utility.AmenityEnumConverter;
 import model.Home;
 import model.HomeHistoryLog;
+import model.Host;
 
 public class HomeMapper {
+  private static final AmenityEnumConverter amenityEnumConverter = new AmenityEnumConverter();
 
     public static HomeCoreDTO convertToCore(Home home) {
         System.out.println(home.getHost());
@@ -26,7 +35,6 @@ public class HomeMapper {
     }
 
   public static HomeHistoryDTO convertToCore(HomeHistoryLog historyLog) {
-
     HomeHistoryDTO dto = new HomeHistoryDTO();
     dto.setId(historyLog.getId());
     dto.setAddress(historyLog.getHome().getAddress());
@@ -38,6 +46,21 @@ public class HomeMapper {
     dto.setAmenities(historyLog.getAmenities());
 
     return dto;
+
+  }
+
+  public static Home convertToHome(HomeAddressDTO dto, Host host){
+    Home home = new Home();
+    home.setPricePerNight(dto.getPricePerNight());
+    home.setStartDate(dto.getStartDate());
+    home.setEndDate(dto.getEndDate());
+    home.setHost(host);
+    List<Amenity> amenities = amenityEnumConverter.getAmenitiesAsAmenityList(dto.getAmenities(), home);
+    List<HomeImage>homeImages = HomeImageMapper.convertToHomeImages(dto.getImages(), home);
+    home.setAmenities(amenities);
+    home.setImages(homeImages);
+    home.setCreatedDate(new Timestamp(Instant.now().toEpochMilli()));
+    return home;
 
   }
 

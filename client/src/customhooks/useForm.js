@@ -3,9 +3,11 @@ import { useState } from 'react'
 export const useForm = (initialValues) => {
   const [values, setValues] = useState(initialValues)
   return [values, e => {
+    const target = e.target
+    const value = target.type === 'checkbox' ? target.checked: target.value
     setValues({
       ...values,
-      [e.target.name]: e.target.value
+      [target.name]: value
     })
   }]
 }
