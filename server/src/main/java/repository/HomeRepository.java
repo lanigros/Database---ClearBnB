@@ -23,11 +23,12 @@ public class HomeRepository implements HomeRepositoryInterface {
   }
 
   @Override
-  public List<Home> findAll() {
-    return entityManager.createNamedQuery("Home.findAll").getResultList();
+  public List<HomeView> findAll() {
+    return entityManager.createNamedQuery("HomeView.findAll").getResultList();
   }
 
   public List<Home> bulkFind(String query) {
+    System.out.println("here");
     return entityManager.createQuery(query).getResultList();
   }
 

@@ -1,11 +1,11 @@
 
 @FilterDef(name ="dateFilter", parameters = {
-    @ParamDef(name = "start_date", type = "java.sql.Timestamp"),
-    @ParamDef(name = "end_date", type = "java.sql.Timestamp")
+    @ParamDef(name = "startDate", type = "java.sql.Timestamp"),
+    @ParamDef(name = "endDate", type = "java.sql.Timestamp")
 })
 
 @FilterDef(name ="priceFilter", parameters = {
-    @ParamDef(name = "price_per_night", type = "int"),
+    @ParamDef(name = "pricePerNight", type = "int"),
 })
 
 @FilterDef(name ="countryFilter", parameters = {

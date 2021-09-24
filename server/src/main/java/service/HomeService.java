@@ -19,6 +19,7 @@ import model.Address;
 import model.AmenityHistory;
 import model.Home;
 import model.HomeHistoryLog;
+import model.HomeView;
 import model.Host;
 import org.hibernate.Filter;
 import org.hibernate.Session;
@@ -60,23 +61,23 @@ public class HomeService {
     return Optional.of(HomeMapper.convertToCore(homeDO.get()));
   }
 
-  public List<Home> getAll(Map<String, List<String>> filters) throws ParseException {
+  public List getAll(Map<String, List<String>> filters) throws ParseException {
     Session session = entityManager.unwrap(Session.class);
-//    if (filters.containsKey("price")) {
-//      int price = Integer.parseInt(filters.get("price").get(0));
-//      Filter filter2 = session.enableFilter("priceFilter");
-//      filter2.setParameter("price_per_night", price);
-//    }
-//    if (filters.containsKey("start_date")) {
-//      Timestamp start = Utility.convertToTimestamp(filters.get("start_date").get(0));
-//      Timestamp end = Utility.convertToTimestamp(filters.get("end_date").get(0));
-//      Filter filter = session.enableFilter("dateFilter");
-//      filter.setParameter("start_date", start);
-//      filter.setParameter("end_date", end);
-//    }
-//    Filter f = session.enableFilter("countryFilter");
-//    f.setParameter("country", "country");
-    List<Home> homes = homeRepository.findAll();
+    if (filters.containsKey("price")) {
+      int price = Integer.parseInt(filters.get("price").get(0));
+      Filter filter2 = session.enableFilter("priceFilter");
+      filter2.setParameter("price_per_night", price);
+    }
+    if (filters.containsKey("start_date")) {
+      Timestamp start = Utility.convertToTimestamp(filters.get("start_date").get(0));
+      Timestamp end = Utility.convertToTimestamp(filters.get("end_date").get(0));
+      Filter filter = session.enableFilter("dateFilter");
+      filter.setParameter("start_date", start);
+      filter.setParameter("end_date", end);
+    }
+    Filter f = session.enableFilter("countryFilter");
+    f.setParameter("country", "country");
+    List<HomeView> homes = homeRepository.findAll();
 
     session.disableFilter("priceFilter");
     session.disableFilter("dateFilter");
@@ -85,6 +86,7 @@ public class HomeService {
     if(homes.size() > 0){
       Set<Integer> list = new HashSet<>();
       homes.forEach(home -> {
+        System.out.print(home.getPricePerNight());
         list.add(home.getId());
       });
 
@@ -95,7 +97,6 @@ public class HomeService {
       }
 
       List<Home> homes1 = homeRepository.bulkFind(query.substring(0, query.length()-11));
-      System.out.println(homes1);
       return homes1;
     }
     return homes;
