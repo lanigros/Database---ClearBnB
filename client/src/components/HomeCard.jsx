@@ -1,6 +1,9 @@
 import React from 'react'
+import { useHistory } from 'react-router'
 
 export default function HomeCard({ home }) {
+  const history = useHistory()
+
   return (
     <div
       className={'Cool'}
@@ -25,6 +28,15 @@ export default function HomeCard({ home }) {
             src={img.imageUrl}></img>
         )
       })}
+      <button
+        value={home.id}
+        onClick={(e) => {
+          e.preventDefault()
+          const id = e.target.value
+          history.push(`/home/${id}/`)
+        }}>
+        Edit
+      </button>
     </div>
   )
 }
