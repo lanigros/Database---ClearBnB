@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.Date;
 import java.util.Random;
 import javax.servlet.http.Cookie;
@@ -74,6 +75,11 @@ public class Utility {
   public static Timestamp convertToTimestamp(String date) throws ParseException {
     Date a = formatter.parse(date);
     return new Timestamp(a.getTime());
+  }
+
+  public static int calculateDuration(Timestamp startDate, Timestamp endDate){
+    System.out.println(startDate + " : " + endDate);
+    return (int) Duration.between(startDate.toInstant(), endDate.toInstant()).toDays();
   }
 
 }

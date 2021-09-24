@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -16,7 +17,11 @@ import javax.persistence.Table;
 @Table(name = "booking_detail")
 @NamedQueries({
     @NamedQuery(name = "BookingDetail.findById", query = "SELECT b FROM BookingDetail b WHERE b.id = :id"),
-    @NamedQuery(name = "BookingDetail.findAll", query = "SELECT b FROM BookingDetail b")})
+    @NamedQuery(name = "BookingDetail.findAll", query = "SELECT b FROM BookingDetail b"),
+    @NamedQuery(name="BookingDetail.checkIfAvailable", query="SELECT b FROM BookingDetail b WHERE ((:startDate BETWEEN b.startDate AND b.endDate)"
+            + " AND (:startDate != b.endDate)) OR ((:endDate != b.startDate)"
+            + " AND (:endDate BETWEEN b.startDate AND b.endDate)) AND b.home = :home")
+})
 public class BookingDetail {
 
   @Id

@@ -21,6 +21,10 @@ public class HomeRepository implements HomeRepositoryInterface {
     return home != null ? Optional.of(home) : Optional.empty();
   }
 
+  public int findPriceById(int homeId){
+    return entityManager.createNamedQuery("Home.findPriceById", Integer.class).setParameter("id", homeId).getSingleResult();
+  }
+
   @Override
   public List<Home> findAll() {
     return entityManager.createQuery("from Home").getResultList();
