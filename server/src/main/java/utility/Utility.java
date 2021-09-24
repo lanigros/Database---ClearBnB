@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 import javax.servlet.http.Cookie;
+import service.ActiveSessionService;
 
 public class Utility {
   static final SimpleDateFormat formatter = new SimpleDateFormat("d/M/yyyy");
@@ -58,6 +59,7 @@ public class Utility {
   }
 
   public static Cookie generateCookie(String cookieName, String cookieValue) {
+
     Cookie cookie = new Cookie(cookieName, cookieValue);
     cookie.setMaxAge(800000);
     return cookie;
