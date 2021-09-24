@@ -33,7 +33,7 @@ export default function HomeCard({ home }) {
         onClick={(e) => {
           e.preventDefault()
           const id = e.target.value
-          history.push(`/home/${id}/`)
+          history.push(`/home/${id}/edit`)
         }}>
         Edit
       </button>
