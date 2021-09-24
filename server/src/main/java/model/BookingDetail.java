@@ -18,9 +18,12 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "BookingDetail.findById", query = "SELECT b FROM BookingDetail b WHERE b.id = :id"),
     @NamedQuery(name = "BookingDetail.findAll", query = "SELECT b FROM BookingDetail b"),
-    @NamedQuery(name="BookingDetail.checkIfAvailable", query="SELECT b FROM BookingDetail b WHERE ((:startDate BETWEEN b.startDate AND b.endDate)"
-            + " AND (:startDate != b.endDate)) OR ((:endDate != b.startDate)"
-            + " AND (:endDate BETWEEN b.startDate AND b.endDate)) AND b.home = :home")
+    @NamedQuery(name="BookingDetail.checkIfAvailable", query="SELECT b FROM BookingDetail b"
+        + " WHERE ((:startDate BETWEEN b.startDate AND b.endDate) AND (:startDate != b.endDate))"
+        + " OR ((:endDate != b.startDate) AND (:endDate BETWEEN b.startDate AND b.endDate))"
+        + " OR ((b.startDate != :endDate) AND (b.startDate BETWEEN :startDate AND :endDate))"
+        + " OR ((b.endDate != :startDate) AND (b.endDate BETWEEN :startDate AND :endDate))"
+        + " AND b.home = :home")
 })
 public class BookingDetail {
 
