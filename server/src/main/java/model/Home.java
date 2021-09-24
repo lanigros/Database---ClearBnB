@@ -26,7 +26,7 @@ import org.hibernate.annotations.Filter;
 @Filter(name = "priceFilter", condition = "price_per_night <= :price_per_night")
 @Filter(name = "countryFilter", condition = "address0_.country = :country")
 @NamedQueries({
-    @NamedQuery(name = "Home.findById", query = "SELECT h FROM Home h WHERE h.id = " + ":id"),
+    @NamedQuery(name = "Home.findById", query = "SELECT h FROM Home h WHERE h.id = :id"),
     @NamedQuery(name = "Home.findAll", query = "SELECT h FROM Home h")})
 
 public class Home {

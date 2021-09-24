@@ -38,7 +38,7 @@ public class ActiveSessionService {
     sessions.remove(sessionId);
   }
 
-  public int getActiveSessionUserId(String activeSessionId){
+  public static int getActiveSessionUserId(String activeSessionId){
     return sessions.get(activeSessionId);
   }
 

@@ -13,4 +13,6 @@ public interface RenterRepositoryInterface {
 
   public Optional<Renter> save(Renter renter);
 
+  public Optional<Renter> findByUserId(int userId);
+
 }

@@ -11,12 +11,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "Renter")
+@NamedQueries({
+    @NamedQuery(name = "Renter.findByUserId", query = "SELECT r FROM Renter r WHERE r.user = (SELECT u FROM User u WHERE u.id=:userId)")
+})
 
 public class Renter {
 
@@ -29,7 +34,7 @@ public class Renter {
   @JsonManagedReference(value = "renter-booking-details")
   @OneToMany(mappedBy = "renter")
   private List<BookingDetail> bookingDetails = new ArrayList<>();
-  @OneToMany(cascade = CascadeType.ALL)
+  @OneToMany(cascade = CascadeType.MERGE)
   @JoinTable(
       name = "renter_review",
       joinColumns = @JoinColumn(name = "renter_id", referencedColumnName = "id"),
