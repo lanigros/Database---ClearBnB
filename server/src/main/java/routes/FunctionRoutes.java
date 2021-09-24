@@ -15,6 +15,7 @@ import repository.ActiveSessionRepository;
 import repository.UserRepository;
 import service.ActiveSessionService;
 import service.UserService;
+import service.WalletService;
 import utility.ManagerFactory;
 import utility.Utility;
 
@@ -93,7 +94,7 @@ public class FunctionRoutes {
     app.get("/api/whoami", (req, res) -> {
       try {
         String sessionId = req.cookie("sessionID");
-        String userId = String.valueOf(activeSessionService.getActiveSessionUserId(sessionId));
+        String userId = String.valueOf(ActiveSessionService.getActiveSessionUserId(sessionId));
         UserCoreDTO userCoreDTO = userService.findByIdAndReturnUserCoreDTO(userId);
         res.json(userCoreDTO)
             .cookie(
@@ -107,5 +108,19 @@ public class FunctionRoutes {
       }
     });
 
+    app.post("api/wallet", (req, res) -> {
+      //?userId=8&price=1000
+      try {
+        String userId = req.query("userId");
+        String price = req.query("price");
+        if(WalletService.tryTransaction(price, userId)){
+          res.send("OK");
+        }else {
+          res.status(402);
+        }
+      }catch(Exception e){
+        res.status(500);
+      }
+    });
   }
 }
