@@ -2,6 +2,7 @@ package service;
 
 import datatransforobject.HomeAddressDTO;
 import datatransforobject.HomeCoreDTO;
+import datatransforobject.HomeCoreNoHostDTO;
 import datatransforobject.HomeHistoryDTO;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -66,7 +67,7 @@ public class HomeService {
     if (filters.containsKey("price")) {
       int price = Integer.parseInt(filters.get("price").get(0));
       Filter filter2 = session.enableFilter("priceFilter");
-      filter2.setParameter("price_per_night", price);
+      filter2.setParameter("pricePerNight", price);
     }
     if (filters.containsKey("start_date")) {
       Timestamp start = Utility.convertToTimestamp(filters.get("start_date").get(0));
@@ -75,8 +76,8 @@ public class HomeService {
       filter.setParameter("start_date", start);
       filter.setParameter("end_date", end);
     }
-    Filter f = session.enableFilter("countryFilter");
-    f.setParameter("country", "country");
+//    Filter f = session.enableFilter("countryFilter");
+//    f.setParameter("country", "country");
     List<HomeView> homes = homeRepository.findAll();
 
     session.disableFilter("priceFilter");
@@ -97,7 +98,7 @@ public class HomeService {
       }
 
       List<Home> homes1 = homeRepository.bulkFind(query.substring(0, query.length()-11));
-      return homes1;
+      return HomeMapper.convertToNoHost(homes1);
     }
     return homes;
   }

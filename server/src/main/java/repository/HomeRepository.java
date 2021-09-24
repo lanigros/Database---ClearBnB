@@ -1,5 +1,6 @@
 package repository;
 
+import datatransforobject.HomeCoreNoHostDTO;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
@@ -28,8 +29,7 @@ public class HomeRepository implements HomeRepositoryInterface {
   }
 
   public List<Home> bulkFind(String query) {
-    System.out.println("here");
-    return entityManager.createQuery(query).getResultList();
+    return entityManager.createQuery(query, Home.class).getResultList();
   }
 
   @Override

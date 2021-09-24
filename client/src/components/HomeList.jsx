@@ -19,6 +19,7 @@ const HomeList = () => {
             )}`
           : ''
       const homeList = await getHomeList(query)
+      console.log(`homeList`, homeList)
       setHomes(homeList)
     }
     getHomes()
