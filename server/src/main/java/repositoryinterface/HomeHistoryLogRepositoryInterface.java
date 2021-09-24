@@ -6,11 +6,10 @@ import model.HomeHistoryLog;
 
 public interface HomeHistoryLogRepositoryInterface {
 
-  public Optional<HomeHistoryLog> findById(String id);
+    public Optional<HomeHistoryLog> findById(String id);
 
-  public List<HomeHistoryLog> findAll();
+    public List<HomeHistoryLog> findByHomeId(String homeId);
 
-  public List<HomeHistoryLog> findByHomeId(String homeId);
+    public Optional<HomeHistoryLog> save(HomeHistoryLog homeHistoryLog);
 
-  public Optional<HomeHistoryLog> save(HomeHistoryLog homeHistoryLog);
 }
