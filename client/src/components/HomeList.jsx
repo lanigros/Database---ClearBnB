@@ -48,6 +48,8 @@ const HomeList = () => {
           setPrice(e.target.value)
         }}
       />
+      <h5>max price: {price}</h5>
+
       <input
         type='date'
         name='startDate'
@@ -79,7 +81,16 @@ const HomeList = () => {
           setInput(e.target.value)
         }}
       />
-      <h5>value: {price}</h5>
+      <div>
+        <input type='checkbox' value='WIFI'></input>
+        <span>WIFI</span>
+        <input type='checkbox' value='KITCHEN'></input>
+        <span>KITCHEN</span>
+        <input type='checkbox' value='BATH'></input>
+        <span>BATH</span>
+        <input type='checkbox' value='PARKING'></input>
+        <span>PARKING</span>
+      </div>
       {homes && homes.map((home) => <HomeCard home={home} />)}
     </>
   )
