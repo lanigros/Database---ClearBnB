@@ -11,7 +11,7 @@ import org.hibernate.annotations.Immutable;
 
 @Entity
 @Immutable
-@Filter(name = "dateFilter", condition = "start_date <= :start_date and end_date >= :end_date")
+@Filter(name = "dateFilter", condition = "startDate <= :startDate and endDate >= :endDate")
 @Filter(name = "priceFilter", condition = "pricePerNight <= :pricePerNight")
 @Filter(name = "searchFilter", condition = "country LIKE '%' :country '%' OR city LIKE '%' :city '%' OR street LIKE '%' :street '%'")
 

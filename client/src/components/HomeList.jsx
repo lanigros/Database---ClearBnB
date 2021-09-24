@@ -44,6 +44,7 @@ const HomeList = () => {
         max='1500'
         step='10'
         onMouseUp={(e) => {
+          e.preventDefault()
           setPrice(e.target.value)
         }}
       />
@@ -52,6 +53,8 @@ const HomeList = () => {
         name='startDate'
         value={startDate}
         onChange={(e) => {
+          e.preventDefault()
+
           setStartDate(e.target.value)
         }}
       />
@@ -61,6 +64,8 @@ const HomeList = () => {
         name='endDate'
         value={endDate}
         onChange={(e) => {
+          e.preventDefault()
+
           setEndDate(e.target.value)
         }}
       />
@@ -69,6 +74,8 @@ const HomeList = () => {
         name='search'
         value={input}
         onChange={(e) => {
+          e.preventDefault()
+
           setInput(e.target.value)
         }}
       />

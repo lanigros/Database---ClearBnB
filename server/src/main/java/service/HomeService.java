@@ -144,8 +144,8 @@ public class HomeService {
       Timestamp start = Utility.convertToTimestamp(filters.get("start_date").get(0));
       Timestamp end = Utility.convertToTimestamp(filters.get("end_date").get(0));
       Filter filter = session.enableFilter("dateFilter");
-      filter.setParameter("start_date", start);
-      filter.setParameter("end_date", end);
+      filter.setParameter("startDate", start);
+      filter.setParameter("endDate", end);
     }
 
     if (filters.containsKey("search")){
