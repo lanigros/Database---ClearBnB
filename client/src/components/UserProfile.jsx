@@ -26,28 +26,28 @@ const UserCard = () => {
           <h4>{JSON.stringify(user.hostReview)}</h4>
           <h4>{JSON.stringify(user.renterReview)}</h4>
           <h1>Homes</h1>
-          {user.homes.map((home, idx) => {
+          {user.homes.map((home) => {
             return (
-              <>
-                <h3 key={idx}>Price per night: {home.pricePerNight}</h3>
-                <h3 key={idx}>
+              <div key={home.id}>
+                <h3>Price per night: {home.pricePerNight}</h3>
+                <h3>
                   Start date: {new Date(home.startDate).toLocaleDateString()}
                 </h3>
-                <h3 key={idx}>
+                <h3>
                   End date: {new Date(home.endDate).toLocaleDateString()}
                 </h3>
                 {home.amenities.map((am, idx) => {
                   return <h3 key={idx}>Got {am.amenity}</h3>
                 })}
-                <h3 key={idx}>Street: {home.address.street}</h3>
-                <h3 key={idx}>City: {home.address.city}</h3>
-                <h3 key={idx}>Country: {home.address.country}</h3>
-                <h3 key={idx}>zip code: {home.address.zipCode}</h3>
-                {home.images.map((img, idx) => {
+                <h3>Street: {home.address.street}</h3>
+                <h3>City: {home.address.city}</h3>
+                <h3>Country: {home.address.country}</h3>
+                <h3>zip code: {home.address.zipCode}</h3>
+                {home.images.map((img) => {
                   // eslint-disable-next-line jsx-a11y/alt-text
-                  return <img key={idx} src={img.imageUrl}></img>
+                  return <img key={img.id} src={img.imageUrl}></img>
                 })}
-              </>
+              </div>
             )
           })}
         </div>

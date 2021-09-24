@@ -3,7 +3,7 @@ package datatransforobject;
 import java.sql.Timestamp;
 import java.util.List;
 import model.Address;
-import model.Amenity;
+import model.AmenityHistory;
 import model.HomeImageHistory;
 
 public class HomeHistoryDTO {
@@ -15,11 +15,7 @@ public class HomeHistoryDTO {
     private Timestamp startDate;
     private Timestamp endDate;
     private Timestamp createdDate;
-
-    @Override
-    public String toString() {
-        return "HomeHistoryDTO{" + "id=" + id + ", address=" + address + ", images=" + images + ", pricePerNight=" + pricePerNight + ", startDate=" + startDate + ", endDate=" + endDate + ", createdDate=" + createdDate + '}';
-    }
+    private List<AmenityHistory> amenities;
 
     public HomeHistoryDTO(int id, Address address, List<HomeImageHistory> images, int pricePerNight,
             Timestamp startDate, Timestamp endDate, Timestamp createdDate) {
@@ -30,10 +26,17 @@ public class HomeHistoryDTO {
         this.startDate = startDate;
         this.endDate = endDate;
         this.createdDate = createdDate;
-
     }
 
-    public HomeHistoryDTO(){};
+    public HomeHistoryDTO() {
+    }
+
+    @Override
+    public String toString() {
+        return "HomeHistoryDTO{" + "id=" + id + ", address=" + address + ", images=" + images + ", pricePerNight=" + pricePerNight + ", startDate=" + startDate + ", endDate=" + endDate + ", createdDate=" + createdDate + '}';
+    }
+
+    ;
 
     public int getId() {
         return id;
@@ -91,5 +94,12 @@ public class HomeHistoryDTO {
         this.createdDate = createdDate;
     }
 
+    public List<AmenityHistory> getAmenities() {
+        return amenities;
+    }
+
+    public void setAmenities(List<AmenityHistory> amenities) {
+        this.amenities = amenities;
+    }
 
 }
