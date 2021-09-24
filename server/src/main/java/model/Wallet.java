@@ -13,7 +13,8 @@ import javax.persistence.Table;
 @Table(name = "wallet")
 @NamedQueries({
     @NamedQuery(name = "Wallet.findByUserId", query = "SELECT w FROM Wallet w WHERE w.userId = :userId"),
-    @NamedQuery(name = "Wallet.findHasEnoughTokens", query = "SELECT CASE WHEN w.tokenAmount >= :price THEN true ELSE false END AS tokenAmount FROM Wallet w WHERE w.userId = :userId")
+    @NamedQuery(name = "Wallet.findHasEnoughTokens", query = "SELECT CASE WHEN w.tokenAmount >= :price THEN true ELSE false END AS tokenAmount FROM Wallet w WHERE w.userId = :userId"),
+    @NamedQuery(name="Wallet.withdrawTokens", query="UPDATE Wallet w SET w.tokenAmount=w.tokenAmount - :tokenAmount")
 }
 )
 public class Wallet {

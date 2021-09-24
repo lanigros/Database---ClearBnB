@@ -16,11 +16,17 @@ public class WalletRepository {
         .getSingleResult();
   }
 
-  public Boolean findHasEnoughTokens(int price, int userId){
-   return entityManager.createNamedQuery("Wallet.findHasEnoughTokens", Boolean.class)
+  public Boolean tryTransaction(int price, int userId){
+    entityManager.getTransaction().begin();
+    boolean hasEnoughTokens = entityManager.createNamedQuery("Wallet.findHasEnoughTokens", Boolean.class)
        .setParameter("price", price)
        .setParameter("userId", userId)
        .getSingleResult();
+    if(hasEnoughTokens) entityManager.createNamedQuery("Wallet.withdrawTokens")
+        .setParameter("tokenAmount", price)
+        .executeUpdate();
+    entityManager.getTransaction().commit();
+    return hasEnoughTokens;
   }
 
 }

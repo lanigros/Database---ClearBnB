@@ -108,11 +108,19 @@ public class FunctionRoutes {
       }
     });
 
-    app.get("api/wallet", (req, res) -> {
-      //api/wallet?userId=8&price=1000
-      String userId = req.query("userId");
-      String price = req.query("price");
-      WalletService.findHasEnoughTokens(price, userId);
+    app.post("api/wallet", (req, res) -> {
+      //?userId=8&price=1000
+      try {
+        String userId = req.query("userId");
+        String price = req.query("price");
+        if(WalletService.tryTransaction(price, userId)){
+          res.send("OK");
+        }else {
+          res.status(402);
+        }
+      }catch(Exception e){
+        res.status(500);
+      }
     });
   }
 }

@@ -7,5 +7,5 @@ public interface WalletRepositoryInterface {
 
 public Wallet findByUserId(String userId);
 
-  public Boolean findHasEnoughTokens(int price, int userId);
+  public Boolean tryTransaction(int price, int userId);
 }
