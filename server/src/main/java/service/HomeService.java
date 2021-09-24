@@ -2,11 +2,9 @@ package service;
 
 import datatransforobject.HomeAddressDTO;
 import datatransforobject.HomeCoreDTO;
-import datatransforobject.HomeCoreNoHostDTO;
 import datatransforobject.HomeHistoryDTO;
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -37,14 +35,13 @@ public class HomeService {
       "Home");
   private final EntityManager entityManager = entityManagerFactory.createEntityManager();
   private final HomeRepository homeRepository = new HomeRepository(entityManager);
-    
+
   private final HomeHistoryLogRepository homeHistoryLogRepository = new HomeHistoryLogRepository(
       entityManager);
   private final AmenityHistoryRepository amenityHistoryRepository = new AmenityHistoryRepository(
       entityManager);
 
   Session session = entityManager.unwrap(Session.class);
-
 
 
   private final HostRepository hostRepository = new HostRepository(entityManager);
@@ -72,7 +69,7 @@ public class HomeService {
     disableFilters();
 
     //to get proper entities inc lists
-    if(homes.size() > 0){
+    if (homes.size() > 0) {
       Set<Integer> list = new HashSet<>();
       homes.forEach(home -> {
         System.out.print(home.getPricePerNight());
@@ -81,11 +78,11 @@ public class HomeService {
 
       StringBuilder query = new StringBuilder("SELECT h FROM Home h WHERE h.id = ");
 
-      for(int nr: list){
+      for (int nr : list) {
         query.append(nr).append(" OR h.id = ");
       }
 
-      List<Home> homes1 = homeRepository.bulkFind(query.substring(0, query.length()-11));
+      List<Home> homes1 = homeRepository.bulkFind(query.substring(0, query.length() - 11));
       return HomeMapper.convertToNoHost(homes1);
     }
     return homes;
@@ -113,7 +110,7 @@ public class HomeService {
   public Optional<Home> createHome(String sessionID, HomeAddressDTO dto) {
     int userId = activeSessionService.getActiveSessionUserId(sessionID);
     Optional<Host> host = hostRepository.findByUserId(userId);
-    if(host.isEmpty()){
+    if (host.isEmpty()) {
       return Optional.empty();
     }
     Home home = HomeMapper.convertToHome(dto, host.get());
@@ -122,18 +119,9 @@ public class HomeService {
 
     Optional<Home> savedHome = homeRepository.save(home);
     return savedHome;
-
-
-
-
-    //fixa en host from userID
-
-
-
-
   }
 
-  public void enableFilter (Map<String, List<String>> filters) throws ParseException {
+  public void enableFilter(Map<String, List<String>> filters) throws ParseException {
 
     if (filters.containsKey("price")) {
       int price = Integer.parseInt(filters.get("price").get(0));
@@ -148,7 +136,7 @@ public class HomeService {
       filter.setParameter("endDate", end);
     }
 
-    if (filters.containsKey("search")){
+    if (filters.containsKey("search")) {
       String search = filters.get("search").get(0);
       Filter sf = session.enableFilter("searchFilter");
       sf.setParameter("city", search);
@@ -156,12 +144,20 @@ public class HomeService {
       sf.setParameter("street", search);
     }
 
+    if (filters.containsKey("amenity")) {
+      filters.get("amenity").forEach(am -> {
+        Filter af = session.enableFilter("amenityFilter");
+        af.setParameter("amenity", am);
+      });
+    }
+
   }
 
-  public void disableFilters(){
+  public void disableFilters() {
     session.disableFilter("priceFilter");
     session.disableFilter("dateFilter");
     session.disableFilter("searchFilter");
+    session.disableFilter("amenityFilter");
   }
 
 

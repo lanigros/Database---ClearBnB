@@ -1,19 +1,23 @@
 package model;
 
 import java.sql.Timestamp;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import model.Amenity.AmenityEnum;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.Immutable;
+import utility.AmenityEnumConverter;
 
 @Entity
 @Immutable
 @Filter(name = "dateFilter", condition = "startDate <= :startDate and endDate >= :endDate")
 @Filter(name = "priceFilter", condition = "pricePerNight <= :pricePerNight")
 @Filter(name = "searchFilter", condition = "country LIKE '%' :country '%' OR city LIKE '%' :city '%' OR street LIKE '%' :street '%'")
+@Filter(name = "amenityFilter", condition = "amenity = :amenity")
 
 @NamedQueries({@NamedQuery(name = "HomeView.findAll", query = "SELECT h FROM HomeView h")})
 public class HomeView {
@@ -28,8 +32,18 @@ public class HomeView {
   private int pricePerNight;
   private Timestamp startDate;
   private Timestamp endDate;
+  @Convert(converter = AmenityEnumConverter.class)
+  private AmenityEnum amenity;
 
   public HomeView() {
+  }
+
+  public AmenityEnum getAmenity() {
+    return amenity;
+  }
+
+  public void setAmenity(AmenityEnum amenity) {
+    this.amenity = amenity;
   }
 
   public String getZipCode() {
