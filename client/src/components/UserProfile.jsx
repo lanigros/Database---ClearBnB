@@ -23,8 +23,13 @@ const UserCard = () => {
           <h4>{user.email}</h4>
           <h4>{`Avg rating as host ${user.avgRatingHost}`}</h4>
           <h4>{`Avg rating as renter ${user.avgRatingRenter}`}</h4>
+
           <h4>{JSON.stringify(user.hostReview)}</h4>
+          <button onclick="removeHostRating()">Remove Rating</button>
+
           <h4>{JSON.stringify(user.renterReview)}</h4>
+          <button onclick="removeRenterRating()">Remove Rating</button>
+          
           <h1>Homes</h1>
           {user.homes.map((home) => {
             return (
