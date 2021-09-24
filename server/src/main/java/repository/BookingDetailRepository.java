@@ -29,6 +29,14 @@ public class BookingDetailRepository implements BookingDetailRepositoryInterface
 
   @Override
   public Optional<BookingDetail> save(BookingDetail bookingDetail) {
-    return Optional.empty();
+    try {
+      entityManager.getTransaction().begin();
+      BookingDetail savedBookingDetail = entityManager.merge(bookingDetail);
+      entityManager.getTransaction().commit();
+      return Optional.of(savedBookingDetail);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return Optional.empty();
+    }
   }
 }

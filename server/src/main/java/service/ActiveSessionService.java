@@ -14,11 +14,11 @@ public class ActiveSessionService {
       "ActiveSession");
   private final EntityManager entityManager = entityManagerFactory.createEntityManager();
   private final ActiveSessionRepository activeSessionRepository = new ActiveSessionRepository(entityManager);
-  private Map<String, Integer> sessions;
+  private static Map<String, Integer> sessions;
 
 
   public ActiveSessionService(){
-    this.sessions = activeSessionRepository.getAllActiveSessions();
+    sessions = activeSessionRepository.getAllActiveSessions();
 
   }
 
@@ -37,7 +37,7 @@ public class ActiveSessionService {
     sessions.remove(sessionId);
   }
 
-  public int getActiveSessionUserId(String activeSessionId){
+  public static int getActiveSessionUserId(String activeSessionId){
     return sessions.get(activeSessionId);
   }
 }
