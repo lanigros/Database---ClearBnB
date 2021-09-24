@@ -66,5 +66,15 @@ public class UserCoreDTO {
     return new User(this.firstName, this.lastName, this.email, this.password);
   }
 
+  @Override
+  public String toString() {
+    return "UserCoreDTO{" +
+        "id=" + id +
+        ", firstName='" + firstName + '\'' +
+        ", lastName='" + lastName + '\'' +
+        ", email='" + email + '\'' +
+        ", password='" + password + '\'' +
+        '}';
+  }
 
 }

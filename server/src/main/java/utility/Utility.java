@@ -7,10 +7,12 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
+import javax.servlet.http.Cookie;
 
 public class Utility {
-
   static final SimpleDateFormat formatter = new SimpleDateFormat("d/M/yyyy");
+  private static Random random = new Random();
 
   public static boolean match(String password, String hashedPassword) {
     return hash(password).equals(hashedPassword);
@@ -37,6 +39,34 @@ public class Utility {
       hexString.append(hex);
     }
     return hexString.toString();
+  }
+
+  public static String createRandomAlphanumeric() {
+    // code from https://www.baeldung.com/java-random-string
+    int leftLimit = 48; // numeral '0'
+    int rightLimit = 122; // letter 'z'
+    int targetStringLength = 50;
+
+    String generatedString = random.ints(leftLimit, rightLimit + 1)
+        .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+        .limit(targetStringLength)
+        .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+        .toString();
+
+    System.out.println(generatedString);
+    return generatedString;
+  }
+
+  public static Cookie generateCookie(String cookieName, String cookieValue) {
+    Cookie cookie = new Cookie(cookieName, cookieValue);
+    cookie.setMaxAge(800000);
+    return cookie;
+  }
+
+  public static Cookie generateCookie(String cookieName, String cookieValue, int maxAge) {
+    Cookie cookie = generateCookie(cookieName, cookieValue);
+    cookie.setMaxAge(maxAge);
+    return cookie;
   }
 
   public static Timestamp convertToTimestamp(String date) throws ParseException {

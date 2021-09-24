@@ -1,6 +1,8 @@
 package routes;
 
 import datatransforobject.UserCoreDTO;
+import datatransforobject.UserNameIdDTO;
+import datatransforobject.UserProfileDTO;
 import express.Express;
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +30,26 @@ public class UserRoutes {
         res.status(500).send(e);
       }
     });
+
+    app.get("rest/users/name", (req, res) -> {
+      try {
+        List<UserNameIdDTO> users = userService.getAllNames();
+        res.json(users);
+      } catch (Exception e) {
+        res.status(500).json("internal error");
+      }
+    });
+
+    app.get("rest/user/:id/profile", (req, res) -> {
+      try {
+        String id = req.params("id");
+        UserProfileDTO user = userService.getUserProfile(id);
+        res.json(user);
+      } catch (Exception e) {
+        res.status(500).json("internal error");
+      }
+    });
+
     app.get("rest/users", (req, res) -> {
       try {
         List<User> users = userService.getAllWithEverything();
