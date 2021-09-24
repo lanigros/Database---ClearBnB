@@ -5,9 +5,12 @@ import datatransforobject.HomeCoreDTO;
 import datatransforobject.HomeHistoryDTO;
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import mapper.AddressMapper;
@@ -59,21 +62,42 @@ public class HomeService {
 
   public List<Home> getAll(Map<String, List<String>> filters) throws ParseException {
     Session session = entityManager.unwrap(Session.class);
-    if (filters.containsKey("price")) {
-      int price = Integer.parseInt(filters.get("price").get(0));
-      Filter filter2 = session.enableFilter("priceFilter");
-      filter2.setParameter("price_per_night", price);
-    }
-    if (filters.containsKey("start_date")) {
-      Timestamp start = Utility.convertToTimestamp(filters.get("start_date").get(0));
-      Timestamp end = Utility.convertToTimestamp(filters.get("end_date").get(0));
-      Filter filter = session.enableFilter("dateFilter");
-      filter.setParameter("start_date", start);
-      filter.setParameter("end_date", end);
-    }
+//    if (filters.containsKey("price")) {
+//      int price = Integer.parseInt(filters.get("price").get(0));
+//      Filter filter2 = session.enableFilter("priceFilter");
+//      filter2.setParameter("price_per_night", price);
+//    }
+//    if (filters.containsKey("start_date")) {
+//      Timestamp start = Utility.convertToTimestamp(filters.get("start_date").get(0));
+//      Timestamp end = Utility.convertToTimestamp(filters.get("end_date").get(0));
+//      Filter filter = session.enableFilter("dateFilter");
+//      filter.setParameter("start_date", start);
+//      filter.setParameter("end_date", end);
+//    }
+//    Filter f = session.enableFilter("countryFilter");
+//    f.setParameter("country", "country");
     List<Home> homes = homeRepository.findAll();
+
     session.disableFilter("priceFilter");
     session.disableFilter("dateFilter");
+    session.disableFilter("countryFilter");
+
+    if(homes.size() > 0){
+      Set<Integer> list = new HashSet<>();
+      homes.forEach(home -> {
+        list.add(home.getId());
+      });
+
+      StringBuilder query = new StringBuilder("SELECT h FROM Home h WHERE h.id = ");
+
+      for(int nr: list){
+        query.append(nr).append(" OR h.id = ");
+      }
+
+      List<Home> homes1 = homeRepository.bulkFind(query.substring(0, query.length()-11));
+      System.out.println(homes1);
+      return homes1;
+    }
     return homes;
   }
 

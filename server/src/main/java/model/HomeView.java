@@ -1,13 +1,11 @@
 package model;
 
 import java.sql.Timestamp;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.Immutable;
 
@@ -16,8 +14,7 @@ import org.hibernate.annotations.Immutable;
 @Filter(name = "dateFilter", condition = "start_date <= :start_date and end_date >= :end_date")
 @Filter(name = "priceFilter", condition = "pricePerNight <= :pricePerNight")
 @Filter(name = "countryFilter", condition = "country = :country")
-@NamedQueries({
-    @NamedQuery(name = "HomeView.TEST", query = "SELECT h FROM HomeView h")})
+@NamedQueries({@NamedQuery(name = "HomeView.findAll", query = "SELECT h FROM HomeView h")})
 public class HomeView {
 
   @Id
@@ -26,13 +23,20 @@ public class HomeView {
   private String country;
   private String city;
   private String street;
+  private String zipCode;
   private int pricePerNight;
-
   private Timestamp startDate;
   private Timestamp endDate;
 
-
   public HomeView() {
+  }
+
+  public String getZipCode() {
+    return zipCode;
+  }
+
+  public void setZipCode(String zipCode) {
+    this.zipCode = zipCode;
   }
 
   @Override

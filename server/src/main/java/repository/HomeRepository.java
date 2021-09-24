@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import model.Home;
+import model.HomeView;
 import repositoryinterface.HomeRepositoryInterface;
 
 public class HomeRepository implements HomeRepositoryInterface {
@@ -23,7 +24,11 @@ public class HomeRepository implements HomeRepositoryInterface {
 
   @Override
   public List<Home> findAll() {
-    return entityManager.createQuery("from Home").getResultList();
+    return entityManager.createNamedQuery("Home.findAll").getResultList();
+  }
+
+  public List<Home> bulkFind(String query) {
+    return entityManager.createQuery(query).getResultList();
   }
 
   @Override
