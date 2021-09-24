@@ -33,9 +33,7 @@ const UserCard = () => {
                 <h3>
                   Start date: {new Date(home.startDate).toLocaleDateString()}
                 </h3>
-                <h3>
-                  End date: {new Date(home.endDate).toLocaleDateString()}
-                </h3>
+                <h3>End date: {new Date(home.endDate).toLocaleDateString()}</h3>
                 {home.amenities.map((am, idx) => {
                   return <h3 key={idx}>Got {am.amenity}</h3>
                 })}
@@ -45,7 +43,13 @@ const UserCard = () => {
                 <h3>zip code: {home.address.zipCode}</h3>
                 {home.images.map((img) => {
                   // eslint-disable-next-line jsx-a11y/alt-text
-                  return <img key={img.id} src={img.imageUrl}></img>
+                  return (
+                    // eslint-disable-next-line jsx-a11y/alt-text
+                    <img
+                      style={{ height: '60px', width: '60px' }}
+                      key={img.id}
+                      src={img.imageUrl}></img>
+                  )
                 })}
               </div>
             )
