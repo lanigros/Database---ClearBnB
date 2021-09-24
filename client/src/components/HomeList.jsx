@@ -8,6 +8,7 @@ const HomeList = () => {
   const [price, setPrice] = useState(100)
   const [startDate, setStartDate] = useState()
   const [endDate, setEndDate] = useState()
+  const [input, setInput] = useState()
 
   useEffect(() => {
     async function getHomes() {
@@ -18,12 +19,16 @@ const HomeList = () => {
               endDate
             )}`
           : ''
+      query += input ? `&search=${input}` : ''
+      console.log('query :>> ', query)
       const homeList = await getHomeList(query)
-      console.log(`homeList`, homeList)
       setHomes(homeList)
     }
-    getHomes()
-  }, [price, startDate, endDate])
+    const timer = setTimeout(() => {
+      getHomes()
+    }, 300)
+    return () => clearTimeout(timer)
+  }, [price, startDate, endDate, input])
 
   const convertDate = (dateString) => {
     var p = dateString.split(/\D/g)
@@ -57,6 +62,14 @@ const HomeList = () => {
         value={endDate}
         onChange={(e) => {
           setEndDate(e.target.value)
+        }}
+      />
+      <input
+        type='text'
+        name='search'
+        value={input}
+        onChange={(e) => {
+          setInput(e.target.value)
         }}
       />
       <h5>value: {price}</h5>

@@ -13,7 +13,8 @@ import org.hibernate.annotations.Immutable;
 @Immutable
 @Filter(name = "dateFilter", condition = "start_date <= :start_date and end_date >= :end_date")
 @Filter(name = "priceFilter", condition = "pricePerNight <= :pricePerNight")
-@Filter(name = "countryFilter", condition = "country = :country")
+@Filter(name = "searchFilter", condition = "country LIKE '%' :country '%' OR city LIKE '%' :city '%' OR street LIKE '%' :street '%'")
+
 @NamedQueries({@NamedQuery(name = "HomeView.findAll", query = "SELECT h FROM HomeView h")})
 public class HomeView {
 

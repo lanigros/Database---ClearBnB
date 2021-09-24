@@ -43,6 +43,9 @@ public class HomeService {
   private final AmenityHistoryRepository amenityHistoryRepository = new AmenityHistoryRepository(
       entityManager);
 
+  Session session = entityManager.unwrap(Session.class);
+
+
 
   private final HostRepository hostRepository = new HostRepository(entityManager);
 
@@ -63,27 +66,12 @@ public class HomeService {
   }
 
   public List getAll(Map<String, List<String>> filters) throws ParseException {
-    Session session = entityManager.unwrap(Session.class);
-    if (filters.containsKey("price")) {
-      int price = Integer.parseInt(filters.get("price").get(0));
-      Filter filter2 = session.enableFilter("priceFilter");
-      filter2.setParameter("pricePerNight", price);
-    }
-    if (filters.containsKey("start_date")) {
-      Timestamp start = Utility.convertToTimestamp(filters.get("start_date").get(0));
-      Timestamp end = Utility.convertToTimestamp(filters.get("end_date").get(0));
-      Filter filter = session.enableFilter("dateFilter");
-      filter.setParameter("start_date", start);
-      filter.setParameter("end_date", end);
-    }
-//    Filter f = session.enableFilter("countryFilter");
-//    f.setParameter("country", "country");
+
+    enableFilter(filters);
     List<HomeView> homes = homeRepository.findAll();
+    disableFilters();
 
-    session.disableFilter("priceFilter");
-    session.disableFilter("dateFilter");
-    session.disableFilter("countryFilter");
-
+    //to get proper entities inc lists
     if(homes.size() > 0){
       Set<Integer> list = new HashSet<>();
       homes.forEach(home -> {
@@ -143,6 +131,37 @@ public class HomeService {
 
 
 
+  }
+
+  public void enableFilter (Map<String, List<String>> filters) throws ParseException {
+
+    if (filters.containsKey("price")) {
+      int price = Integer.parseInt(filters.get("price").get(0));
+      Filter filter2 = session.enableFilter("priceFilter");
+      filter2.setParameter("pricePerNight", price);
+    }
+    if (filters.containsKey("start_date")) {
+      Timestamp start = Utility.convertToTimestamp(filters.get("start_date").get(0));
+      Timestamp end = Utility.convertToTimestamp(filters.get("end_date").get(0));
+      Filter filter = session.enableFilter("dateFilter");
+      filter.setParameter("start_date", start);
+      filter.setParameter("end_date", end);
+    }
+
+    if (filters.containsKey("search")){
+      String search = filters.get("search").get(0);
+      Filter sf = session.enableFilter("searchFilter");
+      sf.setParameter("city", search);
+      sf.setParameter("country", search);
+      sf.setParameter("street", search);
+    }
+
+  }
+
+  public void disableFilters(){
+    session.disableFilter("priceFilter");
+    session.disableFilter("dateFilter");
+    session.disableFilter("searchFilter");
   }
 
 

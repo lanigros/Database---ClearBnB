@@ -8,8 +8,10 @@
     @ParamDef(name = "pricePerNight", type = "int"),
 })
 
-@FilterDef(name ="countryFilter", parameters = {
+@FilterDef(name ="searchFilter", parameters = {
     @ParamDef(name = "country", type = "string"),
+    @ParamDef(name = "city", type = "string"),
+    @ParamDef(name = "street", type = "string"),
 })
 
 package model;
