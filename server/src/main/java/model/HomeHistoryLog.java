@@ -18,101 +18,111 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Home_history_log")
-@NamedQueries({
-  @NamedQuery( name = "HomeHistoryLog.findByHomeId", query = "SELECT h from HomeHistoryLog h " +
-                                                             "WHERE home_id = :id")
-})
-
+@NamedQueries({@NamedQuery(name = "HomeHistoryLog.findByHomeId", query = "SELECT h from HomeHistoryLog h " + "WHERE home_id = :id")})
 public class HomeHistoryLog {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int id;
+    @Id
+    @GeneratedValue
+    private int id;
 
-  @JsonBackReference(value = "home-histories")
-  @ManyToOne
-  private Home home;
-  @JsonManagedReference(value = "home-image-histories")
-  @OneToMany(mappedBy = "homeHistoryLog")
-  private List<HomeImageHistory> images = new ArrayList<>();
-  @Column(name = "price_per_night")
-  private int pricePerNight;
-  @Column(name = "start_date")
-  private Timestamp startDate;
-  @Column(name = "end_date")
-  private Timestamp endDate;
-  @Column(name = "created_date")
-  private Timestamp createdDate;
+    @JsonBackReference(value = "home-histories")
+    @ManyToOne
+    private Home home;
+    @JsonManagedReference(value = "home-image-histories")
+    @OneToMany(mappedBy = "homeHistoryLog")
+    private List<HomeImageHistory> images = new ArrayList<>();
+    @Column(name = "price_per_night")
+    private int pricePerNight;
 
-  public HomeHistoryLog(int id, Home home, int pricePerNight, Timestamp startDate,
-      Timestamp endDate, List<HomeImageHistory> images) {
-    this.id = id;
-    this.home = home;
-    this.pricePerNight = pricePerNight;
-    this.startDate = startDate;
-    this.endDate = endDate;
-    this.images = images;
-  }
+    @Column(name = "start_date")
+    private Timestamp startDate;
 
-  public HomeHistoryLog() {
-  }
+    @Column(name = "end_date")
+    private Timestamp endDate;
 
-  @Override
-  public String toString() {
-    return "HomeHistoryLog{" + "id=" + id + ", home=" + home + ", pricePerNight="
-        + pricePerNight + ", startDate=" + startDate + ", endDate=" + endDate + ", createdDate="
-        + createdDate + '}';
-  }
+    @Column(name = "created_date")
+    private Timestamp createdDate;
 
-  public int getId() {
-    return id;
-  }
+    @JsonManagedReference(value = "home-history-amenities")
+    @OneToMany(mappedBy = "homeHistoryLog")
+    private List<AmenityHistory> amenities;
 
-  public Home getHome() {
-    return home;
-  }
+    public HomeHistoryLog(int id, Home home, int pricePerNight, Timestamp startDate,
+            Timestamp endDate, List<HomeImageHistory> images) {
+        this.id = id;
+        this.home = home;
+        this.pricePerNight = pricePerNight;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.images = images;
+    }
 
-  public void setHome(Home home) {
-    this.home = home;
-  }
+    public HomeHistoryLog() {
+    }
 
-  public int getPricePerNight() {
-    return pricePerNight;
-  }
+    @Override
+    public String toString() {
+        return "HomeHistoryLog{" + "id=" + id + ", home=" + home + ", pricePerNight=" + pricePerNight + ", startDate=" + startDate + ", endDate=" + endDate + ", createdDate=" + createdDate + '}';
+    }
 
-  public void setPricePerNight(int pricePerNight) {
-    this.pricePerNight = pricePerNight;
-  }
+    public int getId() {
+        return id;
+    }
 
-  public Timestamp getStartDate() {
-    return startDate;
-  }
+    public Home getHome() {
+        return home;
+    }
 
-  public void setStartDate(Timestamp startDate) {
-    this.startDate = startDate;
-  }
+    public void setHome(Home home) {
+        this.home = home;
+    }
 
-  public Timestamp getEndDate() {
-    return endDate;
-  }
+    public int getPricePerNight() {
+        return pricePerNight;
+    }
 
-  public void setEndDate(Timestamp endDate) {
-    this.endDate = endDate;
-  }
+    public void setPricePerNight(int pricePerNight) {
+        this.pricePerNight = pricePerNight;
+    }
 
-  public Timestamp getCreatedDate() {
-    return createdDate;
-  }
+    public Timestamp getStartDate() {
+        return startDate;
+    }
 
-  public void setCreatedDate(Timestamp createdDate) {
-    this.createdDate = createdDate;
-  }
+    public void setStartDate(Timestamp startDate) {
+        this.startDate = startDate;
+    }
 
-  public List<HomeImageHistory> getImages() {
-    return images;
-  }
+    public Timestamp getEndDate() {
+        return endDate;
+    }
 
-  public void setImages(List<HomeImageHistory> images) {
-    this.images = images;
-  }
+    public void setEndDate(Timestamp endDate) {
+        this.endDate = endDate;
+    }
+
+    public Timestamp getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Timestamp createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public List<HomeImageHistory> getImages() {
+        return images;
+    }
+
+    public void setImages(List<HomeImageHistory> images) {
+        this.images = images;
+    }
+
+    public List<AmenityHistory> getAmenities() {
+        return amenities;
+    }
+
+    public void setAmenities(List<AmenityHistory> amenities) {
+        this.amenities = amenities;
+    }
+
 }

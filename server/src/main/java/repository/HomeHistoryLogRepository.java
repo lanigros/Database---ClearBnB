@@ -22,15 +22,10 @@ public class HomeHistoryLogRepository implements HomeHistoryLogRepositoryInterfa
   }
 
   @Override
-  public List<HomeHistoryLog> findAll() {
-    return null;
-  }
-
   public List<HomeHistoryLog> findByHomeId(String homeId) {
-
     List<HomeHistoryLog> homeHistoryLog = entityManager.createNamedQuery(
-            "HomeHistoryLog" + ".findByHomeId", HomeHistoryLog.class).setParameter("id", homeId)
-        .getResultList();
+                                                           "HomeHistoryLog" + ".findByHomeId", HomeHistoryLog.class).setParameter("id", homeId)
+                                                       .getResultList();
     return homeHistoryLog;
   }
 
@@ -38,4 +33,5 @@ public class HomeHistoryLogRepository implements HomeHistoryLogRepositoryInterfa
   public Optional<HomeHistoryLog> save(HomeHistoryLog homeHistoryLog) {
     return Optional.empty();
   }
+
 }
