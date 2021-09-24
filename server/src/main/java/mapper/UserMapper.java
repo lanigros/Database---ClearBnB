@@ -50,6 +50,9 @@ public class UserMapper {
     dto.setLastName(user.getFirstName());
     dto.setAvgRatingHost(user.getHostProfile().getReviews());
     dto.setAvgRatingRenter(user.getRenterProfile().getReviews());
+    dto.setRenterReview(user.getRenterProfile().getReviews());
+    dto.setHostReview(user.getHostProfile().getReviews());
+
     System.out.println(dto.toString());
     return dto;
   }
