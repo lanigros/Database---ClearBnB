@@ -21,7 +21,7 @@ public class ReviewRepository implements ReviewRepositoryInterface {
     return review != null ? Optional.of(review) : Optional.empty();
   }
   @Override
-  public List<Review> findAll() {
+  public List<Review> findAll(String id) {
     return entityManager.createQuery("from Review").getResultList();
   }
 
