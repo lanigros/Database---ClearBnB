@@ -1,40 +1,33 @@
 package datatransforobject;
 
-import java.sql.Timestamp;
-
 public class ReviewBasicDTO {
 
-  private int id;
+  private int bookingDetail;
   private int rating;
   private String comment;
-  private Timestamp created;
-
   private int creatorId;
+
+  public ReviewBasicDTO(int bookingDetail, int rating, String comment, int creatorId) {
+    this.bookingDetail = bookingDetail;
+    this.rating = rating;
+    this.comment = comment;
+    this.creatorId = creatorId;
+  }
 
   public ReviewBasicDTO() {
   }
 
-  public ReviewBasicDTO(int id, int rating, String comment, Timestamp created, int creatorId) {
-    this.id = id;
-    this.rating = rating;
-    this.comment = comment;
-    this.created = created;
+  public int getbookingDetail() {
+    return bookingDetail;
+  }
 
-    this.creatorId = creatorId;
+  public void setbookingDetail(int bookingDetail) {
+    this.bookingDetail = bookingDetail;
   }
 
   @Override
   public String toString() {
-    return "ReviewBasicDTO{" + "id=" + id + ", rating=" + rating + ", comment='" + comment + '\''
-        + ", created=" + created + ", creatorId=" + creatorId + '}';
-  }
-
-  public int getId() {
-    return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
+    return "ReviewBasicDTO{" + ", rating=" + rating + ", comment='" + comment + '\'' + ", creatorId=" + creatorId + '}';
   }
 
   public int getRating() {
@@ -53,15 +46,6 @@ public class ReviewBasicDTO {
     this.comment = comment;
   }
 
-  public Timestamp getCreated() {
-    return created;
-  }
-
-  public void setCreated(Timestamp created) {
-    this.created = created;
-  }
-
-
   public int getCreatorId() {
     return creatorId;
   }
@@ -69,4 +53,5 @@ public class ReviewBasicDTO {
   public void setCreatorId(int creatorId) {
     this.creatorId = creatorId;
   }
+
 }
