@@ -121,6 +121,21 @@ public class HomeService {
     return savedHome;
   }
 
+  public Optional<Home> updateHome(String id, HomeAddressDTO dto) {
+    Optional<Home> oldValues = homeRepository.findById(id);
+    Home newValues = HomeMapper.convertToHome(dto, oldValues.get().getHost());
+
+    Address address = AddressMapper.convertToAddress(dto, newValues);
+    newValues.setAddress(address);
+
+    Optional<Home> updatedHome = homeRepository.save(newValues);
+    HomeHistoryLog historyLog = HomeMapper.convertHistory(oldValues.get());
+
+    homeHistoryLogRepository.save(historyLog);
+    return Optional.of(updatedHome.get());
+
+  }
+
   public void enableFilter(Map<String, List<String>> filters) throws ParseException {
 
     if (filters.containsKey("price")) {
