@@ -1,11 +1,13 @@
 package routes;
 
+import datatransforobject.ReviewBasicDTO;
 import datatransforobject.UserCoreDTO;
 import datatransforobject.UserNameIdDTO;
 import datatransforobject.UserProfileDTO;
 import express.Express;
 import java.util.List;
 import java.util.Optional;
+import model.Review;
 import model.User;
 import service.UserService;
 
@@ -30,7 +32,6 @@ public class UserRoutes {
         res.status(500).send(e);
       }
     });
-
     app.get("rest/users/name", (req, res) -> {
       try {
         List<UserNameIdDTO> users = userService.getAllNames();
@@ -39,7 +40,6 @@ public class UserRoutes {
         res.status(500).json("internal error");
       }
     });
-
     app.get("rest/user/:id/profile", (req, res) -> {
       try {
         String id = req.params("id");
@@ -49,7 +49,6 @@ public class UserRoutes {
         res.status(500).json("internal error");
       }
     });
-
     app.get("rest/users", (req, res) -> {
       try {
         List<User> users = userService.getAllWithEverything();
@@ -58,6 +57,13 @@ public class UserRoutes {
         res.status(500).json("internal error");
       }
     });
-
+    app.post("rest/reviews/host/:id", (req, res) -> {
+      //String sessionID = req.cookie("sessionID");
+      String hostID = req.params("id");
+      ReviewBasicDTO dto = req.body(ReviewBasicDTO.class);
+      Review review = userService.createReview(dto, hostID);
+      res.json(review);
+    });
   }
+
 }
