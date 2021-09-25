@@ -1,19 +1,26 @@
 package routes;
 
+import datatransforobject.BookingDetailCoreDTO;
 import datatransforobject.UserCoreDTO;
 import datatransforobject.UserLoginDTO;
 import express.Express;
 import java.io.EOFException;
+import java.time.Duration;
 import java.util.Map;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import mapper.BookingDetailMapper;
 import mapper.UserMapper;
 import model.ActiveSession;
+import model.BookingDetail;
+import model.Home;
+import model.Renter;
 import model.User;
 import repository.ActiveSessionRepository;
 import repository.UserRepository;
 import service.ActiveSessionService;
+import service.BookingDetailService;
 import service.UserService;
 import service.WalletService;
 import utility.ManagerFactory;
@@ -28,11 +35,13 @@ public class FunctionRoutes {
   private final UserRepository userRepository = new UserRepository(entityManager);
   private final UserService userService;
   private final ActiveSessionService activeSessionService;
+  private final BookingDetailService bookingDetailService;
 
   public FunctionRoutes(Express app) {
     this.app = app;
     this.userService = new UserService();
     this.activeSessionService = new ActiveSessionService();
+    this.bookingDetailService = new BookingDetailService();
     init();
   }
 
@@ -108,19 +117,23 @@ public class FunctionRoutes {
       }
     });
 
-    app.post("api/wallet", (req, res) -> {
-      //?userId=8&price=1000
-      try {
-        String userId = req.query("userId");
-        String price = req.query("price");
-        if(WalletService.tryTransaction(price, userId)){
-          res.send("OK");
-        }else {
-          res.status(402);
-        }
-      }catch(Exception e){
+    app.post("api/payment", (req, res) -> {
+      /*try {*/
+        //Get validation
+        String sessionId = req.cookie("sessionID");
+        //Get bookingDetailCoreDTO
+        BookingDetailCoreDTO bookingDetailCoreDTO = req.body(BookingDetailCoreDTO.class);
+        // Get the home linked to bookingDetail
+       Optional<BookingDetail> bookingDetailOptional =
+           bookingDetailService.createBooking(sessionId, bookingDetailCoreDTO);
+       if(bookingDetailOptional.isPresent()){
+         res.json(bookingDetailOptional.get());
+       }else {
+         res.status(402);
+       }
+      /*}catch(Exception e){
         res.status(500);
-      }
+      }*/
     });
   }
 }

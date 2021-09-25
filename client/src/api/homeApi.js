@@ -14,3 +14,14 @@ export const createHome = async (homeObject) => {
     return await response.json()
   return null
 }
+
+export const bookHome = async (bookingObject) => {
+  console.log(bookingObject)
+  const response = await fetch(`/api/payment`, {
+    method: 'POST',
+    body: JSON.stringify(bookingObject)
+  })
+  if(response.ok)
+    return await response.json()
+  return null
+}
