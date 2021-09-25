@@ -8,7 +8,7 @@ public interface ReviewRepositoryInterface {
 
   public Optional<Review> findById(String id);
 
-  public List<Review> findAll();
+  public List<Review> findAll(String id);
 
   public Optional<Review> save(Review review);
 
