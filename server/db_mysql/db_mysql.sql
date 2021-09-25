@@ -63,7 +63,7 @@ CREATE TABLE `address` (
 
 LOCK TABLES `address` WRITE;
 /*!40000 ALTER TABLE `address` DISABLE KEYS */;
-INSERT INTO `address` VALUES (1,'gvwfb','wf','ewfrg','ffwgr3g'),(2,'street','zipCode','city','country'),(3,'street','zipCode','city','country'),(4,'street','zipCode','city','country'),(6,'street','zipCode','city','country'),(7,'street','zipCode','city','country'),(8,'street','zipCode','city','country'),(9,'street','zipCode','city','country'),(10,'street','zipCode','city','country'),(11,'street','zipCode','city','country'),(13,'street','zipCode','city','country'),(17,'Karlstorpsvägen','6432WE','Knutanstad','Sweden'),(19,'Cuckoostreet','SOS911','Elm Street','Fantasia'),(20,'Cuckoostreet','SOS911','Elm Street','Fantasia'),(21,'Cuckoostreet','SOS911','Elm Street','Fantasia'),(22,'Cuckoostreet','SOS911','Elm Street','Fantasia'),(23,'Karlstorpsvägen','6432WE','Knutanstad','Sweden'),(24,'Karlstorpsvägen','6432WE','Knutanstad','Sweden'),(25,'fvewrFV','34T4V','ERGRWGE','G3REEWG§'),(26,'fvewrFV','34T4V','ERGRWGE','G3REEWG§'),(27,'Karlstorpsvägen','6432WE','Knutanstad','Sweden'),(29,'Karlstorpsvägen','6432WE','Knutanstad','Sweden'),(30,'Karlstorpsvägen','6432WE','Knutanstad','Sweden'),(31,'Karlstorpsvägen','6432WE','Knutanstad','Sweden'),(32,'Luxury','SECRET','City of Dreams','TOP-SECRET'),(33,'Karlstorpsvägen','6432WE','Knutanstad','Sweden'),(34,'On the street','No really','Anywhere','ANY.WHERE.'),(35,'Bommerstreet','96532b','Island','USA'),(36,'street','zipCode','city','country'),(37,'Ignotusstreet 9','12345','Boomhill','Unearthly'),(38,'Banan street','1232','Banana','Banna Country');
+INSERT INTO `address` VALUES (1,'gvwfb','wf','ewfrg','ALEXANDER EKDAHL'),(2,'street','zipCode','city','country'),(3,'street','zipCode','city','country'),(4,'street','zipCode','city','country'),(6,'street','zipCode','city','country'),(7,'street','zipCode','city','country'),(8,'street','zipCode','city','country'),(9,'street','zipCode','city','country'),(10,'street','zipCode','city','country'),(11,'street','zipCode','city','country'),(13,'street','zipCode','city','country'),(17,'Karlstorpsvägen','6432WE','Knutanstad','Sweden'),(19,'Cuckoostreet','SOS911','Elm Street','Fantasia'),(20,'Cuckoostreet','SOS911','Elm Street','Fantasia'),(21,'Cuckoostreet','SOS911','Elm Street','Fantasia'),(22,'Cuckoostreet','SOS911','Elm Street','Fantasia'),(23,'Karlstorpsvägen','6432WE','Knutanstad','Sweden'),(24,'Karlstorpsvägen','6432WE','Knutanstad','Sweden'),(25,'fvewrFV','34T4V','ERGRWGE','G3REEWG§'),(26,'fvewrFV','34T4V','ERGRWGE','G3REEWG§'),(27,'Karlstorpsvägen','6432WE','Knutanstad','Sweden'),(29,'Karlstorpsvägen','6432WE','Knutanstad','Sweden'),(30,'Karlstorpsvägen','6432WE','Knutanstad','Sweden'),(31,'Karlstorpsvägen','6432WE','Knutanstad','Sweden'),(32,'Luxury','SECRET','City of Dreams','TOP-SECRET'),(33,'Karlstorpsvägen','6432WE','Knutanstad','Sweden'),(34,'On the street','No really','Anywhere','ANY.WHERE.'),(35,'Bommerstreet','96532b','Island','USA'),(36,'street','zipCode','city','country'),(37,'Ignotusstreet 9','12345','Boomhill','Unearthly'),(38,'Banan street','1232','Banana','Banna Country');
 /*!40000 ALTER TABLE `address` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -108,7 +108,7 @@ CREATE TABLE `amenity_enum_history_log` (
   PRIMARY KEY (`id`),
   KEY `amenity_history_home_history_idx` (`home_history_log_id`),
   CONSTRAINT `amenity_history_home_history` FOREIGN KEY (`home_history_log_id`) REFERENCES `home_history_log` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -140,7 +140,7 @@ CREATE TABLE `booking_detail` (
   KEY `booking_detail_home_id_idx` (`home_id`),
   CONSTRAINT `booking_detail_home_id` FOREIGN KEY (`home_id`) REFERENCES `home` (`id`),
   CONSTRAINT `booking_detail_renter_id` FOREIGN KEY (`renter_id`) REFERENCES `renter` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -149,7 +149,7 @@ CREATE TABLE `booking_detail` (
 
 LOCK TABLES `booking_detail` WRITE;
 /*!40000 ALTER TABLE `booking_detail` DISABLE KEYS */;
-INSERT INTO `booking_detail` VALUES (2,1,1,123,'2021-11-22 23:00:00','2021-11-22 23:00:00','2021-11-22 23:00:00'),(3,8,27,976,'2012-11-18 23:01:57','2012-11-18 23:01:57','2021-09-24 08:23:07'),(4,8,27,976,'2012-11-18 23:01:57','2012-11-18 23:01:57','2021-09-24 08:28:32'),(5,8,24,926,'2012-11-18 23:01:57','2012-11-18 23:01:57','2021-09-24 08:31:13');
+INSERT INTO `booking_detail` VALUES (2,1,1,123,'2021-11-22 23:00:00','2021-11-22 23:00:00','2021-11-22 23:00:00'),(3,8,27,976,'2012-11-18 23:01:57','2012-11-18 23:01:57','2021-09-24 08:23:07'),(4,8,27,976,'2012-11-18 23:01:57','2012-11-18 23:01:57','2021-09-24 08:28:32'),(5,8,24,926,'2012-11-18 23:01:57','2012-11-18 23:01:57','2021-09-24 08:31:13'),(6,15,38,100,'2021-09-25 00:00:00','2021-09-26 00:00:00','2021-09-25 10:42:26');
 /*!40000 ALTER TABLE `booking_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -183,7 +183,7 @@ CREATE TABLE `home` (
 
 LOCK TABLES `home` WRITE;
 /*!40000 ALTER TABLE `home` DISABLE KEYS */;
-INSERT INTO `home` VALUES (1,1,1,123,'2021-11-22 23:00:00','2021-11-22 23:00:00',NULL,'2021-11-22 23:00:00'),(4,2,2,0,'2012-11-18 23:01:57','2012-11-18 23:01:57',NULL,NULL),(5,2,3,0,'2012-11-18 23:01:57','2012-11-18 23:01:57',NULL,NULL),(6,4,4,0,'2012-11-18 23:01:57','2012-11-18 23:01:57',NULL,NULL),(8,4,6,0,'2012-11-18 23:01:57','2012-11-18 23:01:57',NULL,NULL),(9,4,7,0,'2012-11-18 23:01:57','2012-11-18 23:01:57',NULL,NULL),(10,4,8,0,'2012-11-18 23:01:57','2012-11-18 23:01:57',NULL,NULL),(11,4,9,0,'2012-11-18 23:01:57','2012-11-18 23:01:57',NULL,'2021-09-23 18:16:11'),(12,4,10,0,'2012-11-18 23:01:57','2012-11-18 23:01:57',NULL,'2021-09-23 18:16:20'),(13,4,11,0,'2012-11-18 23:01:57','2012-11-18 23:01:57',NULL,'2021-09-23 18:24:36'),(15,4,13,0,'2012-11-18 23:01:57','2012-11-18 23:01:57',NULL,'2021-09-23 18:46:47'),(19,4,17,546,'2021-08-17 00:00:00','2021-11-28 00:00:00',NULL,'2021-09-23 22:14:17'),(21,4,19,9846,'2021-09-12 00:00:00','2021-10-28 00:00:00',NULL,'2021-09-23 22:18:36'),(22,4,20,9846,'2021-09-12 00:00:00','2021-10-28 00:00:00',NULL,'2021-09-23 22:18:44'),(23,4,21,9846,'2021-09-12 00:00:00','2021-10-28 00:00:00',NULL,'2021-09-23 22:18:53'),(24,4,22,9846,'2021-09-12 00:00:00','2021-10-28 00:00:00',NULL,'2021-09-23 22:18:58'),(25,4,23,0,'2021-08-10 00:00:00','2021-10-29 00:00:00',NULL,'2021-09-23 22:19:24'),(26,4,24,544651,'2021-08-10 00:00:00','2021-10-29 00:00:00',NULL,'2021-09-23 22:19:35'),(27,4,25,1243,'2021-09-04 00:00:00','2021-09-29 00:00:00',NULL,'2021-09-24 06:56:21'),(28,4,26,1243,'2021-09-04 00:00:00','2021-09-29 00:00:00',NULL,'2021-09-24 06:56:34'),(29,4,27,76345321,'2021-09-27 00:00:00','2021-10-30 00:00:00',NULL,'2021-09-24 07:17:19'),(30,4,29,123,'2021-09-09 00:00:00','2021-09-12 00:00:00',NULL,'2021-09-24 07:30:52'),(31,4,30,123,'2021-09-09 00:00:00','2021-09-12 00:00:00',NULL,'2021-09-24 07:30:55'),(32,4,31,5646561,'2021-09-21 00:00:00','2021-09-30 00:00:00',NULL,'2021-09-24 07:31:26'),(33,4,32,78998,'2021-09-13 00:00:00','2021-09-30 00:00:00',NULL,'2021-09-24 07:33:23'),(34,4,33,98113512,'2021-09-28 00:00:00','2021-09-30 00:00:00',NULL,'2021-09-24 07:34:01'),(35,4,34,54,'2021-09-08 00:00:00','2021-11-30 00:00:00',NULL,'2021-09-24 07:34:55'),(36,11,35,975,'2021-09-05 00:00:00','2022-01-28 00:00:00',NULL,'2021-09-24 07:37:24'),(37,4,36,0,'2012-11-18 23:01:57','2012-11-18 23:01:57',NULL,'2021-09-24 08:42:32'),(38,11,37,100,'2021-09-13 00:00:00','2021-09-30 00:00:00',NULL,'2021-09-24 08:47:03'),(39,4,38,123,'2021-09-24 00:00:00','2021-09-26 00:00:00',NULL,'2021-09-24 08:58:43');
+INSERT INTO `home` VALUES (1,1,1,4441,'2021-11-22 23:00:00','2021-11-22 23:00:00',NULL,'2021-11-22 23:00:00'),(4,2,2,0,'2012-11-18 23:01:57','2012-11-18 23:01:57',NULL,NULL),(5,2,3,0,'2012-11-18 23:01:57','2012-11-18 23:01:57',NULL,NULL),(6,4,4,0,'2012-11-18 23:01:57','2012-11-18 23:01:57',NULL,NULL),(8,4,6,0,'2012-11-18 23:01:57','2012-11-18 23:01:57',NULL,NULL),(9,4,7,0,'2012-11-18 23:01:57','2012-11-18 23:01:57',NULL,NULL),(10,4,8,0,'2012-11-18 23:01:57','2012-11-18 23:01:57',NULL,NULL),(11,4,9,0,'2012-11-18 23:01:57','2012-11-18 23:01:57',NULL,'2021-09-23 18:16:11'),(12,4,10,0,'2012-11-18 23:01:57','2012-11-18 23:01:57',NULL,'2021-09-23 18:16:20'),(13,4,11,0,'2012-11-18 23:01:57','2012-11-18 23:01:57',NULL,'2021-09-23 18:24:36'),(15,4,13,0,'2012-11-18 23:01:57','2012-11-18 23:01:57',NULL,'2021-09-23 18:46:47'),(19,4,17,546,'2021-08-17 00:00:00','2021-11-28 00:00:00',NULL,'2021-09-23 22:14:17'),(21,4,19,9846,'2021-09-12 00:00:00','2021-10-28 00:00:00',NULL,'2021-09-23 22:18:36'),(22,4,20,9846,'2021-09-12 00:00:00','2021-10-28 00:00:00',NULL,'2021-09-23 22:18:44'),(23,4,21,9846,'2021-09-12 00:00:00','2021-10-28 00:00:00',NULL,'2021-09-23 22:18:53'),(24,4,22,9846,'2021-09-12 00:00:00','2021-10-28 00:00:00',NULL,'2021-09-23 22:18:58'),(25,4,23,0,'2021-08-10 00:00:00','2021-10-29 00:00:00',NULL,'2021-09-23 22:19:24'),(26,4,24,544651,'2021-08-10 00:00:00','2021-10-29 00:00:00',NULL,'2021-09-23 22:19:35'),(27,4,25,1243,'2021-09-04 00:00:00','2021-09-29 00:00:00',NULL,'2021-09-24 06:56:21'),(28,4,26,1243,'2021-09-04 00:00:00','2021-09-29 00:00:00',NULL,'2021-09-24 06:56:34'),(29,4,27,76345321,'2021-09-27 00:00:00','2021-10-30 00:00:00',NULL,'2021-09-24 07:17:19'),(30,4,29,123,'2021-09-09 00:00:00','2021-09-12 00:00:00',NULL,'2021-09-24 07:30:52'),(31,4,30,123,'2021-09-09 00:00:00','2021-09-12 00:00:00',NULL,'2021-09-24 07:30:55'),(32,4,31,5646561,'2021-09-21 00:00:00','2021-09-30 00:00:00',NULL,'2021-09-24 07:31:26'),(33,4,32,78998,'2021-09-13 00:00:00','2021-09-30 00:00:00',NULL,'2021-09-24 07:33:23'),(34,4,33,98113512,'2021-09-28 00:00:00','2021-09-30 00:00:00',NULL,'2021-09-24 07:34:01'),(35,4,34,54,'2021-09-08 00:00:00','2021-11-30 00:00:00',NULL,'2021-09-24 07:34:55'),(36,11,35,975,'2021-09-05 00:00:00','2022-01-28 00:00:00',NULL,'2021-09-24 07:37:24'),(37,4,36,0,'2012-11-18 23:01:57','2012-11-18 23:01:57',NULL,'2021-09-24 08:42:32'),(38,11,37,100,'2021-09-13 00:00:00','2021-09-30 00:00:00',NULL,'2021-09-24 08:47:03'),(39,4,38,123,'2021-09-24 00:00:00','2021-09-26 00:00:00',NULL,'2021-09-24 08:58:43');
 /*!40000 ALTER TABLE `home` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -200,11 +200,11 @@ CREATE TABLE `home_history_log` (
   `price_per_night` int NOT NULL,
   `start_date` timestamp NOT NULL,
   `end_date` timestamp NOT NULL,
-  `created_date` timestamp NOT NULL,
+  `created_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `home_history_log_id_idx` (`home_id`),
   CONSTRAINT `home_history_log_id` FOREIGN KEY (`home_id`) REFERENCES `home` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -213,7 +213,6 @@ CREATE TABLE `home_history_log` (
 
 LOCK TABLES `home_history_log` WRITE;
 /*!40000 ALTER TABLE `home_history_log` DISABLE KEYS */;
-INSERT INTO `home_history_log` VALUES (1,1,1234,'2021-01-11 23:00:00','2021-11-13 12:00:00','2021-01-01 13:15:09');
 /*!40000 ALTER TABLE `home_history_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -258,7 +257,7 @@ CREATE TABLE `home_image_history_log` (
   PRIMARY KEY (`id`),
   KEY `image_history_home_history_id_idx` (`home_history_log_id`),
   CONSTRAINT `image_history_home_history_id` FOREIGN KEY (`home_history_log_id`) REFERENCES `home_history_log` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -267,7 +266,6 @@ CREATE TABLE `home_image_history_log` (
 
 LOCK TABLES `home_image_history_log` WRITE;
 /*!40000 ALTER TABLE `home_image_history_log` DISABLE KEYS */;
-INSERT INTO `home_image_history_log` VALUES (1,1,'oldUrl');
 /*!40000 ALTER TABLE `home_image_history_log` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -304,7 +302,7 @@ CREATE TABLE `host` (
   PRIMARY KEY (`id`),
   KEY `_idx` (`user_id`),
   CONSTRAINT `host_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -313,7 +311,7 @@ CREATE TABLE `host` (
 
 LOCK TABLES `host` WRITE;
 /*!40000 ALTER TABLE `host` DISABLE KEYS */;
-INSERT INTO `host` VALUES (1,1),(3,2),(2,3),(4,4),(5,5),(8,8),(9,9),(10,10),(11,11),(12,12),(13,13),(14,14);
+INSERT INTO `host` VALUES (1,1),(3,2),(2,3),(4,4),(5,5),(8,8),(9,9),(10,10),(11,11),(12,12),(13,13),(14,14),(15,17);
 /*!40000 ALTER TABLE `host` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -402,7 +400,7 @@ CREATE TABLE `renter` (
   PRIMARY KEY (`id`),
   KEY `user_id_idx` (`user_id`),
   CONSTRAINT `renter_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -411,7 +409,7 @@ CREATE TABLE `renter` (
 
 LOCK TABLES `renter` WRITE;
 /*!40000 ALTER TABLE `renter` DISABLE KEYS */;
-INSERT INTO `renter` VALUES (1,1),(2,2),(3,3),(4,4),(5,5),(8,8),(9,9),(10,10),(11,11),(12,12),(13,13),(14,14);
+INSERT INTO `renter` VALUES (1,1),(2,2),(3,3),(4,4),(5,5),(8,8),(9,9),(10,10),(11,11),(12,12),(13,13),(14,14),(15,17);
 /*!40000 ALTER TABLE `renter` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -491,7 +489,7 @@ CREATE TABLE `user` (
   `email` varchar(200) NOT NULL,
   `password` varchar(400) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -500,7 +498,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Kamilla','Johansson','kam@gmail.com','123'),(2,'Andrew','Hamish','anha@gmail.com','a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67'),(3,'Robert','Linder','rolling@gmail.com','09d8409dfa0ba399cf95c6510b579542aba7b6230c6354dfb7090e9a9c0fe3d1'),(4,'Anders','SJ','asj@mail.com','a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67'),(5,'Wendy','Arnoldsson','wean@mail.com','a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67'),(8,'Hamish','Washington','hawa@mail.com','a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67'),(9,'Arnold','Arnoldsson','arn@mail.com','a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67'),(10,'Joey','Quatryl','jq@mail.com','a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67'),(11,'Karen','Boomer','iwanttotalktoyourmanager@me.com','a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67'),(12,'Katarina','Williams','katams@mail.com','a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67'),(13,'John','Adams','ja@mail.com','a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67'),(14,'Polly','Poppins','pop@mail.com','a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67'),(15,'Alex','E','apa','67b176705b46206614219f47a05aee7ae6a3edbe850bbbe214c536b989aea4d2');
+INSERT INTO `user` VALUES (1,'Kamilla','Johansson','kam@gmail.com','123'),(2,'Andrew','Hamish','anha@gmail.com','a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67'),(3,'Robert','Linder','rolling@gmail.com','09d8409dfa0ba399cf95c6510b579542aba7b6230c6354dfb7090e9a9c0fe3d1'),(4,'Anders','SJ','asj@mail.com','a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67'),(5,'Wendy','Arnoldsson','wean@mail.com','a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67'),(8,'Hamish','Washington','hawa@mail.com','a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67'),(9,'Arnold','Arnoldsson','arn@mail.com','a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67'),(10,'Joey','Quatryl','jq@mail.com','a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67'),(11,'Karen','Boomer','iwanttotalktoyourmanager@me.com','a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67'),(12,'Katarina','Williams','katams@mail.com','a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67'),(13,'John','Adams','ja@mail.com','a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67'),(14,'Polly','Poppins','pop@mail.com','a03ab19b866fc585b5cb1812a2f63ca861e7e7643ee5d43fd7106b623725fd67'),(15,'Alex','E','apa','67b176705b46206614219f47a05aee7ae6a3edbe850bbbe214c536b989aea4d2'),(16,'a','a','a','80084bf2fba02475726feb2cab2d8215eab14bc6bdd8bfb2c8151257032ecd8b'),(17,'b','b','b','b039179a8a4ce2c252aa6f2f25798251c19b75fc1508d9d511a191e0487d64a7');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -518,7 +516,7 @@ CREATE TABLE `wallet` (
   PRIMARY KEY (`id`),
   KEY `wallet_user_id_idx` (`user_id`),
   CONSTRAINT `wallet_user_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -527,6 +525,7 @@ CREATE TABLE `wallet` (
 
 LOCK TABLES `wallet` WRITE;
 /*!40000 ALTER TABLE `wallet` DISABLE KEYS */;
+INSERT INTO `wallet` VALUES (1,17,9900);
 /*!40000 ALTER TABLE `wallet` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -611,4 +610,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-09-24 18:36:06
+-- Dump completed on 2021-09-25 18:25:22
