@@ -1,8 +1,9 @@
 import React, { useState, useEffect} from 'react'
 import { getHomeHistory } from '../api/homeApi'
 import HomeHistoryList from './HomeHistoryList'
+import BookHomeForm from './BookHomeForm'
 
-export default function HomeCard({ home: { pricePerNight, startDate, endDate, amenities, address, images } }) {
+export default function HomeCard({ home: { id, pricePerNight, startDate, endDate, amenities, address, images } }) {
   const [homeHistory, setHomeHistory] = useState('')
   const [isVisible, setIsVisible] = useState(false)
 
@@ -27,7 +28,7 @@ export default function HomeCard({ home: { pricePerNight, startDate, endDate, am
       <h3>Start date: {new Date(startDate).toLocaleDateString()}</h3>
       <h3>End date: {new Date(endDate).toLocaleDateString()}</h3>
       {amenities.map((am, idx) => {
-        return <h3 key={idx}>Got {am.amenity}</h3>
+        return <h3 key={idx}>Has {am.amenity}</h3>
       })}
       <h3>Street: {address.street}</h3>
       <h3>City: {address.city}</h3>
@@ -45,6 +46,8 @@ export default function HomeCard({ home: { pricePerNight, startDate, endDate, am
       })}
       <button onClick={changeIsVisible}>See edit history</button>
       {isVisible && homeHistory && <HomeHistoryList homes={homeHistory} />}
+      <BookHomeForm id={id} pricePerNight={pricePerNight}/>
+
     </div>
   )
 }
