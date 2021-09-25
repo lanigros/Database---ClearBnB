@@ -8,6 +8,8 @@ public interface HomeRepositoryInterface {
 
   public Optional<Home> findById(String id);
 
+  public int findPriceById(int homeId);
+
   public List<?> findAll();
 
   public Optional<Home> save(Home home);
