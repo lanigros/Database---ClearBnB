@@ -9,11 +9,14 @@ export default function HomeCardEdit() {
     const getUserProfile = async () => {
       const res = await fetch(`/rest/home/${homeId.id}`)
       const response = await res.json()
-      console.log('response :>> ', response)
       setHome(response)
     }
     getUserProfile().then()
   }, [homeId])
+
+  useEffect(() => {
+    console.log('home :>> ', home)
+  }, [home])
 
   return (
     <>
@@ -22,45 +25,31 @@ export default function HomeCardEdit() {
           <form>
             <div className='conditions'>
               <p>Start date</p>
-              <input type='date' name='startDate' value={home.startDate} />
+              <input
+                type='date'
+                name='startDate'
+                value={new Date(home.startDate)
+                  .toLocaleDateString()
+                  .split('/')
+                  .reverse()
+                  .join('-')}
+              />
               <p>End date</p>
-              <input type='date' name='endDate' value={home.endDate} />
+              <input
+                type='date'
+                name='endDate'
+                value={new Date(home.endDate)
+                  .toLocaleDateString()
+                  .split('/')
+                  .reverse()
+                  .join('-')}
+              />
               <p>Price per night</p>
               <input
                 type='number'
                 placeholder={home.pricePerNight}
                 name='pricePerNight'
                 value={home.pricePerNight}
-              />
-            </div>
-            <div className='address'>
-              <p>street</p>
-              <input
-                type='text'
-                placeholder={home.address.street}
-                name='street'
-                value={home.address.street}
-              />
-              <p>city</p>
-              <input
-                type='text'
-                placeholder={home.address.city}
-                name='city'
-                value={home.address.city}
-              />
-              <p>zip code</p>
-              <input
-                type='text'
-                placeholder={home.address.zipCode}
-                name='zipCode'
-                value={home.address.zipCode}
-              />
-              <p>country</p>
-              <input
-                type='text'
-                placeholder={home.address.country}
-                name='country'
-                value={home.address.country}
               />
             </div>
 
@@ -81,6 +70,29 @@ export default function HomeCardEdit() {
                 <input type='checkbox' name='bath' value={home.bath} />
                 Parking
               </div>
+            </div>
+
+            <div className='images'>
+              <input
+                type='text'
+                placeholder='First imageUrl'
+                name='imageUrl1'
+                value={home.imageUrl1}
+              />
+
+              <input
+                type='text'
+                placeholder='Second imageUrl'
+                name='imageUrl2'
+                value={home.imageUrl2}
+              />
+
+              <input
+                type='text'
+                placeholder='Third imageUrl'
+                name='imageUrl3'
+                value={home.imageUrl3}
+              />
             </div>
 
             <button type='submit'>Submit home</button>
