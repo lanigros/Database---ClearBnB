@@ -8,7 +8,7 @@ public interface HomeRepositoryInterface {
 
   public Optional<Home> findById(String id);
 
-  public List<Home> findAll();
+  public List<?> findAll();
 
   public Optional<Home> save(Home home);
 

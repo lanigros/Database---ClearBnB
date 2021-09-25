@@ -1,16 +1,13 @@
+@FilterDef(name = "dateFilter", parameters = {
+    @ParamDef(name = "startDate", type = "java.sql.Timestamp"),
+    @ParamDef(name = "endDate", type = "java.sql.Timestamp")})
 
-@FilterDef(name ="dateFilter", parameters = {
-    @ParamDef(name = "start_date", type = "java.sql.Timestamp"),
-    @ParamDef(name = "end_date", type = "java.sql.Timestamp")
-})
+@FilterDef(name = "priceFilter", parameters = {@ParamDef(name = "pricePerNight", type = "int"),})
 
-@FilterDef(name ="priceFilter", parameters = {
-    @ParamDef(name = "price_per_night", type = "int"),
-})
+@FilterDef(name = "searchFilter", parameters = {@ParamDef(name = "country", type = "string"),
+    @ParamDef(name = "city", type = "string"), @ParamDef(name = "street", type = "string"),})
 
-@FilterDef(name ="countryFilter", parameters = {
-    @ParamDef(name = "country", type = "string"),
-})
+@FilterDef(name = "amenityFilter", parameters = {@ParamDef(name = "amenity", type = "string"),})
 
 package model;
 
