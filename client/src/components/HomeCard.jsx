@@ -13,7 +13,7 @@ export default function HomeCard({ home: { id, pricePerNight, startDate, endDate
   
   useEffect(() => {
      const fetchHistory = async() => {
-        const history = await getHomeHistory()
+        const history = await getHomeHistory(id)
         setHomeHistory(history)
     }
     if (isVisible) fetchHistory()
@@ -24,6 +24,7 @@ export default function HomeCard({ home: { id, pricePerNight, startDate, endDate
     <div
       className={'Cool'}
       style={{ fontSize: '0.9rem', border: '1px solid black' }}>
+      <h1>{id}</h1>
       <h3>Price per night: {pricePerNight}</h3>
       <h3>Start date: {new Date(startDate).toLocaleDateString()}</h3>
       <h3>End date: {new Date(endDate).toLocaleDateString()}</h3>
@@ -44,7 +45,7 @@ export default function HomeCard({ home: { id, pricePerNight, startDate, endDate
             src={img.imageUrl}></img>
         )
       })}
-      <button onClick={changeIsVisible}>See edit history</button>
+      <button onClick={changeIsVisible}>{isVisible ? 'Hide edit ' : 'See edit '} history</button>
       {isVisible && homeHistory && <HomeHistoryList homes={homeHistory} />}
       <BookHomeForm id={id} pricePerNight={pricePerNight}/>
 

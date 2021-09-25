@@ -19,9 +19,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "home_history_log")
-@NamedQueries({
-    @NamedQuery(name = "HomeHistoryLog.findByHomeId", query = "SELECT h from HomeHistoryLog h "
-        + "WHERE home_id = :id")})
 public class HomeHistoryLog {
 
   @Id
