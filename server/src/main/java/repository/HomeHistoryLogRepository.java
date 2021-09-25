@@ -30,8 +30,16 @@ public class HomeHistoryLogRepository implements HomeHistoryLogRepositoryInterfa
   }
 
   @Override
-  public Optional<HomeHistoryLog> save(HomeHistoryLog homeHistoryLog) {
-    return Optional.empty();
+  public Optional<HomeHistoryLog> save(HomeHistoryLog home) {
+    try {
+      entityManager.getTransaction().begin();
+      entityManager.merge(home);
+      entityManager.getTransaction().commit();
+      return Optional.of(home);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return Optional.empty();
+    }
   }
 
 }

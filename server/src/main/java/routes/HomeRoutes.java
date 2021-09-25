@@ -66,6 +66,17 @@ public class HomeRoutes {
 
     });
 
+    app.put("rest/homes/:id", (req, res) -> {
+      try {
+        String id = req.params("id");
+        HomeAddressDTO dto = req.body(HomeAddressDTO.class);
+        Optional<Home> home = homeService.updateHome(id, dto);
+        res.json(home.get());
+      } catch (Exception e) {
+        res.status(500).send("Internal error");
+      }
+    });
+
 
   }
 
