@@ -32,21 +32,18 @@ public class HomeService {
       "Home");
   private final EntityManager entityManager = entityManagerFactory.createEntityManager();
   private final HomeRepository homeRepository = new HomeRepository(entityManager);
-    
+
   private final HomeHistoryLogRepository homeHistoryLogRepository = new HomeHistoryLogRepository(
       entityManager);
   private final AmenityHistoryRepository amenityHistoryRepository = new AmenityHistoryRepository(
       entityManager);
 
-
   private final HostRepository hostRepository = new HostRepository(entityManager);
 
   private final ActiveSessionService activeSessionService;
 
-
   public HomeService() {
     this.activeSessionService = new ActiveSessionService();
-
   }
 
   public Optional<HomeCoreDTO> getById(String id) {
@@ -99,26 +96,15 @@ public class HomeService {
   public Optional<Home> createHome(String sessionID, HomeAddressDTO dto) {
     int userId = activeSessionService.getActiveSessionUserId(sessionID);
     Optional<Host> host = hostRepository.findByUserId(userId);
-    if(host.isEmpty()){
+    if (host.isEmpty()) {
       return Optional.empty();
     }
     Home home = HomeMapper.convertToHome(dto, host.get());
     Address address = AddressMapper.convertToAddress(dto, home);
     home.setAddress(address);
-
     Optional<Home> savedHome = homeRepository.save(home);
     return savedHome;
-
-
-
-
-    //fixa en host from userID
-
-
-
-
   }
-
 
 }
 
