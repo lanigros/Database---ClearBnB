@@ -1,55 +1,68 @@
 package service;
 
-import static java.util.stream.Collectors.toList;
-
+import datatransforobject.ReviewBasicDTO;
 import datatransforobject.UserCoreDTO;
 import datatransforobject.UserLoginDTO;
 import datatransforobject.UserNameIdDTO;
 import datatransforobject.UserProfileDTO;
 import java.util.List;
 import java.util.Optional;
+import static java.util.stream.Collectors.toList;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import mapper.ReviewMapper;
 import mapper.UserMapper;
+import model.BookingDetail;
+import model.Host;
+import model.Review;
 import model.User;
 import repository.ActiveSessionRepository;
+import repository.BookingDetailRepository;
+import repository.HostRepository;
+import repository.ReviewRepository;
 import repository.UserRepository;
 import utility.ManagerFactory;
 import utility.Utility;
 
 public class UserService {
 
-
   private final EntityManagerFactory entityManagerFactory = ManagerFactory.getEntityManagerFactory(
       "User");
   private final EntityManager entityManager = entityManagerFactory.createEntityManager();
   private final UserRepository userRepository = new UserRepository(entityManager);
+  private final ReviewRepository reviewRepository = new ReviewRepository(entityManager);
   private final ActiveSessionRepository activeSessionRepository = new ActiveSessionRepository(
       entityManager);
+  private final HostRepository hostRepository = new HostRepository(entityManager);
+  private final BookingDetailRepository bookingDetailRepository = new BookingDetailRepository(
+      entityManager);
+
+  private final ActiveSessionService activeSessionService;
+
+  public UserService() {
+    this.activeSessionService = new ActiveSessionService();
+  }
 
   public Optional<UserCoreDTO> getById(String id) {
     Optional<User> userDO = userRepository.findById(id);
-
     if (userDO.isEmpty()) {
       return Optional.empty();
     }
-
     return Optional.of(UserMapper.convertToCoreDTOWithoutPassword(userDO.get()));
   }
 
   public List<User> getAllWithEverything() {
     List<User> users = userRepository.findAll();
-    users.forEach(UserMapper::hidePasswordFromUser);
+    users.forEach(UserMapper :: hidePasswordFromUser);
     return users;
   }
 
   public List<UserNameIdDTO> getAllNames() {
     List<User> users = userRepository.findAll();
-    List<UserNameIdDTO> list = users.stream().map(UserMapper::convertToNameAndId).collect(toList());
-
+    List<UserNameIdDTO> list = users.stream().map(UserMapper :: convertToNameAndId)
+                                    .collect(toList());
     return list;
   }
-
 
   public Optional<UserCoreDTO> registerUser(UserCoreDTO user) {
     Optional<User> exist = userRepository.findByEmail(user.getEmail());
@@ -57,15 +70,12 @@ public class UserService {
       String hashedPassword = Utility.hash(user.getPassword());
       user.setPassword(hashedPassword);
       Optional<User> createdUser = userRepository.save(user.convertToUser());
-
       if (createdUser.isPresent()) {
         //To send a json
         UserCoreDTO createdUserCoreDTO = UserMapper.convertToCoreDTOWithoutPassword(
             createdUser.get());
         System.out.println(createdUserCoreDTO);
-
         return Optional.of(createdUserCoreDTO);
-
       }
     }
     return Optional.empty();
@@ -76,11 +86,9 @@ public class UserService {
     if (userCoreDTO == null) {
       return null;
     }
-
     if (!Utility.match(userLoginDTO.getPassword(), userCoreDTO.getPassword())) {
       return null;
     }
-
     userCoreDTO.setPassword("***");
     return userCoreDTO;
   }
@@ -101,7 +109,22 @@ public class UserService {
       return null;
     }
     return UserMapper.convertToProfile(user.get());
+  }
 
+  public Review createReview(ReviewBasicDTO dto, String hostId) {
+    int userId = 3;
+    Optional<Host> host = hostRepository.findById(hostId);
+    Optional<BookingDetail> bookingDetail = bookingDetailRepository.findById(
+        dto.getbookingDetail());
+    Review review = ReviewMapper.convertToReview(dto, userId, bookingDetail.get(), host.get());
+    host.get().getReviews().add(review);
+    Optional<Host> savedHost = hostRepository.save(host.get());
+    Optional<Review> savedReview = reviewRepository.save(review);
+    //Optional<Review> savedReview = reviewRepository.save(review);
+    //query insert i ett table. host_id, review_id
+    return review;
   }
 
 }
+//    Optional<Host> host = hostRepository.findByUserId(userId);
+// Review review = ReviewMapper.convertToBasicDTO(dto, userId);
