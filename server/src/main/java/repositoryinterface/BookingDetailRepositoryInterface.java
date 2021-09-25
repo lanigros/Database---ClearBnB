@@ -6,7 +6,7 @@ import model.BookingDetail;
 
 public interface BookingDetailRepositoryInterface {
 
-  public Optional<BookingDetail> findById(String id);
+  public Optional<BookingDetail> findById(int id);
 
   public List<BookingDetail> findAll();
 
