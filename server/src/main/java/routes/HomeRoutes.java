@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 import model.Home;
 import model.HomeHistoryLog;
+import model.HomeView;
 import service.HomeService;
 
 public class HomeRoutes {
@@ -49,7 +50,7 @@ public class HomeRoutes {
     app.get("rest/homes", (req, res) -> {
       try {
         Map<String, List<String>> filters = req.query();
-        List<Home> homes = homeService.getAll(filters);
+        List<HomeView> homes = homeService.getAll(filters);
         res.json(homes);
       } catch (Exception e) {
         System.out.println(e);

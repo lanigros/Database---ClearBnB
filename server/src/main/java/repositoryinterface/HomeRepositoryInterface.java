@@ -10,7 +10,7 @@ public interface HomeRepositoryInterface {
 
   public int findPriceById(int homeId);
 
-  public List<Home> findAll();
+  public List<?> findAll();
 
   public Optional<Home> save(Home home);
 
