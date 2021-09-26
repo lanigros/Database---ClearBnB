@@ -4,6 +4,7 @@ import java.util.List;
 import model.Review;
 
 public class UserCompleteProfileDTO {
+
   private int id;
   private String firstName;
   private String lastName;
@@ -13,10 +14,11 @@ public class UserCompleteProfileDTO {
   private List<Review> hostReview;
   private List<Review> renterReview;
   private List<HomeCoreWithBooking> homes;
+  private List<Review> madeReviews;
 
-  public UserCompleteProfileDTO(String firstName, String lastName, String email,
-      int avgRatingHost, int avgRatingRenter, List<Review> hostReview,
-      List<Review> renterReview, List<HomeCoreWithBooking> homes) {
+  public UserCompleteProfileDTO(String firstName, String lastName, String email, int avgRatingHost,
+      int avgRatingRenter, List<Review> hostReview, List<Review> renterReview,
+      List<HomeCoreWithBooking> homes) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
@@ -28,6 +30,14 @@ public class UserCompleteProfileDTO {
   }
 
   public UserCompleteProfileDTO() {
+  }
+
+  public List<Review> getMadeReviews() {
+    return madeReviews;
+  }
+
+  public void setMadeReviews(List<Review> madeReviews) {
+    this.madeReviews = madeReviews;
   }
 
   public int getId() {
@@ -70,8 +80,15 @@ public class UserCompleteProfileDTO {
     this.avgRatingHost = avgRatingHost;
   }
 
-  public void setAvgRatingRenter(int avgRatingRenter) {
-    this.avgRatingRenter = avgRatingRenter;
+  public void setAvgRatingHost(List<Review> reviews) {
+
+    float tempTotal = 0;
+    for (Review re : reviews) {
+      tempTotal += re.getRating();
+    }
+    float tempAvg = tempTotal / reviews.size();
+    this.avgRatingHost = (int) Math.floor(tempAvg);
+
   }
 
   public List<Review> getHostReview() {
@@ -98,19 +115,12 @@ public class UserCompleteProfileDTO {
     this.homes = homes;
   }
 
-  public void setAvgRatingHost(List<Review> reviews) {
-
-    float tempTotal = 0;
-    for (Review re : reviews) {
-      tempTotal += re.getRating();
-    }
-    float tempAvg = tempTotal / reviews.size();
-    this.avgRatingHost = (int) Math.floor(tempAvg);
-
-  }
-
   public int getAvgRatingRenter() {
     return avgRatingRenter;
+  }
+
+  public void setAvgRatingRenter(int avgRatingRenter) {
+    this.avgRatingRenter = avgRatingRenter;
   }
 
   public void setAvgRatingRenter(List<Review> reviews) {

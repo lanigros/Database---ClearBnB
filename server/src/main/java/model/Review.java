@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,8 +34,12 @@ public class Review {
   @ManyToOne
   @JoinColumn(name = "booking_id")
   private BookingDetail bookingDetail;
-  @Column(name = "creator_id")
+  @Column(name = "creator_id", insertable = false, updatable = false)
   private int creatorId;
+  @ManyToOne
+  @JsonBackReference(value = "user-review")
+  @JoinColumn(name = "creator_id")
+  private User creator;
 
   public Review() {
   }
@@ -49,8 +54,20 @@ public class Review {
     this.creatorId = creatorId;
   }
 
+  public User getCreator() {
+    return creator;
+  }
+
+  public void setCreator(User creator) {
+    this.creator = creator;
+  }
+
   public int getCreatorId() {
     return creatorId;
+  }
+
+  public void setCreatorId(int creatorId) {
+    this.creatorId = creatorId;
   }
 
   @Override
@@ -61,6 +78,10 @@ public class Review {
 
   public int getId() {
     return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
   }
 
   public int getRating() {
