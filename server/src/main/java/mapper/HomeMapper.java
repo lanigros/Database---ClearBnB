@@ -58,8 +58,8 @@ public class HomeMapper {
     home.setHost(host);
     List<Amenity> amenities = amenityEnumConverter.getAmenitiesAsAmenityList(dto.getAmenities(),
         home);
-    List<HomeImage> homeImages = HomeImageMapper.convertToHomeImages(dto.getImages(), home);
     home.setAmenities(amenities);
+    List<HomeImage> homeImages = HomeImageMapper.convertToHomeImages(dto.getImages(), home);
     home.setImages(homeImages);
     home.setCreatedDate(new Timestamp(Instant.now().toEpochMilli()));
     return home;
@@ -86,7 +86,8 @@ public class HomeMapper {
 
   }
 
-  public static HomeHistoryLog convertHistory(Home home) {
+  public static List<HomeHistoryLog> convertHistory(Home home) {
+    List<HomeHistoryLog>historylogs = home.getHistoryLogs();
     HomeHistoryLog homeHistory = new HomeHistoryLog();
     homeHistory.setHome(home);
     homeHistory.setPricePerNight(home.getPricePerNight());
@@ -94,8 +95,9 @@ public class HomeMapper {
     homeHistory.setEndDate(home.getEndDate());
     homeHistory.setImages(HomeImageMapper.convertToHistory(home.getImages(), homeHistory));
     homeHistory.setAmenities(AmenityMapper.convertToHistory(home.getAmenities(), homeHistory));
-
-    return homeHistory;
+    homeHistory.setCreatedDate(new Timestamp(Instant.now().toEpochMilli()));
+    historylogs.add(homeHistory);
+    return historylogs;
 
   }
 
