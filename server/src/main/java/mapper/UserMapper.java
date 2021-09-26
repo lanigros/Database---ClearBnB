@@ -44,7 +44,6 @@ public class UserMapper {
   public static UserProfileDTO convertToProfile(User user) {
     UserProfileDTO dto = new UserProfileDTO();
     dto.setHomes(HomeMapper.convertToNoHost(user.getHostProfile().getHomes()));
-
     dto.setId(user.getId());
     dto.setEmail(user.getEmail());
     dto.setFirstName(user.getFirstName());
@@ -70,6 +69,7 @@ public class UserMapper {
     dto.setRenterReview(user.getRenterProfile().getReviews());
     dto.setHostReview(user.getHostProfile().getReviews());
     dto.setMadeReviews(user.getMadeReviews());
+    dto.setBookingDetails(BookingDetailMapper.convertToBookingCoreHomeDTO(user.getRenterProfile().getBookingDetails()));
 
     System.out.println(dto.toString());
     return dto;

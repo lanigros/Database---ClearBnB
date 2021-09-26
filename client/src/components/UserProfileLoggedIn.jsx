@@ -2,6 +2,7 @@ import React from 'react'
 import { useEffect, useState } from 'react'
 import { fetchPrivateProfile } from '../api/userAPI'
 import UserProfile from './UserProfile'
+import BookingDetailList from './BookingDetailList'
 
 const UserProfileLoggedIn = () => {
   const [userComplete, setState] = useState(null)
@@ -18,6 +19,8 @@ const UserProfileLoggedIn = () => {
   return (
     <>
       {userComplete && <UserProfile user={userComplete} />}
+      <h1>Bookings</h1>
+      {userComplete && <BookingDetailList currentUser={userComplete}/>}
     </>
     )
 }
