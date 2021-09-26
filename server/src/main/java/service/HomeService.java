@@ -121,7 +121,7 @@ public class HomeService {
     Address address = AddressMapper.convertToAddress(dto, home);
     home.setAddress(address);
 
-    Optional<Home> savedHome = homeRepository.save(home);
+    Optional<Home> savedHome = homeRepository.save(home, false);
     return savedHome;
   }
 
@@ -135,7 +135,7 @@ public class HomeService {
     newValues.setAddress(oldValues.get().getAddress());
     newValues.setId(oldValues.get().getId());
 
-    Optional<Home> updatedHome = homeRepository.save(newValues);
+    Optional<Home> updatedHome = homeRepository.save(newValues, true);
     return Optional.of(updatedHome.get());
 
   }

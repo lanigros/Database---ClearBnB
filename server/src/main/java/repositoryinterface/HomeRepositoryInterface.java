@@ -12,6 +12,6 @@ public interface HomeRepositoryInterface {
 
   public List<?> findAll();
 
-  public Optional<Home> save(Home home);
+  public Optional<Home> save(Home home, boolean isUpdate);
 
 }
