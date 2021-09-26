@@ -9,22 +9,23 @@ export const createUser = async (userObject) => {
 }
 
 export const fetchUserById = async (id) => {
-   console.log('fetchUserID')
+  console.log('fetchUserID')
   const res = await fetch(`/rest/user/profile/${id}`)
- 
+
   if (!res.ok) return null
   const response = await res.json()
-  console.log('response :>> ', response)   
+  console.log('response :>> ', response)
   return response
 }
 
 export const fetchPrivateProfile = async () => {
   console.log('fetch private')
   const response = await fetch(`/rest/user/private`, {
-    credentials: 'include'
+    credentials: 'include',
   })
-  if(!response.ok) return null
+  if (!response.ok) return null
   const user = await response.json()
+  console.log('user :>> ', user)
   return user
 }
 

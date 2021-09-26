@@ -1,6 +1,18 @@
 import React from 'react'
 
-const UserProfile = ({ user: {id, firstName, email, avgRatingHost, avgRatingRenter, hostReview, renterReview, homes } }) => {
+const UserProfile = ({
+  user: {
+    id,
+    firstName,
+    email,
+    avgRatingHost,
+    avgRatingRenter,
+    hostReview,
+    renterReview,
+    homes,
+    madeReviews,
+  },
+}) => {
   return (
     <>
       {id && (
@@ -12,35 +24,43 @@ const UserProfile = ({ user: {id, firstName, email, avgRatingHost, avgRatingRent
           <h4>{`Avg rating as renter ${avgRatingRenter}`}</h4>
           <h4>{JSON.stringify(hostReview)}</h4>
           <h4>{JSON.stringify(renterReview)}</h4>
+          {madeReviews &&
+            madeReviews.map((rev) => {
+              return <h4>{JSON.stringify(rev)}</h4>
+            })}
           <h1>Homes</h1>
-          {homes && homes.map((home) => {
-            return (
-              <div key={home.id}>
-                <h3>Price per night: {home.pricePerNight}</h3>
-                <h3>
-                  Start date: {new Date(home.startDate).toLocaleDateString()}
-                </h3>
-                <h3>End date: {new Date(home.endDate).toLocaleDateString()}</h3>
-                {home.amenities.map((am, idx) => {
-                  return <h3 key={idx}>Got {am.amenity}</h3>
-                })}
-                <h3>Street: {home.address.street}</h3>
-                <h3>City: {home.address.city}</h3>
-                <h3>Country: {home.address.country}</h3>
-                <h3>zip code: {home.address.zipCode}</h3>
-                {home.images && home.images.map((img) => {
-                  // eslint-disable-next-line jsx-a11y/alt-text
-                  return (
-                    // eslint-disable-next-line jsx-a11y/alt-text
-                    <img
-                      style={{ height: '60px', width: '60px' }}
-                      key={img.id}
-                      src={img.imageUrl}></img>
-                  )
-                })}
-              </div>
-            )
-          })}
+          {homes &&
+            homes.map((home) => {
+              return (
+                <div key={home.id}>
+                  <h3>Price per night: {home.pricePerNight}</h3>
+                  <h3>
+                    Start date: {new Date(home.startDate).toLocaleDateString()}
+                  </h3>
+                  <h3>
+                    End date: {new Date(home.endDate).toLocaleDateString()}
+                  </h3>
+                  {home.amenities.map((am, idx) => {
+                    return <h3 key={idx}>Got {am.amenity}</h3>
+                  })}
+                  <h3>Street: {home.address.street}</h3>
+                  <h3>City: {home.address.city}</h3>
+                  <h3>Country: {home.address.country}</h3>
+                  <h3>zip code: {home.address.zipCode}</h3>
+                  {home.images &&
+                    home.images.map((img) => {
+                      // eslint-disable-next-line jsx-a11y/alt-text
+                      return (
+                        // eslint-disable-next-line jsx-a11y/alt-text
+                        <img
+                          style={{ height: '60px', width: '60px' }}
+                          key={img.id}
+                          src={img.imageUrl}></img>
+                      )
+                    })}
+                </div>
+              )
+            })}
         </div>
       )}
     </>
