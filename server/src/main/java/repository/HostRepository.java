@@ -26,16 +26,25 @@ public class HostRepository implements HostRepositoryInterface {
 
   @Override
   public Optional<Host> save(Host host) {
-    return Optional.empty();
+    try {
+      entityManager.getTransaction().begin();
+      entityManager.merge(host);
+      entityManager.getTransaction().commit();
+      return Optional.of(host);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return Optional.empty();
+    }
   }
 
   public Optional<Host> findByUserId(int id) {
     try {
-      return Optional.of(entityManager.createNamedQuery("Host.findByUserId", Host.class)
-          .setParameter("userId", id).getSingleResult());
-
+      return Optional.of(
+          entityManager.createNamedQuery("Host.findByUserId", Host.class).setParameter("userId", id)
+                       .getSingleResult());
     } catch (Exception e) {
       return Optional.empty();
     }
   }
+
 }
