@@ -31,9 +31,13 @@ const HomeCardEdit = ({homeProp, setIsVisible}) => {
     }
 
     let changedHome = {
+      city: homeProp.address.city,
+      street: homeProp.address.street,
+      zipCode: homeProp.address.zipCode,
+      country: homeProp.address.country,
+      pricePerNight: Number(home.pricePerNight),
       startDate: new Date(home.startDate).getTime(),
       endDate: new Date(home.endDate).getTime(),
-      pricePerNight: Number(home.pricePerNight),
       amenities: createAmenityArray(home.wifi, home.kitchen, home.bath, home.parking),
       images: [home.imageUrl1, home.imageUrl2, home.imageUrl3],
     }
