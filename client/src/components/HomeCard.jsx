@@ -9,16 +9,17 @@ export default function HomeCard({ home }) {
   const { id, pricePerNight, startDate, endDate, amenities, address, images } =
     home
   const history = useHistory()
-  const [isVisible, setIsVisible] = useState(false)
+  const [isHistoryVisible, setIsHistoryVisible] = useState(false)
+  const [isEditVisible, setIsEditVisible] = useState(false)
   const [homeHistory, setHomeHistory] = useState([])
 
   useEffect(() => {
-    if (isVisible) history.push(`/homes/${home.id}/edit`)
+    if (isHistoryVisible) history.push(`/homes/${home.id}/edit`)
     else history.push(`/homes`)
-  }, [isVisible, history, home.id])
+  }, [isHistoryVisible, history, home.id])
 
-  const changeIsVisible = () => {
-    setIsVisible(!isVisible)
+  const changeIsHistoryVisible = () => {
+    setIsHistoryVisible(!isHistoryVisible)
   }
 
   useEffect(() => {
@@ -26,8 +27,8 @@ export default function HomeCard({ home }) {
       const history = await getHomeHistory(id)
       setHomeHistory(history)
     }
-    if (isVisible) fetchHistory()
-  }, [isVisible])
+    if (isHistoryVisible) fetchHistory()
+  }, [isHistoryVisible, id])
 
   return (
     <div
@@ -57,18 +58,17 @@ export default function HomeCard({ home }) {
       <button
         value={home.id}
         onClick={() => {
-          setIsVisible(!isVisible)
+          setIsEditVisible(!isEditVisible)
         }}>
         Edit
       </button>
-      {isVisible && (
-        <HomeCardEdit setIsVisible={setIsVisible} homeProp={home} />
+      {isEditVisible && (
+        <HomeCardEdit setIsVisible={setIsEditVisible} homeProp={home} />
       )}
-      <BookHomeForm home={home} />
-      <button onClick={changeIsVisible}>
-        {isVisible ? 'Hide edit ' : 'See edit '} history
+      <button onClick={changeIsHistoryVisible}>
+        {isHistoryVisible ? 'Hide edit ' : 'See edit '} history
       </button>
-      {isVisible && homeHistory && <HomeHistoryList homes={homeHistory} />}
+      {isHistoryVisible && homeHistory && <HomeHistoryList homes={homeHistory} />}
       <BookHomeForm id={id} pricePerNight={pricePerNight} />
     </div>
   )
