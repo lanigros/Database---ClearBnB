@@ -2,6 +2,7 @@ package service;
 
 import static java.util.stream.Collectors.toList;
 
+import datatransforobject.UserCompleteProfileDTO;
 import datatransforobject.UserCoreDTO;
 import datatransforobject.UserLoginDTO;
 import datatransforobject.UserNameIdDTO;
@@ -27,14 +28,9 @@ public class UserService {
   private final ActiveSessionRepository activeSessionRepository = new ActiveSessionRepository(
       entityManager);
 
-  public Optional<UserCoreDTO> getById(String id) {
+  public Optional<User> getById(String id) {
     Optional<User> userDO = userRepository.findById(id);
-
-    if (userDO.isEmpty()) {
-      return Optional.empty();
-    }
-
-    return Optional.of(UserMapper.convertToCoreDTOWithoutPassword(userDO.get()));
+    return userDO;
   }
 
   public List<User> getAllWithEverything() {
@@ -101,6 +97,15 @@ public class UserService {
       return null;
     }
     return UserMapper.convertToProfile(user.get());
+
+  }
+
+  public UserCompleteProfileDTO getUserCompleteProfile(String userId) {
+    Optional<User> user = userRepository.findById(userId);
+    if (user.isEmpty()) {
+      return null;
+    }
+    return UserMapper.convertToCompleteProfile(user.get());
 
   }
 

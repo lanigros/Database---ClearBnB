@@ -24,7 +24,7 @@ const CreateUserMenu = () => {
       const newUser = await createUser(createdUser)
       if (!newUser) return
       dispatch({ type: 'SET_USER', payload: newUser.firstName })
-      history.push("/my-profile")
+      history.push("/profile/private")
     }
     createAndLogin()
 

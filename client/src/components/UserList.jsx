@@ -17,7 +17,8 @@ const UserList = () => {
   const displayProfile = (e) => {
     e.preventDefault()
     const id = e.target.value
-    history.push(`/profile/${id}`)
+    console.log(id)
+    history.push(`/user/${id}`)
   }
   return (
     <>

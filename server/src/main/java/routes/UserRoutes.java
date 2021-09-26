@@ -1,5 +1,6 @@
 package routes;
 
+import datatransforobject.UserCompleteProfileDTO;
 import datatransforobject.UserCoreDTO;
 import datatransforobject.UserNameIdDTO;
 import datatransforobject.UserProfileDTO;
@@ -7,6 +8,7 @@ import express.Express;
 import java.util.List;
 import java.util.Optional;
 import model.User;
+import service.ActiveSessionService;
 import service.UserService;
 
 public class UserRoutes {
@@ -21,14 +23,17 @@ public class UserRoutes {
   }
 
   void init() {
-    app.get("rest/user/:id", (req, res) -> {
+    app.get("rest/user/private", (req, res) -> {
       try {
-        String id = req.params("id");
-        Optional<UserCoreDTO> user = userService.getById(id);
-        res.status(200).json(user.isPresent() ? user.get() : "No user with that id");
-      } catch (Exception e) {
-        res.status(500).send(e);
+        String sessionID = req.cookie("sessionID");
+        System.out.println(sessionID);
+        String userId = String.valueOf(ActiveSessionService.getActiveSessionUserId(sessionID));
+        UserCompleteProfileDTO user = userService.getUserCompleteProfile(userId);
+        res.json(user);
+      }catch (Exception e){
+        res.json(500);
       }
+
     });
 
     app.get("rest/users/name", (req, res) -> {
@@ -40,7 +45,7 @@ public class UserRoutes {
       }
     });
 
-    app.get("rest/user/:id/profile", (req, res) -> {
+    app.get("rest/user/profile/:id", (req, res) -> {
       try {
         String id = req.params("id");
         UserProfileDTO user = userService.getUserProfile(id);
