@@ -1,12 +1,11 @@
 package routes;
 
+import datatransforobject.ReviewBasicDTO;
 import datatransforobject.UserCompleteProfileDTO;
-import datatransforobject.UserCoreDTO;
 import datatransforobject.UserNameIdDTO;
 import datatransforobject.UserProfileDTO;
 import express.Express;
 import java.util.List;
-import java.util.Optional;
 import model.Review;
 import model.User;
 import service.ActiveSessionService;
@@ -31,7 +30,7 @@ public class UserRoutes {
         String userId = String.valueOf(ActiveSessionService.getActiveSessionUserId(sessionID));
         UserCompleteProfileDTO user = userService.getUserCompleteProfile(userId);
         res.json(user);
-      }catch (Exception e){
+      } catch (Exception e) {
         res.json(500);
       }
 
@@ -64,10 +63,11 @@ public class UserRoutes {
       }
     });
     app.post("rest/reviews/host/:id", (req, res) -> {
-      //String sessionID = req.cookie("sessionID");
+      String sessionId = req.cookie("sessionID");
+      String userId = String.valueOf(ActiveSessionService.getActiveSessionUserId(sessionId));
       String hostID = req.params("id");
-      ReviewBasicDTO dto = req.body(ReviewBasicDTO.class);
-      Review review = userService.createReview(dto, hostID);
+      ReviewBasicDTO body = req.body(ReviewBasicDTO.class);
+      Review review = userService.createReview(userId, body, hostID);
       res.json(review);
     });
   }

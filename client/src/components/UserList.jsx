@@ -10,6 +10,13 @@ const UserList = () => {
     async function getUsers() {
       const fetchedUsers = await getAllUsersAsNames()
       setUsers(fetchedUsers)
+
+      const res = await fetch('rest/reviews/host/2', {
+        method: 'POST',
+        body: JSON.stringify({ rating: 5, bookingDetail: 2, comment: 'Wowo' }),
+      })
+      const response = await res.json()
+      console.log('response :>> ', response)
     }
     getUsers()
   }, [])

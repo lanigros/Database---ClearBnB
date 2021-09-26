@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import model.BookingDetail;
+import model.Home;
 import repositoryinterface.BookingDetailRepositoryInterface;
 
 public class BookingDetailRepository implements BookingDetailRepositoryInterface {

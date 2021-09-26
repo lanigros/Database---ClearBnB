@@ -109,9 +109,8 @@ public class UserService {
     return UserMapper.convertToProfile(user.get());
   }
 
-  public Review createReview(ReviewBasicDTO dto, String hostId) {
-    //try catch eller optional.isempty
-    String userId = "3"; // från session
+  public Review createReview(String userId, ReviewBasicDTO dto, String hostId) {
+
     Optional<Host> host = hostRepository.findById(hostId);
     Optional<User> user = userRepository.findById(userId);
     Optional<BookingDetail> bookingDetail = bookingDetailRepository.findById(
