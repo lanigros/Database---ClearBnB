@@ -1,32 +1,19 @@
 import React from 'react'
-import { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
-const UserCard = () => {
-  const [user, setUser] = useState(null)
-  const userID = useParams()
-  useEffect(() => {
-    const getUserProfile = async () => {
-      const res = await fetch(`/rest/user/${userID.id}/profile`)
-      const response = await res.json()
-      console.log('response :>> ', response)
-      setUser(response)
-    }
-    getUserProfile()
-  }, [userID])
 
+const UserProfile = ({ user: {id, firstName, email, avgRatingHost, avgRatingRenter, hostReview, renterReview, homes } }) => {
   return (
     <>
-      {user && (
+      {id && (
         <div>
-          <h1>{user.id}</h1>
-          <h3>{user.firstName}</h3>
-          <h4>{user.email}</h4>
-          <h4>{`Avg rating as host ${user.avgRatingHost}`}</h4>
-          <h4>{`Avg rating as renter ${user.avgRatingRenter}`}</h4>
-          <h4>{JSON.stringify(user.hostReview)}</h4>
-          <h4>{JSON.stringify(user.renterReview)}</h4>
+          <h1>{id}</h1>
+          <h3>{firstName}</h3>
+          <h4>{email}</h4>
+          <h4>{`Avg rating as host ${avgRatingHost}`}</h4>
+          <h4>{`Avg rating as renter ${avgRatingRenter}`}</h4>
+          <h4>{JSON.stringify(hostReview)}</h4>
+          <h4>{JSON.stringify(renterReview)}</h4>
           <h1>Homes</h1>
-          {user.homes.map((home) => {
+          {homes && homes.map((home) => {
             return (
               <div key={home.id}>
                 <h3>Price per night: {home.pricePerNight}</h3>
@@ -41,7 +28,7 @@ const UserCard = () => {
                 <h3>City: {home.address.city}</h3>
                 <h3>Country: {home.address.country}</h3>
                 <h3>zip code: {home.address.zipCode}</h3>
-                {home.images.map((img) => {
+                {home.images && home.images.map((img) => {
                   // eslint-disable-next-line jsx-a11y/alt-text
                   return (
                     // eslint-disable-next-line jsx-a11y/alt-text
@@ -60,4 +47,4 @@ const UserCard = () => {
   )
 }
 
-export default UserCard
+export default UserProfile
