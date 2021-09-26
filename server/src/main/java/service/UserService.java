@@ -16,11 +16,13 @@ import mapper.ReviewMapper;
 import mapper.UserMapper;
 import model.BookingDetail;
 import model.Host;
+import model.Renter;
 import model.Review;
 import model.User;
 import repository.ActiveSessionRepository;
 import repository.BookingDetailRepository;
 import repository.HostRepository;
+import repository.RenterRepository;
 import repository.ReviewRepository;
 import repository.UserRepository;
 import utility.ManagerFactory;
@@ -36,6 +38,7 @@ public class UserService {
   private final ActiveSessionRepository activeSessionRepository = new ActiveSessionRepository(
       entityManager);
   private final HostRepository hostRepository = new HostRepository(entityManager);
+  private final RenterRepository renterRepository = new RenterRepository(entityManager);
   private final BookingDetailRepository bookingDetailRepository = new BookingDetailRepository(
       entityManager);
 
@@ -109,15 +112,27 @@ public class UserService {
     return UserMapper.convertToProfile(user.get());
   }
 
-  public Review createReview(String userId, ReviewBasicDTO dto, String hostId) {
+  public Review createHostReview(String userId, ReviewBasicDTO dto, String hostId) {
 
     Optional<Host> host = hostRepository.findById(hostId);
     Optional<User> user = userRepository.findById(userId);
     Optional<BookingDetail> bookingDetail = bookingDetailRepository.findById(
         dto.getbookingDetail());
-    Review review = ReviewMapper.convertToReview(dto, user.get(), bookingDetail.get(), host.get());
+    Review review = ReviewMapper.convertToReview(dto, user.get(), bookingDetail.get());
     host.get().getReviews().add(review);
     Optional<Host> savedHost = hostRepository.save(host.get());
+
+    return review;
+  }
+  public Review createRenterReview(String userId, ReviewBasicDTO dto, String renterId) {
+
+    Optional<Renter> renter = renterRepository.findById(renterId);
+    Optional<User> user = userRepository.findById(userId);
+    Optional<BookingDetail> bookingDetail = bookingDetailRepository.findById(
+        dto.getbookingDetail());
+    Review review = ReviewMapper.convertToReview(dto, user.get(), bookingDetail.get());
+    renter.get().getReviews().add(review);
+    Optional<Renter> savedRenter = renterRepository.save(renter.get());
 
     return review;
   }

@@ -22,8 +22,7 @@ public class ReviewMapper {
     return list;
   }
 
-  public static Review convertToReview(ReviewBasicDTO dto, User user, BookingDetail bookingDetail,
-      Host host) {
+  public static Review convertToReview(ReviewBasicDTO dto, User user, BookingDetail bookingDetail) {
     Review review = new Review();
     review.setComment(dto.getComment());
     review.setRating(dto.getRating());

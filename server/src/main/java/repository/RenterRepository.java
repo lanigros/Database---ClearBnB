@@ -16,8 +16,11 @@ public class RenterRepository implements RenterRepositoryInterface {
   }
 
   @Override
-  public Optional<Renter> findById(String id) {
-    return Optional.empty();
+  public Optional<Renter> findById(String ids) {
+    int id = Integer.parseInt(ids);
+
+    Renter renter = entityManager.find(Renter.class, id);
+    return renter != null ? Optional.of(renter) : Optional.empty();
   }
 
   @Override
