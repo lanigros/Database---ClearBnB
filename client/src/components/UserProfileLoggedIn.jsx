@@ -1,39 +1,25 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
+import { fetchPrivateProfile } from '../api/userAPI'
+import UserProfile from './UserProfile'
 
-const UserCard = () => {
-  const [state, setState] = useState(null)
+const UserProfileLoggedIn = () => {
+  const [userComplete, setState] = useState(null)
 
-    useEffect(() => {
-    
-      async function checkLoggedIn() {
-    
-      if (!document.cookie) return
-      const user = await fetch(`/api/whoami`, {
-        credentials: 'include'
-      })
-        const response = await user.json()
-      if (user != null) {
-        setState(response)
-      }
+  useEffect(() => {
+    const fetchEntireUser = async() => {
+      let user = await fetchPrivateProfile()
+      setState(user)
     }
-    checkLoggedIn()
+    fetchEntireUser()
   }, [])
 
   
   return (
     <>
-      {state && (
-           <div>
-          <h2>Hello {state.firstName}!</h2>
-        <h3>Email: {state.email} </h3>
-        </div>
-      )}
+      {userComplete && <UserProfile user={userComplete} />}
     </>
     )
 }
 
-export default UserCard
- 
-//String sessionId = req.cookie("sessionID");
-    //activeSessionService.getActiveSessionUserId(sessionId);
+export default UserProfileLoggedIn
