@@ -1,16 +1,45 @@
 import React from 'react'
 
-export default function ChatMessage(props) {
-  const { msg, uid, id } = props.message
+const sent = {
+  color: 'white',
+  background: 'red',
+  width: 'fit-content',
+}
+const received = {
+  color: 'white',
+  background: 'blue',
+  width: 'fit-content',
+}
+const server = {
+  color: 'white',
+  background: 'green',
+  width: 'fit-content',
+}
 
-  const messageClass = uid === '1' ? 'sent' : 'received'
+export default function ChatMessage(props) {
+  const { msg, uuid, id } = props.message
+  const user = props.user || 'NotLoggedIn'
+  console.log('user :>> ', user)
+
+  let style
+  switch (uuid) {
+    case user: {
+      style = sent
+      break
+    }
+    case 'Server': {
+      style = server
+      break
+    }
+    default: {
+      style = received
+    }
+  }
 
   return (
-    <div
-      style={{ color: 'red', height: '100%', width: '100%' }}
-      className={`message ${messageClass}`}>
+    <div style={style}>
       <p key={id} className='chat-message'>
-        {msg}
+        {uuid} : {msg}
       </p>
     </div>
   )

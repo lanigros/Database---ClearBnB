@@ -1,13 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import socket from '../components/socket'
 import ChatMessage from '../components/ChatMessage'
+import { Context } from '../store/Store'
 
 export default function Chat() {
-  const [message, setMessage] = useState({
-    id: idGen(),
-    uuid: '1',
-    msg: '',
-  })
+  const [state, dispatch] = useContext(Context)
+
+  const [message, setMessage] = useState('')
   const [messages, setMessages] = useState([])
   const area = useRef()
 
@@ -25,10 +24,14 @@ export default function Chat() {
   }
   const sendMessage = async (e) => {
     e.preventDefault()
-    socket.send(JSON.stringify(message))
-    setMessage((old) => {
-      return { ...old, msg: '' }
-    })
+
+    socket.send(
+      JSON.stringify({
+        msg: message,
+        id: idGen(),
+        uuid: state.currentUser ? state.currentUser : 'NotLoggedIn',
+      })
+    )
   }
 
   function idGen() {
@@ -48,7 +51,7 @@ export default function Chat() {
       <div className='chat'>
         {messages &&
           messages.map((msg) => {
-            return <ChatMessage message={msg} />
+            return <ChatMessage message={msg} user={state.currentUser} />
           })}
       </div>
 
@@ -65,9 +68,7 @@ export default function Chat() {
           value={message.msg}
           onChange={(e) => {
             e.preventDefault()
-            setMessage((old) => {
-              return { ...old, msg: e.target.value }
-            })
+            setMessage(e.target.value)
           }}
           onKeyDown={onEnterPress}
           placeholder='...'

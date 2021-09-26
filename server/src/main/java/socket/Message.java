@@ -3,7 +3,7 @@ package socket;
 public class Message {
 
   private String id;
-  private int uuid;
+  private String uuid;
   private String msg;
 
   public Message() {
@@ -22,11 +22,11 @@ public class Message {
     this.id = id;
   }
 
-  public int getUuid() {
+  public String getUuid() {
     return uuid;
   }
 
-  public void setUuid(int uuid) {
+  public void setUuid(String uuid) {
     this.uuid = uuid;
   }
 

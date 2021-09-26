@@ -31,6 +31,7 @@ public class Socket {
         Message msg = new Message();
         msg.setMsg(username + " joined the chat");
         msg.setId(username);
+        msg.setUuid("Server");
         broadcastMessage("Server", msg);
       });
 
