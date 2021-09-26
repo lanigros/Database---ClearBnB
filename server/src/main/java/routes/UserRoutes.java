@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import model.Review;
 import model.User;
+import service.ActiveSessionService;
 import service.UserService;
 
 public class UserRoutes {
@@ -59,10 +60,11 @@ public class UserRoutes {
       }
     });
     app.post("rest/reviews/host/:id", (req, res) -> {
-      //String sessionID = req.cookie("sessionID");
+      String sessionID = req.cookie("sessionID");
+      String userId = String.valueOf(ActiveSessionService.getActiveSessionUserId(sessionID));
       String hostID = req.params("id");
       ReviewBasicDTO dto = req.body(ReviewBasicDTO.class);
-      Review review = userService.createReview(dto, hostID);
+      Review review = userService.createReview(userId, dto, hostID);
       res.json(review);
     });
   }
