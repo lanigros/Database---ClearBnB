@@ -4,6 +4,7 @@ package mapper;
 import datatransforobject.HomeAddressDTO;
 import datatransforobject.HomeCoreDTO;
 import datatransforobject.HomeCoreNoHostDTO;
+import datatransforobject.HomeCoreWithBooking;
 import datatransforobject.HomeHistoryDTO;
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -81,9 +82,19 @@ public class HomeMapper {
       dto.setPricePerNight(home.getPricePerNight());
       list.add(dto);
     });
-
     return list;
+  }
 
+  public static List<HomeCoreWithBooking> convertToWithBooking(List<Home> homes) {
+    List<HomeCoreWithBooking> list = new ArrayList<>();
+    homes.forEach(home -> {
+      HomeCoreWithBooking dto = new HomeCoreWithBooking(
+          home.getAddress(), home.getImages(), home.getPricePerNight(),
+          home.getStartDate(), home.getEndDate(), home.getCreatedDate(),
+          home.getAmenities(), home.getBookingDetails());
+      list.add(dto);
+    });
+    return list;
   }
 
   public static HomeHistoryLog convertHistory(Home home) {
