@@ -1,24 +1,34 @@
-import React, { useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router'
 import { getHomeHistory } from '../api/homeApi'
 import HomeHistoryList from './HomeHistoryList'
 import BookHomeForm from './BookHomeForm'
+import HomeCardEdit from './HomeCardEdit'
 
-export default function HomeCard({ home: { id, pricePerNight, startDate, endDate, amenities, address, images } }) {
-  const [homeHistory, setHomeHistory] = useState('')
-  const [isVisible, setIsVisible] = useState(false)
+export default function HomeCard({ home }) {
+  const { id, pricePerNight, startDate, endDate, amenities, address, images } =
+    home
+  const history = useHistory()
+  const [isHistoryVisible, setIsHistoryVisible] = useState(false)
+  const [isEditVisible, setIsEditVisible] = useState(false)
+  const [homeHistory, setHomeHistory] = useState([])
 
-  const changeIsVisible= () => {
-    setIsVisible(!isVisible)
-  }
-  
   useEffect(() => {
-     const fetchHistory = async() => {
-        const history = await getHomeHistory(id)
-        setHomeHistory(history)
-    }
-    if (isVisible) fetchHistory()
-  }, [isVisible])
+    if (isHistoryVisible) history.push(`/homes/${home.id}/edit`)
+    else history.push(`/homes`)
+  }, [isHistoryVisible, history, home.id])
 
+  const changeIsHistoryVisible = () => {
+    setIsHistoryVisible(!isHistoryVisible)
+  }
+
+  useEffect(() => {
+    const fetchHistory = async () => {
+      const history = await getHomeHistory(id)
+      setHomeHistory(history)
+    }
+    if (isHistoryVisible) fetchHistory()
+  }, [isHistoryVisible, id])
 
   return (
     <div
@@ -45,10 +55,21 @@ export default function HomeCard({ home: { id, pricePerNight, startDate, endDate
             src={img.imageUrl}></img>
         )
       })}
-      <button onClick={changeIsVisible}>{isVisible ? 'Hide edit ' : 'See edit '} history</button>
-      {isVisible && homeHistory && <HomeHistoryList homes={homeHistory} />}
-      <BookHomeForm id={id} pricePerNight={pricePerNight}/>
-
+      <button
+        value={home.id}
+        onClick={() => {
+          setIsEditVisible(!isEditVisible)
+        }}>
+        Edit
+      </button>
+      {isEditVisible && (
+        <HomeCardEdit setIsVisible={setIsEditVisible} homeProp={home} />
+      )}
+      <button onClick={changeIsHistoryVisible}>
+        {isHistoryVisible ? 'Hide edit ' : 'See edit '} history
+      </button>
+      {isHistoryVisible && homeHistory && <HomeHistoryList homes={homeHistory} />}
+      <BookHomeForm id={id} pricePerNight={pricePerNight} />
     </div>
   )
 }

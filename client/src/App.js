@@ -24,7 +24,7 @@ function App() {
           <Route path='/homes' component={HomeList} />
           <Route path='/login' component={LoginForm} />
           <Route path='/profile/:id' component={UserProfile} />
-          <Route path='/my-profile' component={UserProfileLoggedIn}/>
+          <Route path='/my-profile' component={UserProfileLoggedIn} />
         </Switch>
       </Router>
     </Store>

@@ -129,6 +129,7 @@ public class HomeService {
 
     Address address = AddressMapper.convertToAddress(dto, newValues);
     newValues.setAddress(address);
+    newValues.setId(oldValues.get().getId());
 
     Optional<Home> updatedHome = homeRepository.save(newValues);
     HomeHistoryLog historyLog = HomeMapper.convertHistory(oldValues.get());
