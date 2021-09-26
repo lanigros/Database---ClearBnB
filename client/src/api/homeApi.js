@@ -14,6 +14,15 @@ export const createHome = async (homeObject) => {
     return await response.json()
 }
 
+export const getHomeHistory = async (homeId) => {
+  const response = await fetch(`/rest/home/${homeId}/history`)
+  if (response.ok) {
+    let res = await response.json()
+    return res
+  }
+  return null
+}
+
 export const bookHome = async (bookingObject) => {
   console.log(bookingObject)
   const response = await fetch(`/api/payment`, {

@@ -12,7 +12,6 @@ const Header = () => {
       const result = await logoutUser()
       if (result != null) {
         dispatch({ type: 'SET_USER', payload: '' })
-        localStorage.setItem('current-user', null)
       }
     }
     performLogout()

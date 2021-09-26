@@ -185,7 +185,7 @@ const HomeList = () => {
           }}></input>
         <span>PARKING</span>
       </div>
-      {homes && homes.map((home) => <HomeCard home={home} key={home.id}/>)}
+      {homes && homes.map((home) => <HomeCard home={home} key={home.id} />)}
     </>
   )
 }
