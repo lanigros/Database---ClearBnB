@@ -22,14 +22,6 @@ public class HomeHistoryLogRepository implements HomeHistoryLogRepositoryInterfa
   }
 
   @Override
-  public List<HomeHistoryLog> findByHomeId(String homeId) {
-    List<HomeHistoryLog> homeHistoryLog = entityManager.createNamedQuery(
-        "HomeHistoryLog.findByHomeId", HomeHistoryLog.class).setParameter("id", homeId)
-        .getResultList();
-    return homeHistoryLog;
-  }
-
-  @Override
   public Optional<HomeHistoryLog> save(HomeHistoryLog home) {
     try {
       entityManager.getTransaction().begin();

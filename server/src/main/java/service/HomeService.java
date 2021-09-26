@@ -97,7 +97,9 @@ public class HomeService {
   }
 
   public List<HomeHistoryLog> getByHomeId(String homeId) {
-    List<HomeHistoryLog> homeHistoryHomeId = homeHistoryLogRepository.findByHomeId(homeId);
+    Optional<Home> homeOptional = homeRepository.findById(homeId);
+    if(homeOptional.isEmpty()) return null;
+    List<HomeHistoryLog> homeHistoryHomeId = homeOptional.get().getHistoryLogs();
     return homeHistoryHomeId;
   }
 

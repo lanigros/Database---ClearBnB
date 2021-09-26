@@ -20,6 +20,7 @@ public class HomeRepository implements HomeRepositoryInterface {
   public Optional<Home> findById(String ids) {
     int id = Integer.parseInt(ids);
     Home home = entityManager.find(Home.class, id);
+    System.out.println(home.getHistoryLogs());
     return home != null ? Optional.of(home) : Optional.empty();
   }
 
