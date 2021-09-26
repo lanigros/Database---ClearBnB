@@ -13,6 +13,18 @@ public class UserProfileDTO {
   private int avgRatingRenter;
   private List<Review> hostReview;
   private List<Review> renterReview;
+  private List<HomeCoreNoHostDTO> homes;
+
+  public UserProfileDTO() {
+
+  }
+
+  @Override
+  public String toString() {
+    return "UserProfileDTO{" + "id=" + id + ", firstName='" + firstName + '\'' + ", lastName='"
+        + lastName + '\'' + ", email='" + email + '\'' + ", avgRatingHost=" + avgRatingHost
+        + ", avgRatingRenter=" + avgRatingRenter + ", homes=" + homes + '}';
+  }
 
   public List<Review> getHostReview() {
     return hostReview;
@@ -28,19 +40,6 @@ public class UserProfileDTO {
 
   public void setRenterReview(List<Review> renterReview) {
     this.renterReview = renterReview;
-  }
-
-  private List<HomeCoreNoHostDTO> homes;
-
-  public UserProfileDTO() {
-
-  }
-
-  @Override
-  public String toString() {
-    return "UserProfileDTO{" + "id=" + id + ", firstName='" + firstName + '\'' + ", lastName='"
-        + lastName + '\'' + ", email='" + email + '\'' + ", avgRatingHost=" + avgRatingHost
-        + ", avgRatingRenter=" + avgRatingRenter + ", homes=" + homes + '}';
   }
 
   public int getId() {
@@ -74,7 +73,6 @@ public class UserProfileDTO {
   public void setEmail(String email) {
     this.email = email;
   }
-
 
   public int getAvgRatingHost() {
     return avgRatingHost;
