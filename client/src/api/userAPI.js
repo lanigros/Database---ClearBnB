@@ -25,7 +25,6 @@ export const fetchPrivateProfile = async () => {
   })
   if (!response.ok) return null
   const user = await response.json()
-  console.log('user :>> ', user)
   return user
 }
 

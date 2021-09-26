@@ -19,7 +19,6 @@ const server = {
 export default function ChatMessage(props) {
   const { msg, uuid, id } = props.message
   const user = props.user || 'NotLoggedIn'
-  console.log('user :>> ', user)
 
   let style
   switch (uuid) {

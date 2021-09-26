@@ -3,7 +3,7 @@ export const createAmenityArray = (wifi, kitchen, bath, parking) => {
   if (wifi) amenityArray.push('WIFI')
   if (kitchen) amenityArray.push('KITCHEN')
   if (bath) amenityArray.push('BATH')
-  if(parking) amenityArray.push('PARKING')
+  if (parking) amenityArray.push('PARKING')
   console.log(amenityArray)
   return amenityArray
 }
