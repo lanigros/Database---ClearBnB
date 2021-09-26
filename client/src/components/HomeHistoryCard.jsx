@@ -10,7 +10,7 @@ const HomeHistoryCard = ({ home: { pricePerNight, images, amenities, startDate, 
       <h3>Start date: {new Date(startDate).toLocaleDateString()}</h3>
       <h3>End date: {new Date(endDate).toLocaleDateString()}</h3>
       {amenities && amenities.map((am, idx) => {
-        return <h3 key={idx}>Got {am.amenity}</h3>
+        return <h3 key={idx}>Got {am.amenityEnum}</h3>
       })}
       {images.map((img, idx) => {
         // eslint-disable-next-line jsx-a11y/alt-text
