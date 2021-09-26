@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { useForm } from '../customhooks/useForm'
 import { bookHome } from '../api/homeApi'
 
-const BookHomeForm = ({ home: { id, pricePerNight } }) => {
+const BookHomeForm = ({ id, pricePerNight }) => {
   const [bookingValues, handleChange] = useForm({
     startDate: '',
     endDate: ''

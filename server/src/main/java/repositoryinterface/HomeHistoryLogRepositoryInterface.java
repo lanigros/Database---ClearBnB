@@ -8,8 +8,6 @@ public interface HomeHistoryLogRepositoryInterface {
 
     public Optional<HomeHistoryLog> findById(String id);
 
-    public List<HomeHistoryLog> findByHomeId(String homeId);
-
     public Optional<HomeHistoryLog> save(HomeHistoryLog homeHistoryLog);
 
 }

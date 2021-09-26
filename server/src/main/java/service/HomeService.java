@@ -97,7 +97,9 @@ public class HomeService {
   }
 
   public List<HomeHistoryLog> getByHomeId(String homeId) {
-    List<HomeHistoryLog> homeHistoryHomeId = homeHistoryLogRepository.findByHomeId(homeId);
+    Optional<Home> homeOptional = homeRepository.findById(homeId);
+    if(homeOptional.isEmpty()) return null;
+    List<HomeHistoryLog> homeHistoryHomeId = homeOptional.get().getHistoryLogs();
     return homeHistoryHomeId;
   }
 
@@ -127,6 +129,7 @@ public class HomeService {
 
     Address address = AddressMapper.convertToAddress(dto, newValues);
     newValues.setAddress(address);
+    newValues.setId(oldValues.get().getId());
 
     Optional<Home> updatedHome = homeRepository.save(newValues);
     HomeHistoryLog historyLog = HomeMapper.convertHistory(oldValues.get());

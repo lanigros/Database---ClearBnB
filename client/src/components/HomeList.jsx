@@ -6,8 +6,8 @@ import { getHomeList } from '../api/homeApi'
 const HomeList = () => {
   const [homes, setHomes] = useState([])
   const [price, setPrice] = useState(100)
-  const [startDate, setStartDate] = useState()
-  const [endDate, setEndDate] = useState()
+  const [startDate, setStartDate] = useState('')
+  const [endDate, setEndDate] = useState('')
   const [input, setInput] = useState()
   const [wifi, setWifi] = useState(false)
   const [bath, setBath] = useState(false)
@@ -185,7 +185,7 @@ const HomeList = () => {
           }}></input>
         <span>PARKING</span>
       </div>
-      {homes && homes.map((home) => <HomeCard home={home} />)}
+      {homes && homes.map((home) => <HomeCard home={home} key={home.id} />)}
     </>
   )
 }
