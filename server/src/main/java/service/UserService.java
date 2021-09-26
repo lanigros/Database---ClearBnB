@@ -1,7 +1,5 @@
 package service;
 
-import static java.util.stream.Collectors.toList;
-
 import datatransforobject.ReviewBasicDTO;
 import datatransforobject.UserCoreDTO;
 import datatransforobject.UserLoginDTO;
@@ -9,6 +7,7 @@ import datatransforobject.UserNameIdDTO;
 import datatransforobject.UserProfileDTO;
 import java.util.List;
 import java.util.Optional;
+import static java.util.stream.Collectors.toList;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import mapper.ReviewMapper;
@@ -54,13 +53,14 @@ public class UserService {
 
   public List<User> getAllWithEverything() {
     List<User> users = userRepository.findAll();
-    users.forEach(UserMapper::hidePasswordFromUser);
+    users.forEach(UserMapper :: hidePasswordFromUser);
     return users;
   }
 
   public List<UserNameIdDTO> getAllNames() {
     List<User> users = userRepository.findAll();
-    List<UserNameIdDTO> list = users.stream().map(UserMapper::convertToNameAndId).collect(toList());
+    List<UserNameIdDTO> list = users.stream().map(UserMapper :: convertToNameAndId)
+                                    .collect(toList());
     return list;
   }
 
@@ -111,20 +111,15 @@ public class UserService {
     return UserMapper.convertToProfile(user.get());
   }
 
-  public Review createReview(ReviewBasicDTO dto, String hostId) {
-    //try catch eller optional.isempty
-    String userId = "3"; // från session
+  public Review createReview(String userId, ReviewBasicDTO dto, String hostId) {
     Optional<Host> host = hostRepository.findById(hostId);
     Optional<User> user = userRepository.findById(userId);
     Optional<BookingDetail> bookingDetail = bookingDetailRepository.findById(
         dto.getbookingDetail());
-    Review review = ReviewMapper.convertToReview(dto, user.get(), bookingDetail.get(), host.get());
+    Review review = ReviewMapper.convertToReview(dto, user.get(), bookingDetail.get());
     host.get().getReviews().add(review);
     Optional<Host> savedHost = hostRepository.save(host.get());
-
     return review;
   }
 
 }
-//    Optional<Host> host = hostRepository.findByUserId(userId);
-// Review review = ReviewMapper.convertToBasicDTO(dto, userId);
