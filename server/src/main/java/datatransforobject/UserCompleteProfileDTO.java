@@ -3,8 +3,7 @@ package datatransforobject;
 import java.util.List;
 import model.Review;
 
-public class UserProfileDTO {
-
+public class UserCompleteProfileDTO {
   private int id;
   private String firstName;
   private String lastName;
@@ -13,33 +12,22 @@ public class UserProfileDTO {
   private int avgRatingRenter;
   private List<Review> hostReview;
   private List<Review> renterReview;
-  private List<HomeCoreNoHostDTO> homes;
+  private List<HomeCoreWithBooking> homes;
 
-  public UserProfileDTO() {
-
-  }
-
-  @Override
-  public String toString() {
-    return "UserProfileDTO{" + "id=" + id + ", firstName='" + firstName + '\'' + ", lastName='"
-        + lastName + '\'' + ", email='" + email + '\'' + ", avgRatingHost=" + avgRatingHost
-        + ", avgRatingRenter=" + avgRatingRenter + ", homes=" + homes + '}';
-  }
-
-  public List<Review> getHostReview() {
-    return hostReview;
-  }
-
-  public void setHostReview(List<Review> hostReview) {
+  public UserCompleteProfileDTO(String firstName, String lastName, String email,
+      int avgRatingHost, int avgRatingRenter, List<Review> hostReview,
+      List<Review> renterReview, List<HomeCoreWithBooking> homes) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.email = email;
+    this.avgRatingHost = avgRatingHost;
+    this.avgRatingRenter = avgRatingRenter;
     this.hostReview = hostReview;
-  }
-
-  public List<Review>getRenterReview() {
-    return renterReview;
-  }
-
-  public void setRenterReview(List<Review> renterReview) {
     this.renterReview = renterReview;
+    this.homes = homes;
+  }
+
+  public UserCompleteProfileDTO() {
   }
 
   public int getId() {
@@ -78,6 +66,38 @@ public class UserProfileDTO {
     return avgRatingHost;
   }
 
+  public void setAvgRatingHost(int avgRatingHost) {
+    this.avgRatingHost = avgRatingHost;
+  }
+
+  public void setAvgRatingRenter(int avgRatingRenter) {
+    this.avgRatingRenter = avgRatingRenter;
+  }
+
+  public List<Review> getHostReview() {
+    return hostReview;
+  }
+
+  public void setHostReview(List<Review> hostReview) {
+    this.hostReview = hostReview;
+  }
+
+  public List<Review> getRenterReview() {
+    return renterReview;
+  }
+
+  public void setRenterReview(List<Review> renterReview) {
+    this.renterReview = renterReview;
+  }
+
+  public List<HomeCoreWithBooking> getHomes() {
+    return homes;
+  }
+
+  public void setHomes(List<HomeCoreWithBooking> homes) {
+    this.homes = homes;
+  }
+
   public void setAvgRatingHost(List<Review> reviews) {
 
     float tempTotal = 0;
@@ -102,13 +122,4 @@ public class UserProfileDTO {
     this.avgRatingRenter = (int) Math.floor(tempAvg);
   }
 
-  public List<HomeCoreNoHostDTO> getHomes() {
-    return homes;
-  }
-
-  public void setHomes(List<HomeCoreNoHostDTO> homes) {
-    this.homes = homes;
-  }
 }
-
-
