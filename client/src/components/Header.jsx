@@ -12,7 +12,6 @@ const Header = () => {
       const result = await logoutUser()
       if (result != null) {
         dispatch({ type: 'SET_USER', payload: '' })
-        localStorage.setItem('current-user', null)
       }
     }
     performLogout()
@@ -31,7 +30,7 @@ const Header = () => {
         </nav>
         <nav>
           {state.currentUser ? <Link to={'/'} onClick={logout}>Logout</Link> : <Link to={'/login'}>Login</Link>}
-          {state.currentUser && <Link to={'/my-profile'}> {state.currentUser} </Link>}
+          {state.currentUser && <Link to={'/profile/private'}> {state.currentUser} </Link>}
         </nav>
       </header>
     </HeaderStyle>

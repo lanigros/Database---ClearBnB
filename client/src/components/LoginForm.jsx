@@ -18,7 +18,7 @@ const LoginForm = (props) => {
       const user = await loginUser(userLogin)
       if (user != null) {
         dispatch({ type: 'SET_USER', payload: user.firstName })
-        history.push('/my-profile')
+        history.push('/profile/private')
       }
     }
     tryLogin()

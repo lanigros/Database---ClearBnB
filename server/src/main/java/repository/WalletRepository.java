@@ -24,6 +24,7 @@ public class WalletRepository {
        .getSingleResult();
     if(hasEnoughTokens) entityManager.createNamedQuery("Wallet.withdrawTokens")
         .setParameter("tokenAmount", price)
+        .setParameter("userId", userId)
         .executeUpdate();
     entityManager.getTransaction().commit();
     return hasEnoughTokens;
