@@ -1,6 +1,8 @@
 import React from 'react'
+import BookHomeForm from './BookHomeForm'
 
 export default function HomeCard({ home }) {
+
   return (
     <div
       className={'Cool'}
@@ -9,7 +11,7 @@ export default function HomeCard({ home }) {
       <h3>Start date: {new Date(home.startDate).toLocaleDateString()}</h3>
       <h3>End date: {new Date(home.endDate).toLocaleDateString()}</h3>
       {home.amenities.map((am, idx) => {
-        return <h3 key={idx}>Got {am.amenity}</h3>
+        return <h3 key={idx}>Has {am.amenity}</h3>
       })}
       <h3>Street: {home.address.street}</h3>
       <h3>City: {home.address.city}</h3>
@@ -25,6 +27,8 @@ export default function HomeCard({ home }) {
             src={img.imageUrl}></img>
         )
       })}
+      <BookHomeForm home={home}/>
+
     </div>
   )
 }
