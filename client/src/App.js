@@ -23,8 +23,8 @@ function App() {
           <Route path='/users' component={UserList} />
           <Route path='/homes' component={HomeList} />
           <Route path='/login' component={LoginForm} />
-          <Route path='/profile/:id' component={UserView} />
-          <Route path='/my-profile' component={UserProfileLoggedIn} />
+          <Route exact path='/user/:id' component={UserView} />
+          <Route exact path='/profile/private' component={UserProfileLoggedIn} />
         </Switch>
       </Router>
     </Store>
