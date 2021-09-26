@@ -20,9 +20,10 @@ public class HomeCoreNoHostDTO {
   public HomeCoreNoHostDTO() {
   }
 
-  public HomeCoreNoHostDTO(Address address, List<HomeImage> images, int pricePerNight,
+  public HomeCoreNoHostDTO(int id, Address address, List<HomeImage> images, int pricePerNight,
       Timestamp startDate, Timestamp endDate, Timestamp createdDate,
       List<Amenity> amenities) {
+    this.id = id;
     this.address = address;
     this.images = images;
     this.pricePerNight = pricePerNight;
