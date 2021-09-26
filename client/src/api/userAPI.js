@@ -8,6 +8,14 @@ export const createUser = async (userObject) => {
   return user
 }
 
+export const fetchUserById = async (id) => {
+  const res = await fetch(`/rest/user/${id}/profile`)
+  if (!res.ok) return null
+  const response = await res.json()
+  console.log('response :>> ', response)   
+  return response
+}
+
 export const fetchUsers = async () => {
   const users = await (await fetch(`/rest/users`)).json()
   return users
