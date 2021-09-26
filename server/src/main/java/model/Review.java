@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.sql.Timestamp;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,7 +16,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "review")
-@NamedQueries({@NamedQuery(name = "Review.findById", query = "SELECT r FROM Review r WHERE r.id = :id"), @NamedQuery(name = "Review.findAll", query = "SELECT r FROM Review r")})
+@NamedQueries({
+    @NamedQuery(name = "Review.findById", query = "SELECT r FROM Review r WHERE r.id = :id"),
+    @NamedQuery(name = "Review.findAll", query = "SELECT r FROM Review r")})
 public class Review {
 
 
@@ -31,8 +34,12 @@ public class Review {
   @ManyToOne
   @JoinColumn(name = "booking_id")
   private BookingDetail bookingDetail;
-  @Column(name = "creator_id")
+  @Column(name = "creator_id", insertable = false, updatable = false)
   private int creatorId;
+  @ManyToOne
+  @JsonBackReference(value = "user-review")
+  @JoinColumn(name = "creator_id")
+  private User user;
 
   public Review() {
   }
@@ -47,23 +54,12 @@ public class Review {
     this.creatorId = creatorId;
   }
 
-  public int getCreatorId() {
-    return creatorId;
-  }
-
-  public void setCreatorId(int creatorId) {
-  }
-
-  @Override
-  public String toString() {
-    return "Review{" + "rating=" + rating + ", comment='" + comment + '\'' + ", created=" + created + ", isDeleted=" + isDeleted + +'}';
-  }
-
   public int getId() {
     return id;
   }
 
   public void setId(int id) {
+    this.id = id;
   }
 
   public int getRating() {
@@ -106,11 +102,19 @@ public class Review {
     this.bookingDetail = bookingDetail;
   }
 
-  public void setBookingId(BookingDetail bookingDetail) {
-    this.bookingDetail = bookingDetail;
+  public int getCreatorId() {
+    return creatorId;
   }
 
-  public void setHost(Host host) {
+  public void setCreatorId(int creatorId) {
+    this.creatorId = creatorId;
   }
 
+  public User getUser() {
+    return user;
+  }
+
+  public void setUser(User user) {
+    this.user = user;
+  }
 }

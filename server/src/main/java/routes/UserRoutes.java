@@ -54,6 +54,7 @@ public class UserRoutes {
         List<User> users = userService.getAllWithEverything();
         res.json(users);
       } catch (Exception e) {
+        e.printStackTrace();
         res.status(500).json("internal error");
       }
     });

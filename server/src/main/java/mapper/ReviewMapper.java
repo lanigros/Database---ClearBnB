@@ -6,6 +6,7 @@ import java.util.List;
 import model.BookingDetail;
 import model.Host;
 import model.Review;
+import model.User;
 
 public class ReviewMapper {
 
@@ -21,14 +22,13 @@ public class ReviewMapper {
     return list;
   }
 
-  public static Review convertToReview(ReviewBasicDTO dto, int userID, BookingDetail bookingDetail,
+  public static Review convertToReview(ReviewBasicDTO dto, User user, BookingDetail bookingDetail,
       Host host) {
     Review review = new Review();
     review.setComment(dto.getComment());
     review.setRating(dto.getRating());
     review.setBookingDetail(bookingDetail);
-    review.setCreatorId(userID);
-    review.setHost(host);
+    review.setUser(user);
     return review;
   }
 

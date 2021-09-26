@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import model.Host;
+import model.User;
 import repositoryinterface.HostRepositoryInterface;
 
 public class HostRepository implements HostRepositoryInterface {
@@ -15,8 +16,11 @@ public class HostRepository implements HostRepositoryInterface {
   }
 
   @Override
-  public Optional<Host> findById(String id) {
-    return Optional.empty();
+  public Optional<Host> findById(String ids) {
+    int id = Integer.parseInt(ids);
+
+    Host host = entityManager.find(Host.class, id);
+    return host != null ? Optional.of(host) : Optional.empty();
   }
 
   @Override

@@ -1,5 +1,7 @@
 package service;
 
+import static java.util.stream.Collectors.toList;
+
 import datatransforobject.ReviewBasicDTO;
 import datatransforobject.UserCoreDTO;
 import datatransforobject.UserLoginDTO;
@@ -7,7 +9,6 @@ import datatransforobject.UserNameIdDTO;
 import datatransforobject.UserProfileDTO;
 import java.util.List;
 import java.util.Optional;
-import static java.util.stream.Collectors.toList;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import mapper.ReviewMapper;
@@ -53,14 +54,13 @@ public class UserService {
 
   public List<User> getAllWithEverything() {
     List<User> users = userRepository.findAll();
-    users.forEach(UserMapper :: hidePasswordFromUser);
+    users.forEach(UserMapper::hidePasswordFromUser);
     return users;
   }
 
   public List<UserNameIdDTO> getAllNames() {
     List<User> users = userRepository.findAll();
-    List<UserNameIdDTO> list = users.stream().map(UserMapper :: convertToNameAndId)
-                                    .collect(toList());
+    List<UserNameIdDTO> list = users.stream().map(UserMapper::convertToNameAndId).collect(toList());
     return list;
   }
 
@@ -112,16 +112,16 @@ public class UserService {
   }
 
   public Review createReview(ReviewBasicDTO dto, String hostId) {
-    int userId = 3;
+    //try catch eller optional.isempty
+    String userId = "3"; // från session
     Optional<Host> host = hostRepository.findById(hostId);
+    Optional<User> user = userRepository.findById(userId);
     Optional<BookingDetail> bookingDetail = bookingDetailRepository.findById(
         dto.getbookingDetail());
-    Review review = ReviewMapper.convertToReview(dto, userId, bookingDetail.get(), host.get());
+    Review review = ReviewMapper.convertToReview(dto, user.get(), bookingDetail.get(), host.get());
     host.get().getReviews().add(review);
     Optional<Host> savedHost = hostRepository.save(host.get());
-    Optional<Review> savedReview = reviewRepository.save(review);
-    //Optional<Review> savedReview = reviewRepository.save(review);
-    //query insert i ett table. host_id, review_id
+
     return review;
   }
 
