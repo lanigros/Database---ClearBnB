@@ -1,9 +1,16 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { useHistory } from 'react-router'
 import BookHomeForm from './BookHomeForm'
+import HomeCardEdit from './HomeCardEdit'
 
 export default function HomeCard({ home }) {
   const history = useHistory()
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    if(isVisible) history.push(`/homes/${home.id}/edit`)
+    else history.push(`/homes`)
+  }, [isVisible, history, home.id])
 
   return (
     <div
@@ -31,13 +38,12 @@ export default function HomeCard({ home }) {
       })}
       <button
         value={home.id}
-        onClick={(e) => {
-          e.preventDefault()
-          const id = e.target.value
-          history.push(`/home/${id}/edit`)
+        onClick={() => {
+          setIsVisible(!isVisible)
         }}>
         Edit
       </button>
+      {isVisible && <HomeCardEdit setIsVisible={setIsVisible} homeProp={home}/>}
       <BookHomeForm home={home} />
     </div>
   )
