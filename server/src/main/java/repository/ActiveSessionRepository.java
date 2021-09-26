@@ -25,31 +25,26 @@ public class ActiveSessionRepository implements ActiveSessionRepositoryInterface
   @Override
   public void deleteActiveSessionById(String sessionId) {
     entityManager.getTransaction().begin();
-    entityManager.createNamedQuery(
-            "ActiveSession.deleteBySessionId")
-        .setParameter("sessionId", sessionId).executeUpdate();
-    entityManager.getTransaction().commit();
-  }
-
-  @Override
-  public void deleteActiveSessionByUserId(int userId) {
-    entityManager.getTransaction().begin();
-    entityManager.createNamedQuery(
-            "ActiveSession.deleteByUserId")
-        .setParameter("userId", userId).executeUpdate();
+    entityManager.createNamedQuery("ActiveSession.deleteBySessionId")
+                 .setParameter("sessionId", sessionId).executeUpdate();
     entityManager.getTransaction().commit();
   }
 
   @Override
   public Map<String, Integer> getAllActiveSessions() {
     Map<String, Integer> sessions = entityManager.createNamedQuery(
-            "ActiveSession.getAllActiveSessions", ActiveSession.class
-        ).getResultStream()
-        .collect(Collectors.toMap(
-            activeSession -> activeSession.getId(),
-            activeSession -> activeSession.getUserId()
-        ));
+        "ActiveSession.getAllActiveSessions", ActiveSession.class).getResultStream().collect(
+        Collectors.toMap(activeSession -> activeSession.getId(),
+                         activeSession -> activeSession.getUserId()));
     return sessions;
+  }
+
+  @Override
+  public void deleteActiveSessionByUserId(int userId) {
+    entityManager.getTransaction().begin();
+    entityManager.createNamedQuery("ActiveSession.deleteByUserId").setParameter("userId", userId)
+                 .executeUpdate();
+    entityManager.getTransaction().commit();
   }
 
 }
