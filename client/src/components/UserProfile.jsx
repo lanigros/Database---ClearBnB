@@ -22,11 +22,18 @@ const UserProfile = ({
           <h4>{email}</h4>
           <h4>{`Avg rating as host ${avgRatingHost}`}</h4>
           <h4>{`Avg rating as renter ${avgRatingRenter}`}</h4>
-          <h4>{JSON.stringify(hostReview)}</h4>
-          <h4>{JSON.stringify(renterReview)}</h4>
+          <h5>Reviews as host</h5>
+          <pre>{JSON.stringify(hostReview, null, 2)}</pre>
+          <h5>Reviews as renter</h5>
+          <pre>{JSON.stringify(renterReview, null, 2)}</pre>
           {madeReviews &&
             madeReviews.map((rev) => {
-              return <h4>{JSON.stringify(rev)}</h4>
+              return (
+                <>
+                  <h4>reviews made</h4>
+                  <pre>{JSON.stringify(rev, null, 2)}</pre>
+                </>
+              )
             })}
           <h1>Homes</h1>
           {homes &&

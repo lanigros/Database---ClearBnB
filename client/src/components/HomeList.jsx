@@ -63,7 +63,7 @@ const HomeList = () => {
         type='range'
         v-model='range'
         min='0'
-        max='1500'
+        max='15000'
         step='10'
         onMouseUp={(e) => {
           e.preventDefault()
