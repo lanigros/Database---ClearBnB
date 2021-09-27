@@ -1,12 +1,10 @@
 package routes;
 
 import datatransforobject.UserCompleteProfileDTO;
-import datatransforobject.UserCoreDTO;
 import datatransforobject.UserNameIdDTO;
 import datatransforobject.UserProfileDTO;
 import express.Express;
 import java.util.List;
-import java.util.Optional;
 import model.User;
 import service.ActiveSessionService;
 import service.UserService;
@@ -30,12 +28,10 @@ public class UserRoutes {
         String userId = String.valueOf(ActiveSessionService.getActiveSessionUserId(sessionID));
         UserCompleteProfileDTO user = userService.getUserCompleteProfile(userId);
         res.json(user);
-      }catch (Exception e){
+      } catch (Exception e) {
         res.json(500);
       }
-
     });
-
     app.get("rest/users/name", (req, res) -> {
       try {
         List<UserNameIdDTO> users = userService.getAllNames();
@@ -44,7 +40,6 @@ public class UserRoutes {
         res.status(500).json("internal error");
       }
     });
-
     app.get("rest/user/profile/:id", (req, res) -> {
       try {
         String id = req.params("id");
@@ -54,7 +49,6 @@ public class UserRoutes {
         res.status(500).json("internal error");
       }
     });
-
     app.get("rest/users", (req, res) -> {
       try {
         List<User> users = userService.getAllWithEverything();
@@ -63,6 +57,8 @@ public class UserRoutes {
         res.status(500).json("internal error");
       }
     });
-
+    app.post("rest/reviews/renter/:id", (req, res) -> {
+    });
   }
+
 }
