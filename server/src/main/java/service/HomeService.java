@@ -15,6 +15,7 @@ import javax.persistence.EntityManagerFactory;
 import mapper.AddressMapper;
 import mapper.HomeMapper;
 import model.Address;
+import model.Amenity;
 import model.AmenityHistory;
 import model.Home;
 import model.HomeHistoryLog;
@@ -26,6 +27,7 @@ import repository.AmenityHistoryRepository;
 import repository.HomeHistoryLogRepository;
 import repository.HomeRepository;
 import repository.HostRepository;
+import utility.AmenityEnumConverter;
 import utility.ManagerFactory;
 import utility.Utility;
 
@@ -119,22 +121,21 @@ public class HomeService {
     Address address = AddressMapper.convertToAddress(dto, home);
     home.setAddress(address);
 
-    Optional<Home> savedHome = homeRepository.save(home);
+    Optional<Home> savedHome = homeRepository.save(home, false);
     return savedHome;
   }
 
   public Optional<Home> updateHome(String id, HomeAddressDTO dto) {
     Optional<Home> oldValues = homeRepository.findById(id);
+
     Home newValues = HomeMapper.convertToHome(dto, oldValues.get().getHost());
 
-    Address address = AddressMapper.convertToAddress(dto, newValues);
-    newValues.setAddress(address);
+    List<HomeHistoryLog> historyLogs = HomeMapper.convertHistory(oldValues.get());
+    newValues.setHistoryLogs(historyLogs);
+    newValues.setAddress(oldValues.get().getAddress());
     newValues.setId(oldValues.get().getId());
 
-    Optional<Home> updatedHome = homeRepository.save(newValues);
-    HomeHistoryLog historyLog = HomeMapper.convertHistory(oldValues.get());
-
-    homeHistoryLogRepository.save(historyLog);
+    Optional<Home> updatedHome = homeRepository.save(newValues, true);
     return Optional.of(updatedHome.get());
 
   }

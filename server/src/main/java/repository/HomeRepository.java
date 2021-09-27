@@ -38,9 +38,17 @@ public class HomeRepository implements HomeRepositoryInterface {
   }
 
   @Override
-  public Optional<Home> save(Home home) {
+  public Optional<Home> save(Home home, boolean homeIsUpdate) {
     try {
       entityManager.getTransaction().begin();
+      if(homeIsUpdate) {
+        entityManager.createNamedQuery("Amenity.deleteAllByHome")
+            .setParameter("home", home)
+            .executeUpdate();
+        entityManager.createNamedQuery("HomeImage.deleteAllByHome")
+            .setParameter("home", home)
+            .executeUpdate();
+      }
       entityManager.merge(home);
       entityManager.getTransaction().commit();
       return Optional.of(home);
