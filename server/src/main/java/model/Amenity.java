@@ -10,11 +10,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import utility.AmenityEnumConverter;
 
 @Entity
 @Table(name = "amenity_enum")
+@NamedQueries({
+    @NamedQuery(name="Amenity.deleteAllByHome", query = "DELETE FROM Amenity a WHERE a.home = :home")
+})
 public class Amenity {
 
     public enum AmenityEnum {

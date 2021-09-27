@@ -39,7 +39,7 @@ public class Review {
   @ManyToOne
   @JsonBackReference(value = "user-review")
   @JoinColumn(name = "creator_id")
-  private User user;
+  private User creator;
 
   public Review() {
   }
@@ -52,6 +52,28 @@ public class Review {
     this.isDeleted = isDeleted;
     this.bookingDetail = bookingDetail;
     this.creatorId = creatorId;
+  }
+
+  public User getCreator() {
+    return creator;
+  }
+
+  public void setCreator(User creator) {
+    this.creator = creator;
+  }
+
+  public int getCreatorId() {
+    return creatorId;
+  }
+
+  public void setCreatorId(int creatorId) {
+    this.creatorId = creatorId;
+  }
+
+  @Override
+  public String toString() {
+    return "Review{" + "rating=" + rating + ", comment='" + comment + '\'' + ", created=" + created
+        + ", isDeleted=" + isDeleted + +'}';
   }
 
   public int getId() {

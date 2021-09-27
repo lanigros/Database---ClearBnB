@@ -1,6 +1,7 @@
 package model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,7 +21,7 @@ public class HomeImageHistory {
 
   @JsonBackReference(value = "home-image-histories")
   @JoinColumn(name = "home_history_log_id")
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.MERGE)
   private HomeHistoryLog homeHistoryLog;
 
   @Column(name = "image_url")

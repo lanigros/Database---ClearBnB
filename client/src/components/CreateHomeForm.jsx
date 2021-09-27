@@ -1,6 +1,7 @@
 import React from 'react'
 import { useForm } from '../customhooks/useForm'
 import { createHome } from '../api/homeApi'
+import { createAmenityArray } from '../utils/utility'
 import HomeFormStyle from './CreateHomeForm.styles'
 
 const CreateHomeForm = () => {
@@ -20,13 +21,7 @@ const CreateHomeForm = () => {
     imageUrl3: ''
   })
 
-  const createAmenityArray = () => {
-    let amenityArray = []
-    if (home.wifi) amenityArray.push('WIFI')
-    if (home.kitchen) amenityArray.push('KITCHEN')
-    if (home.bath) amenityArray.push('BATH')
-    return amenityArray
-  }
+
 
   const createImageArray = () => {
     let imageArray = [home.imageUrl1, home.imageUrl2, home.imageUrl3]
@@ -35,7 +30,6 @@ const CreateHomeForm = () => {
 
   const postHome = (e) => {
     e.preventDefault()
-    console.log(home.pricePerNight)
 
     const finalHome = {
     city: home.city,
@@ -45,7 +39,7 @@ const CreateHomeForm = () => {
     pricePerNight: Number(home.pricePerNight),
     startDate: new Date(home.startDate).getTime(),
     endDate: new Date(home.endDate).getTime(),
-    amenities: createAmenityArray(),
+    amenities: createAmenityArray(home.wifi, home.kitchen, home.bath, home.parking),
     images: createImageArray()
     }
     createHome(finalHome)

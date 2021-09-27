@@ -49,6 +49,10 @@ public class User {
   @JsonManagedReference(value = "user-review")
   private List<Review> madeReviews = new ArrayList<>();
 
+  @OneToMany(mappedBy = "creator")
+  @JsonManagedReference(value = "user-review")
+  private List<Review> madeReviews = new ArrayList<>();
+
   public User() {
   }
 

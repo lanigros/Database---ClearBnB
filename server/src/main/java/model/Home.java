@@ -22,12 +22,14 @@ import org.hibernate.annotations.Filter;
 
 @Entity
 @Table(name = "Home")
-@Filter(name = "dateFilter", condition = "start_date <= :start_date and end_date >= :end_date")
-@Filter(name = "priceFilter", condition = "price_per_night <= :price_per_night")
-@Filter(name = "countryFilter", condition = "address0_.country = :country")
+//@Filter(name = "dateFilter", condition = "start_date <= :start_date and end_date >= :end_date")
+//@Filter(name = "priceFilter", condition = "price_per_night <= :price_per_night")
+//@Filter(name = "countryFilter", condition = "country = :country")
 @NamedQueries({
     @NamedQuery(name = "Home.findById", query = "SELECT h FROM Home h WHERE h.id = :id"),
-    @NamedQuery(name = "Home.findAll", query = "SELECT h FROM Home h")})
+    @NamedQuery(name = "Home.findAll", query = "SELECT h FROM Home h"),
+    @NamedQuery(name="Home.findPriceById", query = "SELECT h.pricePerNight FROM Home h WHERE h.id = :id"),
+})
 
 public class Home {
 
@@ -51,7 +53,7 @@ public class Home {
   @OneToMany(mappedBy = "home", cascade = CascadeType.MERGE)
   private List<HomeImage> images = new ArrayList<>();
   @JsonManagedReference(value = "home-histories")
-  @OneToMany(mappedBy = "home")
+  @OneToMany(mappedBy = "home", cascade=CascadeType.MERGE)
   private List<HomeHistoryLog> historyLogs = new ArrayList<>();
   @JsonManagedReference(value = "home-amenity")
   @OneToMany(mappedBy = "home", cascade= CascadeType.MERGE)
@@ -99,7 +101,9 @@ public class Home {
   public int getId() {
     return id;
   }
-
+  public void setId(int id) {
+    this.id = id;
+  }
   public Host getHost() {
     return host;
   }

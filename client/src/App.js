@@ -6,7 +6,8 @@ import Header from './components/Header'
 import UserList from './components/UserList'
 import HomeList from './components/HomeList'
 import LoginForm from './components/LoginForm'
-import UserProfile from './components/UserProfile'
+import UserView from './components/UserView'
+import Chat from './views/Chat'
 import UserProfileLoggedIn from './components/UserProfileLoggedIn'
 import { Normalize } from 'styled-normalize'
 
@@ -23,8 +24,9 @@ function App() {
           <Route path='/users' component={UserList} />
           <Route path='/homes' component={HomeList} />
           <Route path='/login' component={LoginForm} />
-          <Route path='/profile/:id' component={UserProfile} />
-          <Route path='/my-profile' component={UserProfileLoggedIn}/>
+          <Route exact path='/user/:id' component={UserView} />
+          <Route exact path='/profile/private' component={UserProfileLoggedIn} />
+          <Route path='/chat' component={Chat} />
         </Switch>
       </Router>
     </Store>

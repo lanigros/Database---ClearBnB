@@ -50,4 +50,14 @@ public class BookingDetailCoreDTO {
   public void setEndDate(Timestamp endDate) {
     this.endDate = endDate;
   }
+
+  @Override
+  public String toString() {
+    return "BookingDetailCoreDTO{" +
+        "homeId=" + homeId +
+        ", totalPrice=" + totalPrice +
+        ", startDate=" + startDate +
+        ", endDate=" + endDate +
+        '}';
+  }
 }

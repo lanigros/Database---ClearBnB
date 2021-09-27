@@ -4,35 +4,37 @@ package mapper;
 import datatransforobject.HomeAddressDTO;
 import datatransforobject.HomeCoreDTO;
 import datatransforobject.HomeCoreNoHostDTO;
+import datatransforobject.HomeCoreWithBooking;
 import datatransforobject.HomeHistoryDTO;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import model.Amenity;
-import model.HomeImage;
-import utility.AmenityEnumConverter;
 import model.Home;
 import model.HomeHistoryLog;
+import model.HomeImage;
 import model.Host;
+import utility.AmenityEnumConverter;
 
 public class HomeMapper {
+
   private static final AmenityEnumConverter amenityEnumConverter = new AmenityEnumConverter();
 
-    public static HomeCoreDTO convertToCore(Home home) {
-        System.out.println(home.getHost());
-        HomeCoreDTO dto = new HomeCoreDTO();
-        dto.setId(home.getId());
-        dto.setAddress(home.getAddress());
-        dto.setHost(HostMapper.convertToHostBasic(home.getHost()));
-        dto.setPricePerNight(home.getPricePerNight());
-        dto.setImages(home.getImages());
-        dto.setStartDate(home.getStartDate());
-        dto.setEndDate(home.getEndDate());
-        dto.setCreatedDate(home.getCreatedDate());
-        dto.setAmenities(home.getAmenities());
-        return dto;
-    }
+  public static HomeCoreDTO convertToCore(Home home) {
+    System.out.println(home.getHost());
+    HomeCoreDTO dto = new HomeCoreDTO();
+    dto.setId(home.getId());
+    dto.setAddress(home.getAddress());
+    dto.setHost(HostMapper.convertToHostBasic(home.getHost()));
+    dto.setPricePerNight(home.getPricePerNight());
+    dto.setImages(home.getImages());
+    dto.setStartDate(home.getStartDate());
+    dto.setEndDate(home.getEndDate());
+    dto.setCreatedDate(home.getCreatedDate());
+    dto.setAmenities(home.getAmenities());
+    return dto;
+  }
 
   public static HomeHistoryDTO convertToCore(HomeHistoryLog historyLog) {
     HomeHistoryDTO dto = new HomeHistoryDTO();
@@ -49,15 +51,16 @@ public class HomeMapper {
 
   }
 
-  public static Home convertToHome(HomeAddressDTO dto, Host host){
+  public static Home convertToHome(HomeAddressDTO dto, Host host) {
     Home home = new Home();
     home.setPricePerNight(dto.getPricePerNight());
     home.setStartDate(dto.getStartDate());
     home.setEndDate(dto.getEndDate());
     home.setHost(host);
-    List<Amenity> amenities = amenityEnumConverter.getAmenitiesAsAmenityList(dto.getAmenities(), home);
-    List<HomeImage>homeImages = HomeImageMapper.convertToHomeImages(dto.getImages(), home);
+    List<Amenity> amenities = amenityEnumConverter.getAmenitiesAsAmenityList(dto.getAmenities(),
+        home);
     home.setAmenities(amenities);
+    List<HomeImage> homeImages = HomeImageMapper.convertToHomeImages(dto.getImages(), home);
     home.setImages(homeImages);
     home.setCreatedDate(new Timestamp(Instant.now().toEpochMilli()));
     return home;
@@ -79,8 +82,33 @@ public class HomeMapper {
       dto.setPricePerNight(home.getPricePerNight());
       list.add(dto);
     });
-
     return list;
+  }
+
+  public static List<HomeCoreWithBooking> convertToWithBooking(List<Home> homes) {
+    List<HomeCoreWithBooking> list = new ArrayList<>();
+    homes.forEach(home -> {
+      HomeCoreWithBooking dto = new HomeCoreWithBooking(home.getId(),
+          home.getAddress(), home.getImages(), home.getPricePerNight(),
+          home.getStartDate(), home.getEndDate(), home.getCreatedDate(),
+          home.getAmenities(), home.getBookingDetails());
+      list.add(dto);
+    });
+    return list;
+  }
+
+  public static List<HomeHistoryLog> convertHistory(Home home) {
+    List<HomeHistoryLog>historylogs = home.getHistoryLogs();
+    HomeHistoryLog homeHistory = new HomeHistoryLog();
+    homeHistory.setHome(home);
+    homeHistory.setPricePerNight(home.getPricePerNight());
+    homeHistory.setStartDate(home.getStartDate());
+    homeHistory.setEndDate(home.getEndDate());
+    homeHistory.setImages(HomeImageMapper.convertToHistory(home.getImages(), homeHistory));
+    homeHistory.setAmenities(AmenityMapper.convertToHistory(home.getAmenities(), homeHistory));
+    homeHistory.setCreatedDate(new Timestamp(Instant.now().toEpochMilli()));
+    historylogs.add(homeHistory);
+    return historylogs;
 
   }
 
