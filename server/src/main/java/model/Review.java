@@ -16,11 +16,8 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "review")
-@NamedQueries({
-    @NamedQuery(name = "Review.findById", query = "SELECT r FROM Review r WHERE r.id = :id"),
-    @NamedQuery(name = "Review.findAll", query = "SELECT r FROM Review r")})
+@NamedQueries({@NamedQuery(name = "Review.findById", query = "SELECT r FROM Review r WHERE r.id = :id"), @NamedQuery(name = "Review.findAll", query = "SELECT r FROM Review r")})
 public class Review {
-
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,18 +59,9 @@ public class Review {
     this.creator = creator;
   }
 
-  public int getCreatorId() {
-    return creatorId;
-  }
-
-  public void setCreatorId(int creatorId) {
-    this.creatorId = creatorId;
-  }
-
   @Override
   public String toString() {
-    return "Review{" + "rating=" + rating + ", comment='" + comment + '\'' + ", created=" + created
-        + ", isDeleted=" + isDeleted + +'}';
+    return "Review{" + "rating=" + rating + ", comment='" + comment + '\'' + ", created=" + created + ", isDeleted=" + isDeleted + +'}';
   }
 
   public int getId() {
@@ -132,11 +120,7 @@ public class Review {
     this.creatorId = creatorId;
   }
 
-  public User getUser() {
-    return user;
+  public void setUser(User user) {
   }
 
-  public void setUser(User user) {
-    this.user = user;
-  }
 }
