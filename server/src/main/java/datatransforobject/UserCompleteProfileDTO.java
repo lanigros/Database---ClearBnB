@@ -15,10 +15,11 @@ public class UserCompleteProfileDTO {
   private List<Review> renterReview;
   private List<HomeCoreWithBooking> homes;
   private List<Review> madeReviews;
+  private List<BookingCoreWithHomeDTO>bookingDetails;
 
   public UserCompleteProfileDTO(String firstName, String lastName, String email, int avgRatingHost,
       int avgRatingRenter, List<Review> hostReview, List<Review> renterReview,
-      List<HomeCoreWithBooking> homes) {
+      List<HomeCoreWithBooking> homes, List<BookingCoreWithHomeDTO>bookingDetails) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;
@@ -27,6 +28,7 @@ public class UserCompleteProfileDTO {
     this.hostReview = hostReview;
     this.renterReview = renterReview;
     this.homes = homes;
+    this.bookingDetails = bookingDetails;
   }
 
   public UserCompleteProfileDTO() {
@@ -132,4 +134,11 @@ public class UserCompleteProfileDTO {
     this.avgRatingRenter = (int) Math.floor(tempAvg);
   }
 
+  public List<BookingCoreWithHomeDTO> getBookingDetails() {
+    return bookingDetails;
+  }
+
+  public void setBookingDetails(List<BookingCoreWithHomeDTO> bookingDetails) {
+    this.bookingDetails = bookingDetails;
+  }
 }
