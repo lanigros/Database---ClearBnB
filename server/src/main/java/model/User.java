@@ -21,9 +21,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "user")
-@NamedQueries({
-    @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
-    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")})
+@NamedQueries({@NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"), @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")})
 public class User {
 
   @Id
@@ -45,10 +43,6 @@ public class User {
   @JsonManagedReference(value = "user-renter")
   @JsonProperty(access = Access.READ_ONLY)
   private Renter renterProfile;
-  @OneToMany(mappedBy = "user")
-  @JsonManagedReference(value = "user-review")
-  private List<Review> madeReviews = new ArrayList<>();
-
   @OneToMany(mappedBy = "creator")
   @JsonManagedReference(value = "user-review")
   private List<Review> madeReviews = new ArrayList<>();
@@ -81,8 +75,7 @@ public class User {
 
   @Override
   public String toString() {
-    return "id=" + id + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\''
-        + ", email='" + email + '\'' + ", password='" + password + '\'';
+    return "id=" + id + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", email='" + email + '\'' + ", password='" + password + '\'';
   }
 
   public String getFirstName() {
@@ -140,4 +133,5 @@ public class User {
   public UserCoreDTO convertToUserCoreDTO() {
     return new UserCoreDTO(this.id, this.firstName, this.lastName, this.email, this.password);
   }
+
 }
