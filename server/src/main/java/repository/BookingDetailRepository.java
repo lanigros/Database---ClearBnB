@@ -6,6 +6,7 @@ import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import model.BookingDetail;
+import model.Home;
 import repositoryinterface.BookingDetailRepositoryInterface;
 
 public class BookingDetailRepository implements BookingDetailRepositoryInterface {
@@ -27,20 +28,6 @@ public class BookingDetailRepository implements BookingDetailRepositoryInterface
     return entityManager.createQuery("from BookingDetail", BookingDetail.class).getResultList();
   }
 
-public boolean checkIfAvailable(Timestamp startDate, Timestamp endDate, Home home){
-    try{
-      BookingDetail bookingDetail = entityManager.createNamedQuery("BookingDetail.checkIfAvailable", BookingDetail.class)
-          .setParameter("startDate", startDate)
-          .setParameter("endDate", endDate)
-          .setParameter("home", home)
-          .setMaxResults(1).getSingleResult();
-      return false;
-    }catch(NoResultException e){
-      return true;
-    }
-
-}
-
   @Override
   public Optional<BookingDetail> save(BookingDetail bookingDetail) {
     try {
@@ -51,6 +38,20 @@ public boolean checkIfAvailable(Timestamp startDate, Timestamp endDate, Home hom
     } catch (Exception e) {
       e.printStackTrace();
       return Optional.empty();
+    }
+  }
+
+  public boolean checkIfAvailable(Timestamp startDate, Timestamp endDate, Home home) {
+    try {
+      BookingDetail bookingDetail = entityManager.createNamedQuery("BookingDetail.checkIfAvailable",
+                                                                   BookingDetail.class)
+                                                 .setParameter("startDate", startDate)
+                                                 .setParameter("endDate", endDate)
+                                                 .setParameter("home", home).setMaxResults(1)
+                                                 .getSingleResult();
+      return false;
+    } catch (NoResultException e) {
+      return true;
     }
   }
 
