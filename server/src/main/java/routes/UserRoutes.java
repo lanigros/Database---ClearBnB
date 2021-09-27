@@ -64,7 +64,7 @@ public class UserRoutes {
       String userId = String.valueOf(ActiveSessionService.getActiveSessionUserId(sessionID));
       String hostID = req.params("id");
       ReviewBasicDTO dto = req.body(ReviewBasicDTO.class);
-      Review review = userService.createReview(userId, dto, hostID);
+      Review review = userService.createHostReview(userId, dto, hostID);
       res.json(review);
     });
   }
