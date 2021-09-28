@@ -51,6 +51,7 @@ public class HomeRepository implements HomeRepositoryInterface {
       }
       entityManager.merge(home);
       entityManager.getTransaction().commit();
+      entityManager.clear();
       return Optional.of(home);
     } catch (Exception e) {
       e.printStackTrace();

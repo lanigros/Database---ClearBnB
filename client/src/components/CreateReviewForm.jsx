@@ -1,11 +1,22 @@
 import React from 'react'
+import { createReview } from '../api/reviewApi'
 import { useForm } from '../customhooks/useForm'
 
-const CreateReviewForm = () => {
+const CreateReviewForm = ({ bookingDetailId, hostUserId }) => {
   const [review, handleChange] = useForm({
     rating: '',
-    comment: ''
+    comment: '',
+    bookingDetailId: bookingDetailId
   })
+
+  const submitReview = () => {
+    console.log(review)
+    const postReview = async() => {
+      await createReview(review, hostUserId)
+    }
+    postReview()
+  }
+
 
   return (
     <div>
@@ -20,6 +31,7 @@ const CreateReviewForm = () => {
       </div>
       <h2>Comment</h2>
       <textarea className="area-one" name="comment" value={review.comment} onChange={handleChange} />
+      <button type="button" name="submit" onClick={submitReview}>Submit</button>
       
     </div>
   )
