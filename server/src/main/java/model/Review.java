@@ -120,7 +120,5 @@ public class Review {
     this.creatorId = creatorId;
   }
 
-  public void setUser(User user) {
-  }
 
 }
