@@ -1,24 +1,15 @@
 package model;
 
-import com.mongodb.lang.Nullable;
 import java.sql.Timestamp;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import model.Amenity.AmenityEnum;
-import org.hibernate.annotations.Filter;
-import org.hibernate.annotations.FilterDef;
-import org.hibernate.annotations.FilterDefs;
 import org.hibernate.annotations.Immutable;
-import org.hibernate.annotations.ParamDef;
 import utility.AmenityEnumConverter;
 
 @Entity
 @Immutable
-
 public class HomeView {
 
   @Id
@@ -32,8 +23,6 @@ public class HomeView {
   private Timestamp endDate;
   @Convert(converter = AmenityEnumConverter.class)
   private AmenityEnum amenity;
-
-
 
 
   public HomeView() {
@@ -54,7 +43,6 @@ public class HomeView {
   public void setZipCode(String zipCode) {
     this.zipCode = zipCode;
   }
-
 
 
   @Override
