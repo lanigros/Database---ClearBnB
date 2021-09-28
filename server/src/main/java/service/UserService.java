@@ -113,11 +113,13 @@ public class UserService {
 
   public Review createHostReview(String userId, ReviewBasicDTO dto, String hostId) {
     Optional<Host> host = hostRepository.findById(hostId);
-    Optional<User> user = userRepository.findById(userId);
+    Optional<User> creator = userRepository.findById(userId);
     Optional<BookingDetail> bookingDetail = bookingDetailRepository.findById(
-        dto.getbookingDetail());
-    Review review = ReviewMapper.convertToReview(dto, user.get(), bookingDetail.get());
-    host.get().getReviews().add(review);
+        dto.getBookingDetailId());
+    Review review = ReviewMapper.convertToReview(dto, creator.get(), bookingDetail.get());
+    List<Review>hostReviews = host.get().getReviews();
+    hostReviews.add(review);
+    host.get().setReviews(hostReviews);
     Optional<Host> savedHost = hostRepository.save(host.get());
     return review;
   }
