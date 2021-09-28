@@ -2,6 +2,7 @@ package mapper;
 
 import datatransforobject.BookingCoreWithHomeDTO;
 import datatransforobject.BookingDetailCoreDTO;
+import datatransforobject.HomeCoreDTO;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -26,11 +27,13 @@ public class BookingDetailMapper {
   public static List<BookingCoreWithHomeDTO> convertToBookingCoreHomeDTO(List<BookingDetail> bookingDetails){
     List<BookingCoreWithHomeDTO>bookingHomeDTOs = new ArrayList<>();
     for(BookingDetail bookingDetail : bookingDetails){
-      BookingCoreWithHomeDTO bookingCoreWithHomeDTO = new BookingCoreWithHomeDTO();
-      bookingCoreWithHomeDTO.setHome(bookingDetail.getHome());
-      bookingCoreWithHomeDTO.setEndDate(bookingDetail.getEndDate());
-      bookingCoreWithHomeDTO.setStartDate(bookingDetail.getStartDate());
-      bookingCoreWithHomeDTO.setTotalPrice(bookingDetail.getTotalPrice());
+      BookingCoreWithHomeDTO bookingCoreWithHomeDTO = new BookingCoreWithHomeDTO(
+          bookingDetail.getId(),
+          bookingDetail.getTotalPrice(),
+          bookingDetail.getStartDate(),
+          bookingDetail.getEndDate(),
+          HomeMapper.convertToCore(bookingDetail.getHome()
+          ));
       bookingHomeDTOs.add(bookingCoreWithHomeDTO);
     }
    return bookingHomeDTOs;
