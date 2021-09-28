@@ -1,8 +1,6 @@
 package service;
 
 import datatransforobject.ReviewBasicDTO;
-import static java.util.stream.Collectors.toList;
-
 import datatransforobject.UserCompleteProfileDTO;
 import datatransforobject.UserCoreDTO;
 import datatransforobject.UserLoginDTO;
@@ -22,8 +20,8 @@ import model.Review;
 import model.User;
 import repository.ActiveSessionRepository;
 import repository.BookingDetailRepository;
-import repository.RenterRepository;
 import repository.HostRepository;
+import repository.RenterRepository;
 import repository.ReviewRepository;
 import repository.UserRepository;
 import utility.ManagerFactory;
@@ -39,10 +37,9 @@ public class UserService {
   private final BookingDetailRepository bookingDetailRepository = new BookingDetailRepository(
       entityManager);
   private final ReviewRepository reviewRepository = new ReviewRepository(entityManager);
-  private final ActiveSessionRepository activeSessionRepository = new ActiveSessionRepository(
-      entityManager);
   private final HostRepository hostRepository = new HostRepository(entityManager);
-  private final BookingDetailRepository bookingDetailRepository = new BookingDetailRepository(
+
+  private final ActiveSessionRepository activeSessionRepository = new ActiveSessionRepository(
       entityManager);
 
   private final ActiveSessionService activeSessionService;
@@ -122,7 +119,7 @@ public class UserService {
     Optional<BookingDetail> bookingDetail = bookingDetailRepository.findById(
         dto.getBookingDetailId());
     Review review = ReviewMapper.convertToReview(dto, creator.get(), bookingDetail.get());
-    List<Review>hostReviews = host.get().getReviews();
+    List<Review> hostReviews = host.get().getReviews();
     hostReviews.add(review);
     host.get().setReviews(hostReviews);
     Optional<Host> savedHost = hostRepository.save(host.get());
@@ -141,10 +138,10 @@ public class UserService {
     Optional<Renter> renter = renterRepository.findById(renterID);
     Optional<User> user = userRepository.findById(userID);
     Optional<BookingDetail> bookingDetail = bookingDetailRepository.findById(
-        dto.getbookingDetail());
+        dto.getBookingDetailId());
     Review review = ReviewMapper.convertToReview(dto, user.get(), bookingDetail.get());
     renter.get().getReviews().add(review);
-    Optional<Host> savedRenter = renterRepository.save(renter.get());
+    Optional<Renter> savedRenter = renterRepository.save(renter.get());
     return review;
   }
 

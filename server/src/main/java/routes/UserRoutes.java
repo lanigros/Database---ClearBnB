@@ -6,7 +6,6 @@ import datatransforobject.UserNameIdDTO;
 import datatransforobject.UserProfileDTO;
 import express.Express;
 import java.util.List;
-import java.util.Optional;
 import model.Review;
 import model.User;
 import service.ActiveSessionService;
@@ -69,7 +68,21 @@ public class UserRoutes {
         ReviewBasicDTO dto = req.body(ReviewBasicDTO.class);
         Review review = userService.createHostReview(userId, dto, hostID);
         res.json(review);
-      }catch(Exception e){
+      } catch (Exception e) {
+        e.printStackTrace();
+        res.status(500);
+      }
+    });
+    app.post("rest/reviews/renter/:id", (req, res) -> {
+      try {
+        String sessionID = req.cookie("sessionID");
+        String userId = "3";
+        //String.valueOf(ActiveSessionService.getActiveSessionUserId(sessionID));
+        String renterID = req.params("id");
+        ReviewBasicDTO dto = req.body(ReviewBasicDTO.class);
+        Review review = userService.createRenterReview(userId, dto, renterID);
+        res.json(review);
+      } catch (Exception e) {
         e.printStackTrace();
         res.status(500);
       }
