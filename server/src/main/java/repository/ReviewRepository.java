@@ -10,7 +10,6 @@ public class ReviewRepository implements ReviewRepositoryInterface {
 
   private final EntityManager entityManager;
 
-
   public ReviewRepository(EntityManager entityManager) {
     this.entityManager = entityManager;
   }
@@ -20,13 +19,23 @@ public class ReviewRepository implements ReviewRepositoryInterface {
     Review review = entityManager.find(Review.class, id);
     return review != null ? Optional.of(review) : Optional.empty();
   }
+
   @Override
-  public List<Review> findAll() {
+  public List<Review> findAll(String id) {
     return entityManager.createQuery("from Review").getResultList();
   }
 
   @Override
   public Optional<Review> save(Review review) {
-    return Optional.empty();
+    try {
+      entityManager.getTransaction().begin();
+      entityManager.merge(review);
+      entityManager.getTransaction().commit();
+      return Optional.of(review);
+    } catch (Exception e) {
+      e.printStackTrace();
+      return Optional.empty();
+    }
   }
+
 }
