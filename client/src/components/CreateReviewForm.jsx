@@ -1,8 +1,8 @@
 import React from 'react'
-import { createReview } from '../api/reviewApi'
+import { createReviewOnHost, createReviewOnRenter } from '../api/reviewApi'
 import { useForm } from '../customhooks/useForm'
 
-const CreateReviewForm = ({ bookingDetailId, hostUserId }) => {
+const CreateReviewForm = ({ bookingDetailId, hostUserId, renterUserId }) => {
   const [review, handleChange] = useForm({
     rating: '',
     comment: '',
@@ -11,8 +11,14 @@ const CreateReviewForm = ({ bookingDetailId, hostUserId }) => {
 
   const submitReview = () => {
     console.log(review)
-    const postReview = async() => {
-      await createReview(review, hostUserId)
+    
+    const postReview = async () => {
+      if(hostUserId)
+        await createReviewOnHost(review, hostUserId)
+      if (renterUserId)
+        await createReviewOnRenter(review, renterUserId)
+      //else
+        //await createReviewOnRenter(review, reviewedUserId)
     }
     postReview()
   }
@@ -21,7 +27,8 @@ const CreateReviewForm = ({ bookingDetailId, hostUserId }) => {
   return (
     <div>
       <div>
-        <h1>Rating</h1>
+        <h1>Leave a Review!</h1>
+        <h2>Rating</h2>
         <button type="button" name="rating" value="1" onClick={handleChange}>1</button>
         <button type="button" name="rating" value="2" onClick={handleChange}>2</button>
         <button type="button" name="rating" value="3" onClick={handleChange}>3</button>
