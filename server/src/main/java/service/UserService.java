@@ -145,4 +145,10 @@ public class UserService {
     return review;
   }
 
+  public Review deleteRenterReview(ReviewBasicDTO dto, String reviewID, String renterID) {
+    Optional<Renter> renter = renterRepository.findById(renterID);
+    Optional<Review> updatedReview = reviewRepository.update(reviewID);
+    return updatedReview.get();
+  }
+
 }
