@@ -86,6 +86,12 @@ public class UserRoutes {
         res.status(500);
       }
     });
+    app.delete("rest/reviews/renter/:id", (req, res) -> {
+      String reviewID = req.params("id");
+      ReviewBasicDTO dto = req.body(ReviewBasicDTO.class);
+      Review review = userService.deleteRenterReview(dto, reviewID);
+      res.json(review);
+    });
   }
 
 }
