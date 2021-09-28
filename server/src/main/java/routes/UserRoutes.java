@@ -2,12 +2,10 @@ package routes;
 
 import datatransforobject.ReviewBasicDTO;
 import datatransforobject.UserCompleteProfileDTO;
-import datatransforobject.UserCoreDTO;
 import datatransforobject.UserNameIdDTO;
 import datatransforobject.UserProfileDTO;
 import express.Express;
 import java.util.List;
-import java.util.Optional;
 import model.Review;
 import model.User;
 import service.ActiveSessionService;
@@ -32,10 +30,9 @@ public class UserRoutes {
         String userId = String.valueOf(ActiveSessionService.getActiveSessionUserId(sessionID));
         UserCompleteProfileDTO user = userService.getUserCompleteProfile(userId);
         res.json(user);
-      }catch (Exception e){
+      } catch (Exception e) {
         res.json(500);
       }
-
     });
     app.get("rest/users/name", (req, res) -> {
       try {
@@ -45,7 +42,6 @@ public class UserRoutes {
         res.status(500).json("internal error");
       }
     });
-
     app.get("rest/user/profile/:id", (req, res) -> {
       try {
         String id = req.params("id");
@@ -72,7 +68,20 @@ public class UserRoutes {
         ReviewBasicDTO dto = req.body(ReviewBasicDTO.class);
         Review review = userService.createHostReview(userId, dto, hostID);
         res.json(review);
-      }catch(Exception e){
+      } catch (Exception e) {
+        e.printStackTrace();
+        res.status(500);
+      }
+    });
+    app.post("rest/reviews/renter/:id", (req, res) -> {
+      try {
+        String sessionID = req.cookie("sessionID");
+        String userId = String.valueOf(ActiveSessionService.getActiveSessionUserId(sessionID));
+        String renterID = req.params("id");
+        ReviewBasicDTO dto = req.body(ReviewBasicDTO.class);
+        Review review = userService.createRenterReview(userId, dto, renterID);
+        res.json(review);
+      } catch (Exception e) {
         e.printStackTrace();
         res.status(500);
       }
