@@ -6,6 +6,7 @@ import datatransforobject.UserNameIdDTO;
 import datatransforobject.UserProfileDTO;
 import express.Express;
 import java.util.List;
+import java.util.Optional;
 import model.Review;
 import model.User;
 import service.ActiveSessionService;
@@ -56,16 +57,22 @@ public class UserRoutes {
         List<User> users = userService.getAllWithEverything();
         res.json(users);
       } catch (Exception e) {
+        e.printStackTrace();
         res.status(500).json("internal error");
       }
     });
-    app.post("rest/reviews/renter/:id", (req, res) -> {
-      String id = req.cookie("sessionID");
-      String userID = String.valueOf(ActiveSessionService.getActiveSessionUserId(id));
-      String renterID = req.params("id");
-      ReviewBasicDTO dto = req.body(ReviewBasicDTO.class);
-      Review review = userService.createRenterReview(userID, dto, renterID);
-      res.json(review);
+    app.post("rest/reviews/host/:id", (req, res) -> {
+      try {
+        String sessionID = req.cookie("sessionID");
+        String userId = String.valueOf(ActiveSessionService.getActiveSessionUserId(sessionID));
+        String hostID = req.params("id");
+        ReviewBasicDTO dto = req.body(ReviewBasicDTO.class);
+        Review review = userService.createHostReview(userId, dto, hostID);
+        res.json(review);
+      }catch(Exception e){
+        e.printStackTrace();
+        res.status(500);
+      }
     });
   }
 

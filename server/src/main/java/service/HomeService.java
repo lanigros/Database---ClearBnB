@@ -50,10 +50,8 @@ public class HomeService {
 
   private final ActiveSessionService activeSessionService;
 
-
   public HomeService() {
     this.activeSessionService = new ActiveSessionService();
-
   }
 
   public Optional<HomeCoreDTO> getById(String id) {

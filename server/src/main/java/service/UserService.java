@@ -1,6 +1,8 @@
 package service;
 
 import datatransforobject.ReviewBasicDTO;
+import static java.util.stream.Collectors.toList;
+
 import datatransforobject.UserCompleteProfileDTO;
 import datatransforobject.UserCoreDTO;
 import datatransforobject.UserLoginDTO;
@@ -21,6 +23,8 @@ import model.User;
 import repository.ActiveSessionRepository;
 import repository.BookingDetailRepository;
 import repository.RenterRepository;
+import repository.HostRepository;
+import repository.ReviewRepository;
 import repository.UserRepository;
 import utility.ManagerFactory;
 import utility.Utility;
@@ -34,8 +38,18 @@ public class UserService {
   private final RenterRepository renterRepository = new RenterRepository(entityManager);
   private final BookingDetailRepository bookingDetailRepository = new BookingDetailRepository(
       entityManager);
+  private final ReviewRepository reviewRepository = new ReviewRepository(entityManager);
   private final ActiveSessionRepository activeSessionRepository = new ActiveSessionRepository(
       entityManager);
+  private final HostRepository hostRepository = new HostRepository(entityManager);
+  private final BookingDetailRepository bookingDetailRepository = new BookingDetailRepository(
+      entityManager);
+
+  private final ActiveSessionService activeSessionService;
+
+  public UserService() {
+    this.activeSessionService = new ActiveSessionService();
+  }
 
   public Optional<User> getById(String id) {
     Optional<User> userDO = userRepository.findById(id);
@@ -100,6 +114,19 @@ public class UserService {
       return null;
     }
     return UserMapper.convertToProfile(user.get());
+  }
+
+  public Review createHostReview(String userId, ReviewBasicDTO dto, String hostId) {
+    Optional<Host> host = hostRepository.findById(hostId);
+    Optional<User> creator = userRepository.findById(userId);
+    Optional<BookingDetail> bookingDetail = bookingDetailRepository.findById(
+        dto.getBookingDetailId());
+    Review review = ReviewMapper.convertToReview(dto, creator.get(), bookingDetail.get());
+    List<Review>hostReviews = host.get().getReviews();
+    hostReviews.add(review);
+    host.get().setReviews(hostReviews);
+    Optional<Host> savedHost = hostRepository.save(host.get());
+    return review;
   }
 
   public UserCompleteProfileDTO getUserCompleteProfile(String userId) {
