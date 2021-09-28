@@ -10,7 +10,7 @@ public interface HomeRepositoryInterface {
 
   public int findPriceById(int homeId);
 
-  public List<?> findAll();
+  public List<?> findAll(String query);
 
   public Optional<Home> save(Home home, boolean isUpdate);
 

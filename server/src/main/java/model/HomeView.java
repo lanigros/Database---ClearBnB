@@ -1,5 +1,6 @@
 package model;
 
+import com.mongodb.lang.Nullable;
 import java.sql.Timestamp;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
@@ -9,21 +10,18 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import model.Amenity.AmenityEnum;
 import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
+import org.hibernate.annotations.FilterDefs;
 import org.hibernate.annotations.Immutable;
+import org.hibernate.annotations.ParamDef;
 import utility.AmenityEnumConverter;
 
 @Entity
 @Immutable
-@Filter(name = "dateFilter", condition = "startDate <= :startDate and endDate >= :endDate")
-@Filter(name = "priceFilter", condition = "pricePerNight <= :pricePerNight")
-@Filter(name = "searchFilter", condition = "country LIKE '%' :country '%' OR city LIKE '%' :city '%' OR street LIKE '%' :street '%'")
-@Filter(name = "amenityFilter", condition = "amenity = :amenity")
 
-@NamedQueries({@NamedQuery(name = "HomeView.findAll", query = "SELECT h FROM HomeView h")})
 public class HomeView {
 
   @Id
-  @GeneratedValue
   private int id;
   private String country;
   private String city;
@@ -34,6 +32,9 @@ public class HomeView {
   private Timestamp endDate;
   @Convert(converter = AmenityEnumConverter.class)
   private AmenityEnum amenity;
+
+
+
 
   public HomeView() {
   }
@@ -53,6 +54,8 @@ public class HomeView {
   public void setZipCode(String zipCode) {
     this.zipCode = zipCode;
   }
+
+
 
   @Override
   public String toString() {
