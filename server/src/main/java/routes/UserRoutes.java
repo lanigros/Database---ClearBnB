@@ -65,12 +65,17 @@ public class UserRoutes {
       }
     });
     app.post("rest/reviews/host/:id", (req, res) -> {
-      String sessionID = req.cookie("sessionID");
-      String userId = String.valueOf(ActiveSessionService.getActiveSessionUserId(sessionID));
-      String hostID = req.params("id");
-      ReviewBasicDTO dto = req.body(ReviewBasicDTO.class);
-      Review review = userService.createHostReview(userId, dto, hostID);
-      res.json(review);
+      try {
+        String sessionID = req.cookie("sessionID");
+        String userId = String.valueOf(ActiveSessionService.getActiveSessionUserId(sessionID));
+        String hostID = req.params("id");
+        ReviewBasicDTO dto = req.body(ReviewBasicDTO.class);
+        Review review = userService.createHostReview(userId, dto, hostID);
+        res.json(review);
+      }catch(Exception e){
+        e.printStackTrace();
+        res.status(500);
+      }
     });
   }
 
