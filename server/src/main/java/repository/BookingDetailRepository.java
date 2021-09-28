@@ -8,40 +8,25 @@ import javax.persistence.NoResultException;
 import model.BookingDetail;
 import model.Home;
 import repositoryinterface.BookingDetailRepositoryInterface;
-import repositoryinterface.HomeRepositoryInterface;
 
 public class BookingDetailRepository implements BookingDetailRepositoryInterface {
 
   private final EntityManager entityManager;
-
 
   public BookingDetailRepository(EntityManager entityManager) {
     this.entityManager = entityManager;
   }
 
   @Override
-  public Optional<BookingDetail> findById(String id) {
+  public Optional<BookingDetail> findById(int id) {
     BookingDetail bookingDetail = entityManager.find(BookingDetail.class, id);
     return bookingDetail != null ? Optional.of(bookingDetail) : Optional.empty();
   }
+
   @Override
   public List<BookingDetail> findAll() {
     return entityManager.createQuery("from BookingDetail", BookingDetail.class).getResultList();
   }
-
-public boolean checkIfAvailable(Timestamp startDate, Timestamp endDate, Home home){
-    try{
-      BookingDetail bookingDetail = entityManager.createNamedQuery("BookingDetail.checkIfAvailable", BookingDetail.class)
-          .setParameter("startDate", startDate)
-          .setParameter("endDate", endDate)
-          .setParameter("home", home)
-          .setMaxResults(1).getSingleResult();
-      return false;
-    }catch(NoResultException e){
-      return true;
-    }
-
-}
 
   @Override
   public Optional<BookingDetail> save(BookingDetail bookingDetail) {
@@ -55,4 +40,19 @@ public boolean checkIfAvailable(Timestamp startDate, Timestamp endDate, Home hom
       return Optional.empty();
     }
   }
+
+  public boolean checkIfAvailable(Timestamp startDate, Timestamp endDate, Home home) {
+    try {
+      BookingDetail bookingDetail = entityManager.createNamedQuery("BookingDetail.checkIfAvailable",
+                                                                   BookingDetail.class)
+                                                 .setParameter("startDate", startDate)
+                                                 .setParameter("endDate", endDate)
+                                                 .setParameter("home", home).setMaxResults(1)
+                                                 .getSingleResult();
+      return false;
+    } catch (NoResultException e) {
+      return true;
+    }
+  }
+
 }
