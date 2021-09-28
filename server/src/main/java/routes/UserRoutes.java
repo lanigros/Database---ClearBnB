@@ -76,8 +76,7 @@ public class UserRoutes {
     app.post("rest/reviews/renter/:id", (req, res) -> {
       try {
         String sessionID = req.cookie("sessionID");
-        String userId = "3";
-        //String.valueOf(ActiveSessionService.getActiveSessionUserId(sessionID));
+        String userId = String.valueOf(ActiveSessionService.getActiveSessionUserId(sessionID));
         String renterID = req.params("id");
         ReviewBasicDTO dto = req.body(ReviewBasicDTO.class);
         Review review = userService.createRenterReview(userId, dto, renterID);
