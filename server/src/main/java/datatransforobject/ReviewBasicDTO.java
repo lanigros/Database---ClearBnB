@@ -2,32 +2,30 @@ package datatransforobject;
 
 public class ReviewBasicDTO {
 
-  private int bookingDetail;
+  private int bookingDetailId;
   private int rating;
   private String comment;
-  private int creatorId;
 
-  public ReviewBasicDTO(int bookingDetail, int rating, String comment, int creatorId) {
-    this.bookingDetail = bookingDetail;
+  public ReviewBasicDTO(int bookingDetailId, int rating, String comment) {
+    this.bookingDetailId = bookingDetailId;
     this.rating = rating;
     this.comment = comment;
-    this.creatorId = creatorId;
   }
 
   public ReviewBasicDTO() {
   }
 
-  public int getbookingDetail() {
-    return bookingDetail;
+  public int getBookingDetailId() {
+    return bookingDetailId;
   }
 
-  public void setbookingDetail(int bookingDetail) {
-    this.bookingDetail = bookingDetail;
+  public void setBookingDetail(int bookingDetailId) {
+    this.bookingDetailId = bookingDetailId;
   }
 
   @Override
   public String toString() {
-    return "ReviewBasicDTO{" + ", rating=" + rating + ", comment='" + comment + '\'' + ", creatorId=" + creatorId + '}';
+    return "ReviewBasicDTO{" + ", rating=" + rating + ", comment='" + comment + ", bookingDetailId='" + bookingDetailId + "}";
   }
 
   public int getRating() {
@@ -44,14 +42,6 @@ public class ReviewBasicDTO {
 
   public void setComment(String comment) {
     this.comment = comment;
-  }
-
-  public int getCreatorId() {
-    return creatorId;
-  }
-
-  public void setCreatorId(int creatorId) {
-    this.creatorId = creatorId;
   }
 
 }
