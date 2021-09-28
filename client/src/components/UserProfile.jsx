@@ -1,4 +1,5 @@
 import React from 'react'
+import HomeBookingList from './HomeBookingList'
 
 const UserProfile = ({
   user: {
@@ -12,6 +13,7 @@ const UserProfile = ({
     homes,
     madeReviews,
   },
+  isHost
 }) => {
   return (
     <>
@@ -29,10 +31,10 @@ const UserProfile = ({
           {madeReviews &&
             madeReviews.map((rev) => {
               return (
-                <>
+                <div key={rev.id}>
                   <h4>reviews made</h4>
                   <pre>{JSON.stringify(rev, null, 2)}</pre>
-                </>
+                </div>
               )
             })}
           <h1>Homes</h1>
@@ -65,6 +67,7 @@ const UserProfile = ({
                           src={img.imageUrl}></img>
                       )
                     })}
+                  {isHost && home.bookingDetails.length && <HomeBookingList bookingDetails={home.bookingDetails}/>}
                 </div>
               )
             })}
