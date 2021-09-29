@@ -87,9 +87,9 @@ public class UserRoutes {
         res.status(500);
       }
     });
-    app.delete("rest/reviews/renter/:id", (req, res) -> {
+    app.delete("rest/reviews/:id", (req, res) -> {
       String reviewID = req.params("id");
-      Optional<Integer> review = userService.deleteRenterReview(reviewID);
+      Optional<Integer> review = userService.deleteReview(reviewID);
       res.json(review);
     });
   }

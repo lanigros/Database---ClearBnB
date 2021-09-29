@@ -146,7 +146,7 @@ public class UserService {
     return review;
   }
 
-  public Optional<Integer> deleteRenterReview(String reviewID) {
+  public Optional<Integer> deleteReview(String reviewID) {
     int reviewId = Integer.parseInt(reviewID);
     Optional<Integer> updatedReview = reviewRepository.update(reviewId);
     return updatedReview;
