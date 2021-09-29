@@ -26,7 +26,6 @@ public class UserRoutes {
     app.get("rest/user/private", (req, res) -> {
       try {
         String sessionID = req.cookie("sessionID");
-        System.out.println(sessionID);
         String userId = String.valueOf(ActiveSessionService.getActiveSessionUserId(sessionID));
         UserCompleteProfileDTO user = userService.getUserCompleteProfile(userId);
         res.json(user);
@@ -73,13 +72,13 @@ public class UserRoutes {
         res.status(500);
       }
     });
-    app.post("rest/reviews/renter/:id", (req, res) -> {
+    app.post("rest/reviews/renter/user/:id", (req, res) -> {
       try {
         String sessionID = req.cookie("sessionID");
         String userId = String.valueOf(ActiveSessionService.getActiveSessionUserId(sessionID));
-        String renterID = req.params("id");
+        String renterUserId = req.params("id");
         ReviewBasicDTO dto = req.body(ReviewBasicDTO.class);
-        Review review = userService.createRenterReview(userId, dto, renterID);
+        Review review = userService.createRenterReview(userId, dto, renterUserId);
         res.json(review);
       } catch (Exception e) {
         e.printStackTrace();
