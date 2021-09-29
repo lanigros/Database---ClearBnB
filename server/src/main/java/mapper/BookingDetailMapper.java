@@ -2,6 +2,8 @@ package mapper;
 
 import datatransforobject.BookingCoreWithHomeDTO;
 import datatransforobject.BookingDetailCoreDTO;
+import datatransforobject.BookingDetailWithRenterDTO;
+import datatransforobject.HomeCoreDTO;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -26,14 +28,32 @@ public class BookingDetailMapper {
   public static List<BookingCoreWithHomeDTO> convertToBookingCoreHomeDTO(List<BookingDetail> bookingDetails){
     List<BookingCoreWithHomeDTO>bookingHomeDTOs = new ArrayList<>();
     for(BookingDetail bookingDetail : bookingDetails){
-      BookingCoreWithHomeDTO bookingCoreWithHomeDTO = new BookingCoreWithHomeDTO();
-      bookingCoreWithHomeDTO.setHome(bookingDetail.getHome());
-      bookingCoreWithHomeDTO.setEndDate(bookingDetail.getEndDate());
-      bookingCoreWithHomeDTO.setStartDate(bookingDetail.getStartDate());
-      bookingCoreWithHomeDTO.setTotalPrice(bookingDetail.getTotalPrice());
+      BookingCoreWithHomeDTO bookingCoreWithHomeDTO = new BookingCoreWithHomeDTO(
+          bookingDetail.getId(),
+          bookingDetail.getTotalPrice(),
+          bookingDetail.getStartDate(),
+          bookingDetail.getEndDate(),
+          HomeMapper.convertToCore(bookingDetail.getHome()
+          ));
       bookingHomeDTOs.add(bookingCoreWithHomeDTO);
     }
    return bookingHomeDTOs;
+  }
+
+  public static List<BookingDetailWithRenterDTO> convertToBookingWithRenterDTO(List<BookingDetail> bookingDetails){
+    List<BookingDetailWithRenterDTO>bookingRenterDTOs = new ArrayList<>();
+    for(BookingDetail bookingDetail : bookingDetails){
+      BookingDetailWithRenterDTO bookingCoreWithRenterDTO = new BookingDetailWithRenterDTO(
+          bookingDetail.getHome().getId(),
+          bookingDetail.getTotalPrice(),
+          bookingDetail.getStartDate(),
+          bookingDetail.getEndDate(),
+          bookingDetail.getRenter().getUser().getId(),
+          bookingDetail.getId()
+          );
+      bookingRenterDTOs.add(bookingCoreWithRenterDTO);
+    }
+    return bookingRenterDTOs;
   }
 
 }

@@ -30,10 +30,7 @@ public class Socket {
       ws.onConnect(ctx -> {
         String id = "" + nextUserNumber++;
         userUsernameMap.add(ctx);
-        Message msg = new Message();
-        msg.setMsg("A user joined the chat");
-        msg.setId(id);
-        msg.setUuid("Server");
+        Message msg = new Message(id,"Server", "A user joined the chat");
         broadcastMessage(msg);
       });
 

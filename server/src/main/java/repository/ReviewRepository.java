@@ -22,7 +22,7 @@ public class ReviewRepository implements ReviewRepositoryInterface {
 
   @Override
   public List<Review> findAll(String id) {
-    return entityManager.createQuery("from Review").getResultList();
+    return entityManager.createQuery("from Review", Review.class).getResultList();
   }
 
   @Override

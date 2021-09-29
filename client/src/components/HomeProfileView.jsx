@@ -1,43 +1,10 @@
 import React from 'react'
 import HomeBookingList from './HomeBookingList'
 
-const UserProfile = ({
-  user: {
-    id,
-    firstName,
-    email,
-    avgRatingHost,
-    avgRatingRenter,
-    hostReview,
-    renterReview,
-    homes,
-    madeReviews,
-  },
-  isHost
-}) => {
+const HomeProfileView = ({homes}) => {
   return (
     <>
-      {id && (
-        <div>
-          <h1>{id}</h1>
-          <h3>{firstName}</h3>
-          <h4>{email}</h4>
-          <h4>{`Avg rating as host ${avgRatingHost}`}</h4>
-          <h4>{`Avg rating as renter ${avgRatingRenter}`}</h4>
-          <h5>Reviews as host</h5>
-          <pre>{JSON.stringify(hostReview, null, 2)}</pre>
-          <h5>Reviews as renter</h5>
-          <pre>{JSON.stringify(renterReview, null, 2)}</pre>
-          {madeReviews &&
-            madeReviews.map((rev) => {
-              return (
-                <div key={rev.id}>
-                  <h4>reviews made</h4>
-                  <pre>{JSON.stringify(rev, null, 2)}</pre>
-                </div>
-              )
-            })}
-          <h1>Homes</h1>
+      <h1>Homes</h1>
           {homes &&
             homes.map((home) => {
               return (
@@ -62,19 +29,23 @@ const UserProfile = ({
                       return (
                         // eslint-disable-next-line jsx-a11y/alt-text
                         <img
-                          style={{ height: '60px', width: '60px' }}
                           key={img.id}
+                          style={{ height: '60px', width: '60px' }}
                           src={img.imageUrl}></img>
                       )
                     })}
-                  {isHost && home.bookingDetails.length && <HomeBookingList bookingDetails={home.bookingDetails}/>}
+                 
+                  {home.bookingDetails.length() > 0 && <HomeBookingList bookingDetails={home.bookingDetails} isRenter={true} />}
+                  
                 </div>
               )
-            })}
-        </div>
-      )}
-    </>
+            })
+          }
+   </>
+    
+      
+    
   )
 }
 
-export default UserProfile
+export default HomeProfileView
