@@ -4,7 +4,7 @@ export const createReviewOnHost = async (review, hostUserId) => {
     body: JSON.stringify(review)
   })
   if (!response.ok) return null
-  const received = response.json()
+  const received = await response.json()
   return received
 }
 
@@ -14,6 +14,15 @@ export const createReviewOnRenter = async (review, renterUserId) => {
     body: JSON.stringify(review)
   })
   if (!response.ok) return null
-  const received = response.json()
+  const received = await response.json()
+  return received
+}
+
+export const deleteReview = async (reviewId) => {
+  const response = await fetch(`/rest/reviews/${reviewId}`, {
+    method: 'DELETE'
+  })
+  if (!response.ok) return null
+  const received = await response.json()
   return received
 }
