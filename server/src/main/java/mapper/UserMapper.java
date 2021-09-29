@@ -59,6 +59,7 @@ public class UserMapper {
 
   public static UserCompleteProfileDTO convertToCompleteProfile(User user) {
     UserCompleteProfileDTO dto = new UserCompleteProfileDTO();
+    System.out.println(user.getHostProfile().getHomes());
     dto.setHomes(HomeMapper.convertToWithBooking(user.getHostProfile().getHomes()));
     dto.setId(user.getId());
     dto.setEmail(user.getEmail());
@@ -70,8 +71,6 @@ public class UserMapper {
     dto.setHostReview(user.getHostProfile().getReviews());
     dto.setMadeReviews(user.getMadeReviews());
     dto.setBookingDetails(BookingDetailMapper.convertToBookingCoreHomeDTO(user.getRenterProfile().getBookingDetails()));
-
-    System.out.println(dto.toString());
     return dto;
   }
 

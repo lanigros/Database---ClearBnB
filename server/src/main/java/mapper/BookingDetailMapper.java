@@ -2,6 +2,7 @@ package mapper;
 
 import datatransforobject.BookingCoreWithHomeDTO;
 import datatransforobject.BookingDetailCoreDTO;
+import datatransforobject.BookingDetailWithRenterDTO;
 import datatransforobject.HomeCoreDTO;
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -37,6 +38,22 @@ public class BookingDetailMapper {
       bookingHomeDTOs.add(bookingCoreWithHomeDTO);
     }
    return bookingHomeDTOs;
+  }
+
+  public static List<BookingDetailWithRenterDTO> convertToBookingWithRenterDTO(List<BookingDetail> bookingDetails){
+    List<BookingDetailWithRenterDTO>bookingRenterDTOs = new ArrayList<>();
+    for(BookingDetail bookingDetail : bookingDetails){
+      BookingDetailWithRenterDTO bookingCoreWithRenterDTO = new BookingDetailWithRenterDTO(
+          bookingDetail.getHome().getId(),
+          bookingDetail.getTotalPrice(),
+          bookingDetail.getStartDate(),
+          bookingDetail.getEndDate(),
+          bookingDetail.getRenter().getUser().getId(),
+          bookingDetail.getId()
+          );
+      bookingRenterDTOs.add(bookingCoreWithRenterDTO);
+    }
+    return bookingRenterDTOs;
   }
 
 }

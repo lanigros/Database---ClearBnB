@@ -63,7 +63,7 @@ public class BookingDetail {
   @Override
   public String toString() {
     return "BookingDetail{" + "id=" + id + ",totalPrice=" + totalPrice + ", startDate=" + startDate
-        + ", endDate=" + endDate + ", createdDate=" + createdDate + "}";
+        + ", endDate=" + endDate + ", createdDate=" + createdDate + ", renterUserId=" + renter.getUser().getId() + "}";
   }
 
   public int getId() {
