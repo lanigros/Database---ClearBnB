@@ -20,14 +20,12 @@ const HomeList = () => {
       query +=
         startDate && endDate
           ? `&start_date=${convertDate(startDate)}&end_date=${convertDate(
-              endDate
-            )}`
+            endDate
+          )}`
           : ''
       query = amenitiesFilter(query)
       query += input ? `&search=${input}` : ''
-      console.log('query :>> ', query)
       const homeList = await getHomeList(query)
-      console.log(`homeList`, homeList)
       setHomes(homeList)
     }
     const timer = setTimeout(() => {

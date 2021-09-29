@@ -9,7 +9,6 @@ export const createReviewOnHost = async (review, hostUserId) => {
 }
 
 export const createReviewOnRenter = async (review, renterUserId) => {
-  console.log(review)
   const response = await fetch(`/rest/reviews/renter/user/${renterUserId}`, {
     method: 'POST',
     body: JSON.stringify(review)
