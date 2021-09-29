@@ -11,7 +11,7 @@ export const createHome = async (homeObject) => {
     body: JSON.stringify(homeObject)
   })
   if (!response.ok) return null
-    return await response.json()
+  return await response.json()
 }
 
 export const getHomeHistory = async (homeId) => {
@@ -24,13 +24,12 @@ export const getHomeHistory = async (homeId) => {
 }
 
 export const bookHome = async (bookingObject) => {
-  console.log(bookingObject)
   const response = await fetch(`/api/payment`, {
     method: 'POST',
     body: JSON.stringify(bookingObject)
   })
-  if(!response.ok) return null
-    return await response.json()
+  if (!response.ok) return null
+  return await response.json()
 }
 
 export const updateHome = async (id, homeObject) => {

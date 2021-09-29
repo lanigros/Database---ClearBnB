@@ -10,15 +10,11 @@ const CreateReviewForm = ({ bookingDetailId, hostUserId, renterUserId }) => {
   })
 
   const submitReview = () => {
-    console.log(review)
-    
     const postReview = async () => {
-      if(hostUserId)
+      if (hostUserId)
         await createReviewOnHost(review, hostUserId)
-      if (renterUserId)
+      else if (renterUserId)
         await createReviewOnRenter(review, renterUserId)
-      //else
-        //await createReviewOnRenter(review, reviewedUserId)
     }
     postReview()
   }
@@ -39,7 +35,7 @@ const CreateReviewForm = ({ bookingDetailId, hostUserId, renterUserId }) => {
       <h2>Comment</h2>
       <textarea className="area-one" name="comment" value={review.comment} onChange={handleChange} />
       <button type="button" name="submit" onClick={submitReview}>Submit</button>
-      
+
     </div>
   )
 }

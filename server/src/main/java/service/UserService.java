@@ -1,5 +1,7 @@
 package service;
 
+import static java.util.stream.Collectors.toList;
+
 import datatransforobject.ReviewBasicDTO;
 import datatransforobject.UserCompleteProfileDTO;
 import datatransforobject.UserCoreDTO;
@@ -8,7 +10,6 @@ import datatransforobject.UserNameIdDTO;
 import datatransforobject.UserProfileDTO;
 import java.util.List;
 import java.util.Optional;
-import static java.util.stream.Collectors.toList;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import mapper.ReviewMapper;
@@ -55,14 +56,14 @@ public class UserService {
 
   public List<User> getAllWithEverything() {
     List<User> users = userRepository.findAll();
-    users.forEach(UserMapper :: hidePasswordFromUser);
+    users.forEach(UserMapper::hidePasswordFromUser);
     return users;
   }
 
   public List<UserNameIdDTO> getAllNames() {
     List<User> users = userRepository.findAll();
-    List<UserNameIdDTO> list = users.stream().map(UserMapper :: convertToNameAndId)
-                                    .collect(toList());
+    List<UserNameIdDTO> list = users.stream().map(UserMapper::convertToNameAndId)
+        .collect(toList());
     return list;
   }
 
@@ -116,11 +117,8 @@ public class UserService {
   public Review createHostReview(String userId, ReviewBasicDTO dto, String hostUserID) {
     int hostUserId = Integer.parseInt(hostUserID);
     Optional<Host> host = hostRepository.findByUserId(hostUserId);
-    Optional<User> creator = userRepository.findById(userId);
-    Optional<BookingDetail> bookingDetail = bookingDetailRepository.findById(
-        dto.getBookingDetailId());
-    Review review = ReviewMapper.convertToReview(dto, creator.get(), bookingDetail.get());
     List<Review> hostReviews = host.get().getReviews();
+    Review review = this.findUserDetailsAndConvertToReview(userId, dto);
     hostReviews.add(review);
     host.get().setReviews(hostReviews);
     Optional<Host> savedHost = hostRepository.save(host.get());
@@ -135,16 +133,24 @@ public class UserService {
     return UserMapper.convertToCompleteProfile(user.get());
   }
 
-  public Review createRenterReview(String userID, ReviewBasicDTO dto, String renterID) {
-    Optional<Renter> renter = renterRepository.findById(renterID);
-    Optional<User> user = userRepository.findById(userID);
-    Optional<BookingDetail> bookingDetail = bookingDetailRepository.findById(
-        dto.getBookingDetailId());
-    Review review = ReviewMapper.convertToReview(dto, user.get(), bookingDetail.get());
-    renter.get().getReviews().add(review);
+  public Review createRenterReview(String userID, ReviewBasicDTO dto, String renterUserID) {
+    int renterUserId = Integer.parseInt(renterUserID);
+    Optional<Renter> renter = renterRepository.findByUserId(renterUserId);
+    Review review = this.findUserDetailsAndConvertToReview(userID, dto);
+    List<Review> renterReviews = renter.get().getReviews();
+    renterReviews.add(review);
+    renter.get().setReviews(renterReviews);
     Optional<Renter> savedRenter = renterRepository.save(renter.get());
     return review;
   }
+
+  public Review findUserDetailsAndConvertToReview(String userId, ReviewBasicDTO dto) {
+    Optional<User> creator = userRepository.findById(userId);
+    Optional<BookingDetail> bookingDetail = bookingDetailRepository.findById(
+        dto.getBookingDetailId());
+    return ReviewMapper.convertToReview(dto, creator.get(), bookingDetail.get());
+  }
+
 
   public Optional<Integer> deleteReview(String reviewID) {
     int reviewId = Integer.parseInt(reviewID);
