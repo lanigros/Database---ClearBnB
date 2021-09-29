@@ -31,7 +31,6 @@ public class Socket {
         String id = "" + nextUserNumber++;
         userUsernameMap.add(ctx);
         Message msg = new Message(id,"Server", "A user joined the chat");
-        msg.setUuid("Server");
         broadcastMessage(msg);
       });
 
