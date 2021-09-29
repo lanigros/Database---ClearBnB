@@ -59,7 +59,9 @@ public class HomeService {
   }
 
   public List getAll(Map<String, List<String>> filters) throws ParseException {
-    List<HomeView> homes = homeRepository.findAll(buildFilterQuery(filters));
+//    List<HomeView> homes = homeRepository.findAll(buildFilterQuery(filters));
+    System.out.println(buildFilterQuery(filters));
+    List<HomeView> homes = homeRepository.findAll(buildFilterQuery(filters), filters);
 
     //to get proper entities inc lists
     if (homes.size() > 0) {
@@ -126,6 +128,16 @@ public class HomeService {
 
   }
 
+  private String buildGetByIdQuery(Set<Integer> list) {
+    StringBuilder query = new StringBuilder("SELECT h FROM Home h WHERE h.id = ");
+
+    for (int nr : list) {
+      query.append(nr).append(" OR h.id = ");
+    }
+    return query.toString().substring(0, query.length() - 11);
+  }
+
+
   private String buildFilterQuery(Map<String, List<String>> filters) throws ParseException {
 
     StringBuilder query = new StringBuilder();
@@ -142,59 +154,49 @@ public class HomeService {
     }
 
     query.append("WHERE ");
+    boolean firstIteration = true;
 
     for (Map.Entry<String, List<String>> entry : filters.entrySet()) {
       String key = entry.getKey();
       List<String> value = entry.getValue();
       // add and to new filter statement
-      if (query.length() != 406) {
+      if (!firstIteration) {
         query.append(" AND");
       }
 
       switch (key) {
         case "price": {
-          query.append(" home.price_per_night < ").append(value.get(0));
+          query.append(" home.price_per_night < :price");
           break;
         }
         case "start_date": {
-          query.append(" home.").append(key).append("<= '")
-              .append(Utility.convertToTimestamp(value.get(0))).append("'");
+          query.append(" home.start_date <= :start_date");
           break;
         }
         case "end_date": {
-          query.append(" home.").append(key).append(">= '")
-              .append(Utility.convertToTimestamp(value.get(0))).append("'");
+          query.append(" home.end_date >= :end_date");
           break;
         }
         case "amenity": {
           for (int i = 0; i < value.size(); i++) {
             if (i == 0) {
-              query.append(" amenity = '").append(value.get(i)).append("'");
+              query.append(" amenity = :am").append(i+1);
             } else {
               query.append(" AND EXISTS ( SELECT 1 FROM amenity_enum t").append(i + 1)
                   .append(" WHERE t").append(i + 1).append(".home_id = home.id AND t").append(i + 1)
-                  .append(".amenity = '").append(value.get(i)).append("' )");
+                  .append(".amenity = :am").append(i+1).append(")");
             }
           }
           break;
         }
         case "search": {
-          query.append(" address.country LIKE '%").append(value.get(0))
-              .append("%' OR address.street LIKE '%").append(value.get(0))
-              .append("%' OR address.city LIKE '%").append(value.get(0)).append("%'");
+          query.append(
+              " address.country LIKE :search OR address.street LIKE :search  OR address.city LIKE  :search ");
         }
       }
+      firstIteration = false;
     }
     return query.toString();
-  }
-
-  private String buildGetByIdQuery(Set<Integer> list) {
-    StringBuilder query = new StringBuilder("SELECT h FROM Home h WHERE h.id = ");
-
-    for (int nr : list) {
-      query.append(nr).append(" OR h.id = ");
-    }
-    return query.toString().substring(0, query.length() - 11);
   }
 
 
