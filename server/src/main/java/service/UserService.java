@@ -152,4 +152,10 @@ public class UserService {
   }
 
 
+  public Optional<Integer> deleteReview(String reviewID) {
+    int reviewId = Integer.parseInt(reviewID);
+    Optional<Integer> updatedReview = reviewRepository.update(reviewId);
+    return updatedReview;
+  }
+
 }

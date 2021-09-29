@@ -12,4 +12,6 @@ public interface ReviewRepositoryInterface {
 
   public Optional<Review> save(Review review);
 
+  public Optional<Integer> update(int review);
+
 }

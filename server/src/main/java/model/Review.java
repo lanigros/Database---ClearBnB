@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "review")
-@NamedQueries({@NamedQuery(name = "Review.findById", query = "SELECT r FROM Review r WHERE r.id = :id"), @NamedQuery(name = "Review.findAll", query = "SELECT r FROM Review r")})
+@NamedQueries({@NamedQuery(name = "Review.findById", query = "SELECT r FROM Review r WHERE r.id = :id"), @NamedQuery(name = "Review.findAll", query = "SELECT r FROM Review r"), @NamedQuery(name = "Review.deleteReview", query = "UPDATE Review r SET r.isDeleted = :isDeleted WHERE r.id = :id")})
 public class Review {
 
   @Id
@@ -119,6 +119,5 @@ public class Review {
   public void setCreatorId(int creatorId) {
     this.creatorId = creatorId;
   }
-
 
 }
