@@ -15,7 +15,12 @@ export default function Chat() {
     const socket1 = socketFunc()
     setSocket(socket1)
     socket1.onmessage = (msg) => {
-      setMessages((o) => [...o, JSON.parse(msg.data)])
+      const res = JSON.parse(msg.data)
+      if (Object.prototype.toString.call(res) === '[object Array]') {
+        setMessages(res)
+      } else {
+        setMessages((o) => [...o, res])
+      }
     }
   }, [])
 
@@ -31,7 +36,6 @@ export default function Chat() {
     socket.send(
       JSON.stringify({
         msg: message,
-        id: idGen(),
         uuid: state.currentUser ? state.currentUser : 'NotLoggedIn',
       })
     )
