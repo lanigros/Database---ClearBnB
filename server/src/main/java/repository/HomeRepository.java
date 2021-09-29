@@ -29,8 +29,8 @@ public class HomeRepository implements HomeRepositoryInterface {
   }
 
   @Override
-  public List<HomeView> findAll() {
-    return entityManager.createNamedQuery("HomeView.findAll").getResultList();
+  public List<HomeView> findAll(String query) {
+    return entityManager.createNativeQuery(query, HomeView.class).getResultList();
   }
 
   public List<Home> bulkFind(String query) {
@@ -51,6 +51,7 @@ public class HomeRepository implements HomeRepositoryInterface {
       }
       entityManager.merge(home);
       entityManager.getTransaction().commit();
+      entityManager.clear();
       return Optional.of(home);
     } catch (Exception e) {
       e.printStackTrace();

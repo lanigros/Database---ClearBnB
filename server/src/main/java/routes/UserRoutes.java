@@ -60,13 +60,13 @@ public class UserRoutes {
         res.status(500).json("internal error");
       }
     });
-    app.post("rest/reviews/host/:id", (req, res) -> {
+    app.post("rest/reviews/host/user/:id", (req, res) -> {
       try {
         String sessionID = req.cookie("sessionID");
         String userId = String.valueOf(ActiveSessionService.getActiveSessionUserId(sessionID));
-        String hostID = req.params("id");
+        String hostUserId = req.params("id");
         ReviewBasicDTO dto = req.body(ReviewBasicDTO.class);
-        Review review = userService.createHostReview(userId, dto, hostID);
+        Review review = userService.createHostReview(userId, dto, hostUserId);
         res.json(review);
       } catch (Exception e) {
         e.printStackTrace();

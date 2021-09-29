@@ -5,7 +5,7 @@ const BookingDetailList = ({ currentUser : {bookingDetails} }) => {
   return (
     <div>
       {bookingDetails && bookingDetails.map((bookingDetail, idx) =>
-        <BookingDetailCard home={bookingDetail.home} startDate={bookingDetail.startDate}
+        <BookingDetailCard id={bookingDetail.id} home={bookingDetail.home} startDate={bookingDetail.startDate}
           endDate={bookingDetail.endDate} totalPrice={bookingDetail.totalPrice} key={idx} />)}
     </div>
   )

@@ -113,8 +113,9 @@ public class UserService {
     return UserMapper.convertToProfile(user.get());
   }
 
-  public Review createHostReview(String userId, ReviewBasicDTO dto, String hostId) {
-    Optional<Host> host = hostRepository.findById(hostId);
+  public Review createHostReview(String userId, ReviewBasicDTO dto, String hostUserID) {
+    int hostUserId = Integer.parseInt(hostUserID);
+    Optional<Host> host = hostRepository.findByUserId(hostUserId);
     Optional<User> creator = userRepository.findById(userId);
     Optional<BookingDetail> bookingDetail = bookingDetailRepository.findById(
         dto.getBookingDetailId());

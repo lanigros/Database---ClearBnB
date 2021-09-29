@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from 'react'
-import socket from '../components/socket'
+import socketFunc from '../components/socket'
 import ChatMessage from '../components/ChatMessage'
 import { Context } from '../store/Store'
 
@@ -8,10 +8,13 @@ export default function Chat() {
 
   const [message, setMessage] = useState('')
   const [messages, setMessages] = useState([])
+  const [socket, setSocket] = useState([])
   const area = useRef()
 
   useEffect(() => {
-    socket.onmessage = (msg) => {
+    const socket1 = socketFunc()
+    setSocket(socket1)
+    socket1.onmessage = (msg) => {
       setMessages((o) => [...o, JSON.parse(msg.data)])
     }
   }, [])
