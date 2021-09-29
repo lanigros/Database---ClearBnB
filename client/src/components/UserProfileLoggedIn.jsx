@@ -18,8 +18,7 @@ const UserProfileLoggedIn = () => {
   
   return (
     <>
-      {userComplete && <UserProfile user={userComplete} />}
-      <h1>Bookings</h1>
+      {userComplete && <UserProfile user={userComplete} isHost={true}/>}
       {userComplete && <BookingDetailList currentUser={userComplete}/>}
     </>
     )

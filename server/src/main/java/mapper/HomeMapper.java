@@ -9,6 +9,7 @@ import datatransforobject.HomeHistoryDTO;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import model.Amenity;
 import model.Home;
@@ -91,7 +92,7 @@ public class HomeMapper {
       HomeCoreWithBooking dto = new HomeCoreWithBooking(home.getId(),
           home.getAddress(), home.getImages(), home.getPricePerNight(),
           home.getStartDate(), home.getEndDate(), home.getCreatedDate(),
-          home.getAmenities(), home.getBookingDetails());
+          home.getAmenities(), BookingDetailMapper.convertToBookingWithRenterDTO(home.getBookingDetails()));
       list.add(dto);
     });
     return list;

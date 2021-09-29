@@ -8,21 +8,28 @@ import model.BookingDetail;
 import model.HomeImage;
 
 public class HomeCoreWithBooking extends HomeCoreNoHostDTO{
-  private List<BookingDetail>bookingDetails;
+  private List<BookingDetailWithRenterDTO>bookingDetails;
 
   public HomeCoreWithBooking(int id, Address address, List<HomeImage> images,
       int pricePerNight, Timestamp startDate, Timestamp endDate,
       Timestamp createdDate, List<Amenity> amenities,
-      List<BookingDetail> bookingDetails) {
+      List<BookingDetailWithRenterDTO> bookingDetails) {
     super(id, address, images, pricePerNight, startDate, endDate, createdDate, amenities);
     this.bookingDetails = bookingDetails;
   }
 
-  public List<BookingDetail> getBookingDetails() {
+  @Override
+  public String toString() {
+    return "HomeCoreWithBooking{" +
+        "bookingDetails=" + bookingDetails +
+        '}';
+  }
+
+  public List<BookingDetailWithRenterDTO> getBookingDetails() {
     return bookingDetails;
   }
 
-  public void setBookingDetails(List<BookingDetail> bookingDetails) {
+  public void setBookingDetails(List<BookingDetailWithRenterDTO> bookingDetails) {
     this.bookingDetails = bookingDetails;
   }
 }
