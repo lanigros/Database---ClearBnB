@@ -6,6 +6,7 @@ import datatransforobject.UserNameIdDTO;
 import datatransforobject.UserProfileDTO;
 import express.Express;
 import java.util.List;
+import java.util.Optional;
 import model.Review;
 import model.User;
 import service.ActiveSessionService;
@@ -85,6 +86,11 @@ public class UserRoutes {
         e.printStackTrace();
         res.status(500);
       }
+    });
+    app.delete("rest/reviews/:id", (req, res) -> {
+      String reviewID = req.params("id");
+      Optional<Integer> review = userService.deleteReview(reviewID);
+      res.json(review);
     });
   }
 
