@@ -39,15 +39,14 @@ public class ReviewRepository implements ReviewRepositoryInterface {
   }
 
   @Override
-  public Optional<Review> update(Review review) {
+  public Optional<Integer> update(int reviewId) {
     try {
       entityManager.getTransaction().begin();
-      entityManager.createQuery("Review.deleteReview").setParameter("isDeleted", "1")
-                   .executeUpdate();
-      entityManager.merge(review);
+      entityManager.createNamedQuery("Review.deleteReview").setParameter("id", reviewId)
+                   .setParameter("isDeleted", true).executeUpdate();
       entityManager.getTransaction().commit();
       System.out.println("From REVIEW REPO!");
-      return Optional.of(review);
+      return Optional.of(reviewId);
     } catch (Exception e) {
       e.printStackTrace();
       return Optional.empty();
