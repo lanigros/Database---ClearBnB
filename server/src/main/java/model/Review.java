@@ -12,11 +12,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import org.hibernate.annotations.Filter;
 //import org.eclipse.jetty.server.Authentication.User;
 
 @Entity
 @Table(name = "review")
-@NamedQueries({@NamedQuery(name = "Review.findById", query = "SELECT r FROM Review r WHERE r.id = :id"), @NamedQuery(name = "Review.findAll", query = "SELECT r FROM Review r"), @NamedQuery(name = "Review.deleteReview", query = "UPDATE Review r SET r.isDeleted = :isDeleted WHERE r.id = :id")})
+@NamedQueries({
+    @NamedQuery(name = "Review.findById", query = "SELECT r FROM Review r WHERE r.id = :id"),
+    @NamedQuery(name = "Review.findAll", query = "SELECT r FROM Review r"),
+    @NamedQuery(name = "Review.deleteReview", query = "UPDATE Review r SET r.isDeleted = :isDeleted WHERE r.id = :id")})
 public class Review {
 
   @Id

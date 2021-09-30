@@ -42,10 +42,12 @@ public class ReviewRepository implements ReviewRepositoryInterface {
   public Optional<Integer> update(int reviewId) {
     try {
       entityManager.getTransaction().begin();
-      entityManager.createNamedQuery("Review.deleteReview").setParameter("id", reviewId)
-                   .setParameter("isDeleted", true).executeUpdate();
+      entityManager.createNamedQuery("Review.deleteReview")
+          .setParameter("isDeleted", true)
+          .setParameter("id", reviewId)
+                   .executeUpdate();
       entityManager.getTransaction().commit();
-      System.out.println("From REVIEW REPO!");
+      entityManager.clear();
       return Optional.of(reviewId);
     } catch (Exception e) {
       e.printStackTrace();
