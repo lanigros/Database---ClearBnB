@@ -87,9 +87,20 @@ public class UserRoutes {
       }
     });
     app.delete("rest/reviews/:id", (req, res) -> {
-      String reviewID = req.params("id");
-      Optional<Integer> review = userService.deleteReview(reviewID);
-      res.json(review);
+      try {
+        String sessionID = req.cookie("sessionID");
+        String userId = String.valueOf(ActiveSessionService.getActiveSessionUserId(sessionID));
+        String reviewId = req.params("id");
+        Optional<Integer> review = userService.deleteReview(reviewId, userId);
+        if(review.isEmpty()){
+          res.status(401);
+          return;
+        }
+        res.json(review);
+      }catch(Exception e){
+        e.printStackTrace();
+        res.status(500);
+      }
     });
   }
 

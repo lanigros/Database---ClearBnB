@@ -152,8 +152,12 @@ public class UserService {
   }
 
 
-  public Optional<Integer> deleteReview(String reviewID) {
+  public Optional<Integer> deleteReview(String reviewID, String userId) {
     int reviewId = Integer.parseInt(reviewID);
+    Optional<Review> review = reviewRepository.findById(reviewId);
+    if(review.isEmpty() || !userId.equals(String.valueOf(review.get().getCreatorId())))
+      return Optional.empty();
+
     Optional<Integer> updatedReview = reviewRepository.update(reviewId);
     return updatedReview;
   }

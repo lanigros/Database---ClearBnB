@@ -6,7 +6,7 @@ import model.Review;
 
 public interface ReviewRepositoryInterface {
 
-  public Optional<Review> findById(String id);
+  public Optional<Review> findById(int id);
 
   public List<Review> findAll(String id);
 

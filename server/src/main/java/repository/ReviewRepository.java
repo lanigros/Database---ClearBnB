@@ -15,7 +15,7 @@ public class ReviewRepository implements ReviewRepositoryInterface {
   }
 
   @Override
-  public Optional<Review> findById(String id) {
+  public Optional<Review> findById(int id) {
     Review review = entityManager.find(Review.class, id);
     return review != null ? Optional.of(review) : Optional.empty();
   }
