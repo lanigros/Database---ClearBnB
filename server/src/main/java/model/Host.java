@@ -15,6 +15,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.Filter;
 
 @Entity
 @Table(name = "host")
@@ -36,6 +37,7 @@ public class Host {
       joinColumns = @JoinColumn(name = "host_id", referencedColumnName = "id"),
       inverseJoinColumns = @JoinColumn(name = "review_id", referencedColumnName = "id")
   )
+  @Filter(name="reviewFilter")
   private List<Review> reviews = new ArrayList<>();
 
   public Host() {

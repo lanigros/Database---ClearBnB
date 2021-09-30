@@ -1,5 +1,6 @@
 import React from 'react'
 import HomeBookingList from './HomeBookingList'
+import ReviewList from './ReviewList'
 
 const UserProfile = ({
   user: {
@@ -25,9 +26,8 @@ const UserProfile = ({
           <h4>{`Avg rating as host ${avgRatingHost}`}</h4>
           <h4>{`Avg rating as renter ${avgRatingRenter}`}</h4>
           <h5>Reviews as host</h5>
-          <pre>{JSON.stringify(hostReview, null, 2)}</pre>
-          <h5>Reviews as renter</h5>
-          <pre>{JSON.stringify(renterReview, null, 2)}</pre>
+          {hostReview && <ReviewList reviews={hostReview} title="Reviews as Host" />}
+          {renterReview && <ReviewList reviews={renterReview} title="Reviews as Renter" />}
           {madeReviews &&
             madeReviews.map((rev) => {
               return (
@@ -67,7 +67,7 @@ const UserProfile = ({
                           src={img.imageUrl}></img>
                       )
                     })}
-                  {isHost && home.bookingDetails.length && <HomeBookingList bookingDetails={home.bookingDetails}/>}
+                  {isHost && home.bookingDetails.length && <HomeBookingList bookingDetails={home.bookingDetails} />}
                 </div>
               )
             })}

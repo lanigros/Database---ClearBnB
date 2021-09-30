@@ -18,6 +18,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.Filter;
 
 @Entity
 @Table(name = "user")
@@ -45,6 +46,7 @@ public class User {
   private Renter renterProfile;
   @OneToMany(mappedBy = "creator")
   @JsonManagedReference(value = "user-review")
+  @Filter(name="reviewFilter")
   private List<Review> madeReviews = new ArrayList<>();
 
   public User() {

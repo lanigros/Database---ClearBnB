@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import model.User;
+import org.hibernate.Filter;
+import org.hibernate.Session;
 import repositoryinterface.UserRepositoryInterface;
 
 
@@ -14,6 +16,9 @@ public class UserRepository implements UserRepositoryInterface {
 
   public UserRepository(EntityManager entityManager) {
     this.entityManager = entityManager;
+    Session session = entityManager.unwrap(Session.class);
+    Filter filter = session.enableFilter("reviewFilter");
+    filter.setParameter("isDeleted", false);
   }
 
   @Override
