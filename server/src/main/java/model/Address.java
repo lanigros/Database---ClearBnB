@@ -1,14 +1,13 @@
 package model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -24,32 +23,19 @@ public class Address {
   @Column(name = "zip_code")
   private String zipCode;
   @JsonBackReference(value = "homes-address")
-  @OneToMany(mappedBy = "address", cascade = CascadeType.MERGE)
-  private List<Home> homes;
+  @OneToOne(mappedBy = "address", cascade = CascadeType.MERGE)
+  private Home homes;
 
   public Address() {
   }
 
-  public Address(String city, String street, String zipCode, String country, List<Home> homes) {
+  public Address(int id, String city, String street, String country, String zipCode, Home homes) {
+    this.id = id;
     this.city = city;
     this.street = street;
-    this.zipCode = zipCode;
     this.country = country;
+    this.zipCode = zipCode;
     this.homes = homes;
-  }
-
-  public List<Home> getHomes() {
-    return homes;
-  }
-
-  public void setHomes(List<Home> homes) {
-    this.homes = homes;
-  }
-
-  @Override
-  public String toString() {
-    return "Address{" + "id=" + id + ", city='" + city + '\'' + ", street='" + street + '\''
-        + ", country='" + country + '\'' + ", zipCode='" + zipCode + '\'' + '}';
   }
 
   public int getId() {
@@ -59,6 +45,7 @@ public class Address {
   public void setId(int id) {
     this.id = id;
   }
+
 
   public String getCity() {
     return city;
@@ -92,4 +79,17 @@ public class Address {
     this.zipCode = zipCode;
   }
 
+  public Home getHomes() {
+    return homes;
+  }
+
+  public void setHomes(Home homes) {
+    this.homes = homes;
+  }
+
+  @Override
+  public String toString() {
+    return "Address{" + "id=" + id + ", city='" + city + '\'' + ", street='" + street + '\''
+        + ", country='" + country + '\'' + ", zipCode='" + zipCode + '\'' + '}';
+  }
 }
