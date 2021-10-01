@@ -1,6 +1,7 @@
 package service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import database.Redis;
 import datatransforobject.HomeAddressDTO;
 import datatransforobject.HomeCoreDTO;
 import datatransforobject.HomeHistoryDTO;
@@ -16,12 +17,10 @@ import javax.persistence.EntityManagerFactory;
 import mapper.AddressMapper;
 import mapper.HomeMapper;
 import model.Address;
-import model.AmenityHistory;
 import model.Home;
 import model.HomeHistoryLog;
 import model.HomeView;
 import model.Host;
-import org.hibernate.Session;
 import redis.clients.jedis.Jedis;
 import repository.AmenityHistoryRepository;
 import repository.HomeHistoryLogRepository;
@@ -35,20 +34,12 @@ public class HomeService {
       "Home");
   private final EntityManager entityManager = entityManagerFactory.createEntityManager();
   private final HomeRepository homeRepository = new HomeRepository(entityManager);
-
   private final HomeHistoryLogRepository homeHistoryLogRepository = new HomeHistoryLogRepository(
       entityManager);
   private final AmenityHistoryRepository amenityHistoryRepository = new AmenityHistoryRepository(
       entityManager);
-
-  Jedis redis = new Jedis("localhost", 6379);
-
-
-  Session session = entityManager.unwrap(Session.class);
-
-
   private final HostRepository hostRepository = new HostRepository(entityManager);
-
+  private final Jedis redis = Redis.getConnection();
   private final ActiveSessionService activeSessionService;
 
   public HomeService() {
@@ -56,25 +47,24 @@ public class HomeService {
   }
 
   public Optional<HomeCoreDTO> getById(String id) throws JsonProcessingException {
-    if(redis.exists("home"+id)){
-      System.out.println(redis.get("home"+id));
-      HomeCoreDTO c   =  JavalinJackson.getObjectMapper().readValue(redis.get("home"+id), HomeCoreDTO.class);
-
+    if (redis.exists("home" + id)) {
+      HomeCoreDTO c = JavalinJackson.getObjectMapper()
+          .readValue(redis.get("home" + id), HomeCoreDTO.class);
       return Optional.of(c);
     }
+
     Optional<Home> homeDO = homeRepository.findById(id);
     if (homeDO.isEmpty()) {
       return Optional.empty();
     }
 
-    redis.set("home"+id, JavalinJackson.getObjectMapper().writeValueAsString(HomeMapper.convertToCore(homeDO.get())));
-    return Optional.of(HomeMapper.convertToCore(homeDO.get()));
+    HomeCoreDTO returnHome = HomeMapper.convertToCore(homeDO.get());
+    redis.set("home" + id, JavalinJackson.getObjectMapper().writeValueAsString(returnHome));
+    return Optional.of(returnHome);
   }
 
   public List getAll(Map<String, List<String>> filters)
       throws ParseException, JsonProcessingException {
-
-    System.out.println(buildFilterQuery(filters));
     List<HomeView> homes = homeRepository.findAll(buildFilterQuery(filters), filters);
 
     //to get proper entities inc lists
@@ -107,12 +97,6 @@ public class HomeService {
     return homeHistoryHomeId;
   }
 
-  public List<AmenityHistory> getByHomeHistoryId(String homeHistoryId) {
-    List<AmenityHistory> amenityHistoryList = amenityHistoryRepository.findByHomeHistoryId(
-        homeHistoryId);
-    return amenityHistoryList;
-  }
-
   public Optional<Home> createHome(String sessionID, HomeAddressDTO dto) {
     int userId = activeSessionService.getActiveSessionUserId(sessionID);
     Optional<Host> host = hostRepository.findByUserId(userId);
@@ -137,9 +121,10 @@ public class HomeService {
     newValues.setAddress(oldValues.get().getAddress());
     newValues.setId(oldValues.get().getId());
 
-    redis.getDel("home"+id);
+    redis.getDel("home" + id);
     Optional<Home> updatedHome = homeRepository.save(newValues, true);
     return Optional.of(updatedHome.get());
+    
 
   }
 
@@ -195,11 +180,11 @@ public class HomeService {
         case "amenity": {
           for (int i = 0; i < value.size(); i++) {
             if (i == 0) {
-              query.append(" amenity = :am").append(i+1);
+              query.append(" amenity = :am").append(i + 1);
             } else {
               query.append(" AND EXISTS ( SELECT 1 FROM amenity_enum t").append(i + 1)
                   .append(" WHERE t").append(i + 1).append(".home_id = home.id AND t").append(i + 1)
-                  .append(".amenity = :am").append(i+1).append(")");
+                  .append(".amenity = :am").append(i + 1).append(")");
             }
           }
           break;
