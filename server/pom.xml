@@ -35,7 +35,17 @@
       <artifactId>java-dotenv</artifactId>
       <version>5.2.2</version>
     </dependency>
-  </dependencies>
+
+    <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
+    <dependency>
+      <groupId>redis.clients</groupId>
+      <artifactId>jedis</artifactId>
+      <version>3.6.0</version>
+    </dependency>
+
+
+    </dependencies>
+
   <groupId>org.example</groupId>
   <modelVersion>4.0.0</modelVersion>
 
