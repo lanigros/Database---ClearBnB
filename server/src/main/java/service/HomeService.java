@@ -1,8 +1,10 @@
 package service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import datatransforobject.HomeAddressDTO;
 import datatransforobject.HomeCoreDTO;
 import datatransforobject.HomeHistoryDTO;
+import io.javalin.plugin.json.JavalinJackson;
 import java.text.ParseException;
 import java.util.HashSet;
 import java.util.List;
@@ -20,12 +22,12 @@ import model.HomeHistoryLog;
 import model.HomeView;
 import model.Host;
 import org.hibernate.Session;
+import redis.clients.jedis.Jedis;
 import repository.AmenityHistoryRepository;
 import repository.HomeHistoryLogRepository;
 import repository.HomeRepository;
 import repository.HostRepository;
 import utility.ManagerFactory;
-import utility.Utility;
 
 public class HomeService {
 
@@ -39,6 +41,9 @@ public class HomeService {
   private final AmenityHistoryRepository amenityHistoryRepository = new AmenityHistoryRepository(
       entityManager);
 
+  Jedis redis = new Jedis("localhost", 6379);
+
+
   Session session = entityManager.unwrap(Session.class);
 
 
@@ -50,16 +55,25 @@ public class HomeService {
     this.activeSessionService = new ActiveSessionService();
   }
 
-  public Optional<HomeCoreDTO> getById(String id) {
+  public Optional<HomeCoreDTO> getById(String id) throws JsonProcessingException {
+    if(redis.exists("home"+id)){
+      System.out.println(redis.get("home"+id));
+      HomeCoreDTO c   =  JavalinJackson.getObjectMapper().readValue(redis.get("home"+id), HomeCoreDTO.class);
+
+      return Optional.of(c);
+    }
     Optional<Home> homeDO = homeRepository.findById(id);
     if (homeDO.isEmpty()) {
       return Optional.empty();
     }
+
+    redis.set("home"+id, JavalinJackson.getObjectMapper().writeValueAsString(HomeMapper.convertToCore(homeDO.get())));
     return Optional.of(HomeMapper.convertToCore(homeDO.get()));
   }
 
-  public List getAll(Map<String, List<String>> filters) throws ParseException {
-//    List<HomeView> homes = homeRepository.findAll(buildFilterQuery(filters));
+  public List getAll(Map<String, List<String>> filters)
+      throws ParseException, JsonProcessingException {
+
     System.out.println(buildFilterQuery(filters));
     List<HomeView> homes = homeRepository.findAll(buildFilterQuery(filters), filters);
 
@@ -123,6 +137,7 @@ public class HomeService {
     newValues.setAddress(oldValues.get().getAddress());
     newValues.setId(oldValues.get().getId());
 
+    redis.getDel("home"+id);
     Optional<Home> updatedHome = homeRepository.save(newValues, true);
     return Optional.of(updatedHome.get());
 
