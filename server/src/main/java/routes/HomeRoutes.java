@@ -29,6 +29,7 @@ public class HomeRoutes {
         Optional<HomeCoreDTO> home = homeService.getById(id);
         res.json(home.isPresent() ? home.get() : "No home with that id");
       } catch (Exception e) {
+        e.printStackTrace();
         res.status(500).send("Internal error");
       }
     });

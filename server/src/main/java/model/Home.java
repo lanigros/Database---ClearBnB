@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -36,7 +37,7 @@ public class Home {
   private Host host;
 
   @JsonManagedReference(value = "homes-address")
-  @ManyToOne(cascade = CascadeType.MERGE)
+  @OneToOne(cascade = CascadeType.MERGE)
   @JoinColumn(name = "address_id")
   private Address address;
 

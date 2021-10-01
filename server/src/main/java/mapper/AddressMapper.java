@@ -13,7 +13,7 @@ public class AddressMapper {
     address.setCountry(dto.getCountry());
     address.setStreet(dto.getStreet());
     address.setZipCode(dto.getZipCode());
-    address.setHomes(List.of(home));
+    address.setHomes(home);
     return address;
 
   }
