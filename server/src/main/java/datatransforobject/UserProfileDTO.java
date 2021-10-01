@@ -34,7 +34,7 @@ public class UserProfileDTO {
     this.hostReview = hostReview;
   }
 
-  public List<Review>getRenterReview() {
+  public List<Review> getRenterReview() {
     return renterReview;
   }
 
@@ -78,7 +78,11 @@ public class UserProfileDTO {
     return avgRatingHost;
   }
 
-  public void setAvgRatingHost(List<Review> reviews) {
+  public void setAvgRatingHost(int avgRatingHost) {
+    this.avgRatingHost = avgRatingHost;
+  }
+
+  public void setAvgRatingHostFromList(List<Review> reviews) {
 
     float tempTotal = 0;
     for (Review re : reviews) {
@@ -93,7 +97,11 @@ public class UserProfileDTO {
     return avgRatingRenter;
   }
 
-  public void setAvgRatingRenter(List<Review> reviews) {
+  public void setAvgRatingRenter(int avgRatingRenter) {
+    this.avgRatingRenter = avgRatingRenter;
+  }
+
+  public void setAvgRatingRenterFromList(List<Review> reviews) {
     float tempTotal = 0;
     for (Review re : reviews) {
       tempTotal += re.getRating();

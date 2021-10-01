@@ -2,12 +2,16 @@ package service;
 
 import static java.util.stream.Collectors.toList;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import database.Redis;
 import datatransforobject.ReviewBasicDTO;
 import datatransforobject.UserCompleteProfileDTO;
 import datatransforobject.UserCoreDTO;
 import datatransforobject.UserLoginDTO;
 import datatransforobject.UserNameIdDTO;
 import datatransforobject.UserProfileDTO;
+import io.javalin.plugin.json.JavalinJackson;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
@@ -19,7 +23,7 @@ import model.Host;
 import model.Renter;
 import model.Review;
 import model.User;
-import repository.ActiveSessionRepository;
+import redis.clients.jedis.Jedis;
 import repository.BookingDetailRepository;
 import repository.HostRepository;
 import repository.RenterRepository;
@@ -39,14 +43,10 @@ public class UserService {
       entityManager);
   private final ReviewRepository reviewRepository = new ReviewRepository(entityManager);
   private final HostRepository hostRepository = new HostRepository(entityManager);
+  private final Jedis redis = Redis.getConnection();
 
-  private final ActiveSessionRepository activeSessionRepository = new ActiveSessionRepository(
-      entityManager);
-
-  private final ActiveSessionService activeSessionService;
 
   public UserService() {
-    this.activeSessionService = new ActiveSessionService();
   }
 
   public Optional<User> getById(String id) {
@@ -60,10 +60,16 @@ public class UserService {
     return users;
   }
 
-  public List<UserNameIdDTO> getAllNames() {
+  public List<UserNameIdDTO> getAllNames() throws JsonProcessingException {
+    if (redis.exists("names")) {
+      List<UserNameIdDTO> list = JavalinJackson.getObjectMapper()
+          .readValue(redis.get("names"), new TypeReference<>() {
+          });
+      return list;
+    }
     List<User> users = userRepository.findAll();
-    List<UserNameIdDTO> list = users.stream().map(UserMapper::convertToNameAndId)
-        .collect(toList());
+    List<UserNameIdDTO> list = users.stream().map(UserMapper::convertToNameAndId).collect(toList());
+    redis.set("names", JavalinJackson.getObjectMapper().writeValueAsString(list));
     return list;
   }
 
@@ -77,7 +83,7 @@ public class UserService {
         //To send a json
         UserCoreDTO createdUserCoreDTO = UserMapper.convertToCoreDTOWithoutPassword(
             createdUser.get());
-        System.out.println(createdUserCoreDTO);
+        redis.getDel("names");
         return Optional.of(createdUserCoreDTO);
       }
     }
@@ -111,6 +117,7 @@ public class UserService {
     if (user.isEmpty()) {
       return null;
     }
+
     return UserMapper.convertToProfile(user.get());
   }
 
@@ -155,8 +162,9 @@ public class UserService {
   public Optional<Integer> deleteReview(String reviewID, String userId) {
     int reviewId = Integer.parseInt(reviewID);
     Optional<Review> review = reviewRepository.findById(reviewId);
-    if(review.isEmpty() || !userId.equals(String.valueOf(review.get().getCreatorId())))
+    if (review.isEmpty() || !userId.equals(String.valueOf(review.get().getCreatorId()))) {
       return Optional.empty();
+    }
 
     Optional<Integer> updatedReview = reviewRepository.update(reviewId);
     return updatedReview;
