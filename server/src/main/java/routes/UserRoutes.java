@@ -48,6 +48,7 @@ public class UserRoutes {
         UserProfileDTO user = userService.getUserProfile(id);
         res.json(user);
       } catch (Exception e) {
+        e.printStackTrace();
         res.status(500).json("internal error");
       }
     });
