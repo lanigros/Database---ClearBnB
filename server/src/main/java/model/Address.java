@@ -1,14 +1,12 @@
 package model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -31,6 +29,15 @@ public class Address {
   public Address() {
   }
 
+  public Address(int id, String city, String street, String country, String zipCode, Home homes) {
+    this.id = id;
+    this.city = city;
+    this.street = street;
+    this.country = country;
+    this.zipCode = zipCode;
+    this.homes = homes;
+  }
+
   public int getId() {
     return id;
   }
@@ -38,6 +45,7 @@ public class Address {
   public void setId(int id) {
     this.id = id;
   }
+
 
   public String getCity() {
     return city;
@@ -77,5 +85,11 @@ public class Address {
 
   public void setHomes(Home homes) {
     this.homes = homes;
+  }
+
+  @Override
+  public String toString() {
+    return "Address{" + "id=" + id + ", city='" + city + '\'' + ", street='" + street + '\''
+        + ", country='" + country + '\'' + ", zipCode='" + zipCode + '\'' + '}';
   }
 }
