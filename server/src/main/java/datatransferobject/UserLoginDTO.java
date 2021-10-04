@@ -1,4 +1,4 @@
-package datatransforobject;
+package datatransferobject;
 
 public class UserLoginDTO {
 

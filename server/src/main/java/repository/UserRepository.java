@@ -1,6 +1,6 @@
 package repository;
 
-import datatransforobject.UserCoreDTO;
+import datatransferobject.UserCoreDTO;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;

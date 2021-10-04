@@ -1,7 +1,7 @@
 package routes;
 
-import datatransforobject.HomeAddressDTO;
-import datatransforobject.HomeCoreDTO;
+import datatransferobject.HomeAddressDTO;
+import datatransferobject.HomeCoreDTO;
 import express.Express;
 import java.util.List;
 import java.util.Map;

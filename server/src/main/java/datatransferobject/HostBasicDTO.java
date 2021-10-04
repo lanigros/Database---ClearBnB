@@ -1,4 +1,4 @@
-package datatransforobject;
+package datatransferobject;
 
 import java.util.List;
 import model.Review;

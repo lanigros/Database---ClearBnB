@@ -1,7 +1,7 @@
 package mapper;
 
 
-import datatransforobject.HostBasicDTO;
+import datatransferobject.HostBasicDTO;
 import model.Host;
 
 public class HostMapper {

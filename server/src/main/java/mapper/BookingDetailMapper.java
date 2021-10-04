@@ -1,8 +1,8 @@
 package mapper;
 
-import datatransforobject.BookingCoreWithHomeDTO;
-import datatransforobject.BookingDetailCoreDTO;
-import datatransforobject.BookingDetailWithRenterDTO;
+import datatransferobject.BookingCoreWithHomeDTO;
+import datatransferobject.BookingDetailCoreDTO;
+import datatransferobject.BookingDetailWithRenterDTO;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;

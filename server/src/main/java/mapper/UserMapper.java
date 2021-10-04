@@ -1,9 +1,9 @@
 package mapper;
 
-import datatransforobject.UserCompleteProfileDTO;
-import datatransforobject.UserCoreDTO;
-import datatransforobject.UserNameIdDTO;
-import datatransforobject.UserProfileDTO;
+import datatransferobject.UserCompleteProfileDTO;
+import datatransferobject.UserCoreDTO;
+import datatransferobject.UserNameIdDTO;
+import datatransferobject.UserProfileDTO;
 import model.User;
 
 public class UserMapper {

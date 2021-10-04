@@ -1,11 +1,11 @@
 package mapper;
 
 
-import datatransforobject.HomeAddressDTO;
-import datatransforobject.HomeCoreDTO;
-import datatransforobject.HomeCoreNoHostDTO;
-import datatransforobject.HomeCoreWithBooking;
-import datatransforobject.HomeHistoryDTO;
+import datatransferobject.HomeAddressDTO;
+import datatransferobject.HomeCoreDTO;
+import datatransferobject.HomeCoreNoHostDTO;
+import datatransferobject.HomeCoreWithBooking;
+import datatransferobject.HomeHistoryDTO;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;

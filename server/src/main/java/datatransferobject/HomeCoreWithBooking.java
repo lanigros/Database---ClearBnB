@@ -1,14 +1,14 @@
-package datatransforobject;
+package datatransferobject;
 
 import java.sql.Timestamp;
 import java.util.List;
 import model.Address;
 import model.Amenity;
-import model.BookingDetail;
 import model.HomeImage;
 
-public class HomeCoreWithBooking extends HomeCoreNoHostDTO{
-  private List<BookingDetailWithRenterDTO>bookingDetails;
+public class HomeCoreWithBooking extends HomeCoreNoHostDTO {
+
+  private List<BookingDetailWithRenterDTO> bookingDetails;
 
   public HomeCoreWithBooking(int id, Address address, List<HomeImage> images,
       int pricePerNight, Timestamp startDate, Timestamp endDate,

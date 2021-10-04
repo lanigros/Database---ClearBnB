@@ -1,6 +1,6 @@
 package mapper;
 
-import datatransforobject.ReviewBasicDTO;
+import datatransferobject.ReviewBasicDTO;
 import java.sql.Timestamp;
 import java.time.Instant;
 import model.BookingDetail;

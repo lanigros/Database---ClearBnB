@@ -2,9 +2,9 @@ package service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import database.Redis;
-import datatransforobject.HomeAddressDTO;
-import datatransforobject.HomeCoreDTO;
-import datatransforobject.HomeHistoryDTO;
+import datatransferobject.HomeAddressDTO;
+import datatransferobject.HomeCoreDTO;
+import datatransferobject.HomeHistoryDTO;
 import io.javalin.plugin.json.JavalinJackson;
 import java.text.ParseException;
 import java.util.HashSet;
@@ -124,7 +124,7 @@ public class HomeService {
     redis.getDel("home" + id);
     Optional<Home> updatedHome = homeRepository.save(newValues, true);
     return Optional.of(updatedHome.get());
-    
+
 
   }
 

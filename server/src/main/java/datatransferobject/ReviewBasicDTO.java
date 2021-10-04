@@ -1,4 +1,4 @@
-package datatransforobject;
+package datatransferobject;
 
 public class ReviewBasicDTO {
 
@@ -25,7 +25,8 @@ public class ReviewBasicDTO {
 
   @Override
   public String toString() {
-    return "ReviewBasicDTO{" + ", rating=" + rating + ", comment='" + comment + ", bookingDetailId='" + bookingDetailId + "}";
+    return "ReviewBasicDTO{" + ", rating=" + rating + ", comment='" + comment
+        + ", bookingDetailId='" + bookingDetailId + "}";
   }
 
   public int getRating() {
