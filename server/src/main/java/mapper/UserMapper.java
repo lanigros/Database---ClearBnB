@@ -24,13 +24,12 @@ public class UserMapper {
   }
 
   public static User convertToUser(UserCoreDTO dto) {
-
-    User userDO = new User();
-    userDO.setFirstName(dto.getFirstName());
-    userDO.setLastName(dto.getLastName());
-    userDO.setEmail(dto.getEmail());
-    userDO.setPassword(dto.getPassword());
-    return userDO;
+    return new User(
+        dto.getFirstName(),
+        dto.getLastName(),
+        dto.getEmail(),
+        dto.getPassword()
+    );
   }
 
   public static UserNameIdDTO convertToNameAndId(User user) {
@@ -70,7 +69,8 @@ public class UserMapper {
     dto.setRenterReview(user.getRenterProfile().getReviews());
     dto.setHostReview(user.getHostProfile().getReviews());
     dto.setMadeReviews(user.getMadeReviews());
-    dto.setBookingDetails(BookingDetailMapper.convertToBookingCoreHomeDTO(user.getRenterProfile().getBookingDetails()));
+    dto.setBookingDetails(BookingDetailMapper.convertToBookingCoreHomeDTO(
+        user.getRenterProfile().getBookingDetails()));
     return dto;
   }
 

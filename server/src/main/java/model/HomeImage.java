@@ -17,7 +17,7 @@ import javax.persistence.Table;
 @NamedQueries({
     @NamedQuery(name = "HomeImage.findById", query = "SELECT h FROM HomeImage h WHERE h.id = :id"),
     @NamedQuery(name = "HomeImage.findAll", query = "SELECT h FROM HomeImage h"),
-    @NamedQuery(name="HomeImage.deleteAllByHome", query = "DELETE FROM HomeImage h WHERE h.home = :home")
+    @NamedQuery(name = "HomeImage.deleteAllByHome", query = "DELETE FROM HomeImage h WHERE h.home = :home")
 })
 public class HomeImage {
 
@@ -36,6 +36,11 @@ public class HomeImage {
 
   public HomeImage(int id, String imageUrl, Home home) {
     this.id = id;
+    this.imageUrl = imageUrl;
+    this.home = home;
+  }
+
+  public HomeImage(String imageUrl, Home home) {
     this.imageUrl = imageUrl;
     this.home = home;
   }

@@ -18,56 +18,61 @@ import utility.AmenityEnumConverter;
 @Table(name = "amenity_enum_history_log")
 public class AmenityHistory {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private int id;
 
-    @JsonBackReference(value = "home-history-amenities")
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "home_history_log_id")
-    private HomeHistoryLog homeHistoryLog;
+  @JsonBackReference(value = "home-history-amenities")
+  @ManyToOne(cascade = CascadeType.MERGE)
+  @JoinColumn(name = "home_history_log_id")
+  private HomeHistoryLog homeHistoryLog;
 
-    @Column(name = "amenity")
-    @Convert(converter = AmenityEnumConverter.class)
-    private AmenityEnum amenityEnum;
+  @Column(name = "amenity")
+  @Convert(converter = AmenityEnumConverter.class)
+  private AmenityEnum amenityEnum;
 
-    public AmenityHistory(int id, HomeHistoryLog homeHistoryLog, AmenityEnum amenityEnum) {
-        this.id = id;
-        this.homeHistoryLog = homeHistoryLog;
-        this.amenityEnum = amenityEnum;
-    }
+  public AmenityHistory(int id, HomeHistoryLog homeHistoryLog, AmenityEnum amenityEnum) {
+    this.id = id;
+    this.homeHistoryLog = homeHistoryLog;
+    this.amenityEnum = amenityEnum;
+  }
 
-    public AmenityHistory() {
-    }
+  public AmenityHistory(HomeHistoryLog homeHistoryLog, AmenityEnum amenityEnum) {
+    this.homeHistoryLog = homeHistoryLog;
+    this.amenityEnum = amenityEnum;
+  }
 
-    public int getId() {
-        return id;
-    }
+  public AmenityHistory() {
+  }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+  public int getId() {
+    return id;
+  }
 
-    public HomeHistoryLog getHomeHistoryLog() {
-        return homeHistoryLog;
-    }
+  public void setId(int id) {
+    this.id = id;
+  }
 
-    public void setHomeHistoryLogId(HomeHistoryLog homeHistoryLog) {
-        this.homeHistoryLog = homeHistoryLog;
-    }
+  public HomeHistoryLog getHomeHistoryLog() {
+    return homeHistoryLog;
+  }
 
-    public AmenityEnum getAmenityEnum() {
-        return amenityEnum;
-    }
+  public void setHomeHistoryLogId(HomeHistoryLog homeHistoryLog) {
+    this.homeHistoryLog = homeHistoryLog;
+  }
 
-    public void setAmenityEnum(AmenityEnum amenityEnum) {
-        this.amenityEnum = amenityEnum;
-    }
+  public AmenityEnum getAmenityEnum() {
+    return amenityEnum;
+  }
 
-    @Override
-    public String toString() {
-        return "AmenityHistory{" + "id=" + id + ", amenityEnum=" + amenityEnum + '}';
-    }
+  public void setAmenityEnum(AmenityEnum amenityEnum) {
+    this.amenityEnum = amenityEnum;
+  }
+
+  @Override
+  public String toString() {
+    return "AmenityHistory{" + "id=" + id + ", amenityEnum=" + amenityEnum + '}';
+  }
 
 }
 

@@ -38,6 +38,14 @@ public class Address {
     this.homes = homes;
   }
 
+  public Address(String city, String street, String country, String zipCode, Home homes) {
+    this.city = city;
+    this.street = street;
+    this.country = country;
+    this.zipCode = zipCode;
+    this.homes = homes;
+  }
+
   public int getId() {
     return id;
   }
