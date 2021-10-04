@@ -29,10 +29,18 @@ public class BookingDetailService {
     if (renter.isEmpty()) return Optional.empty();
     // Find home about to be booked
     Optional<Home> home = homeRepository.findById(String.valueOf(bookingDetailCoreDTO.getHomeId()));
-    if(home.isEmpty()) return Optional.empty();
-
+    if (home.isEmpty() || bookingDetailCoreDTO.getStartDate().before(home.get().getStartDate()) ||
+        bookingDetailCoreDTO.getEndDate().after(home.get().getEndDate())) {
+      System.out.println("if");
+      return Optional.empty();
+    }
+    
     BookingDetail bookingDetail = BookingDetailMapper.convertToBookingDetail(bookingDetailCoreDTO,
         renter.get(), home.get());
+
+    boolean available = bookingDetailRepository.checkIfAvailable(bookingDetail.getStartDate(),
+        bookingDetail.getEndDate(), home.get());
+    if(!available) return Optional.empty();
 
     //calculate total price
     int pricePerNight = bookingDetail.getHome().getPricePerNight();
@@ -41,8 +49,7 @@ public class BookingDetailService {
     int totalPrice = pricePerNight * duration;
     bookingDetail.setTotalPrice(totalPrice);
 
-    boolean available = bookingDetailRepository.checkIfAvailable(bookingDetail.getStartDate(), bookingDetail.getEndDate(), home.get());
-    if(!available) return Optional.empty();
+
 
     // try to perform payment, break if doesn't work
     if(!WalletService.tryTransaction(totalPrice, userId)){
