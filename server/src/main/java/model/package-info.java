@@ -9,9 +9,6 @@
 
 @FilterDef(name = "amenityFilter", parameters = {@ParamDef(name = "amenity", type = "string"),})
 
-@FilterDef(name = "reviewFilter", parameters = @ParamDef(name = "isDeleted", type = "boolean"),
-defaultCondition = "is_deleted = :isDeleted")
-
 package model;
 
 import org.hibernate.annotations.FilterDef;
