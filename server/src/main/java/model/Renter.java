@@ -16,7 +16,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.Where;
 
 @Entity
 @Table(name = "Renter")
@@ -41,7 +41,7 @@ public class Renter {
       joinColumns = @JoinColumn(name = "renter_id", referencedColumnName = "id"),
       inverseJoinColumns = @JoinColumn(name = "review_id", referencedColumnName = "id")
   )
-  @Filter(name="reviewFilter")
+  @Where(clause = "is_deleted = 0")
   private List<Review> reviews = new ArrayList<>();
 
   public Renter() {
