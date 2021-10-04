@@ -1,4 +1,4 @@
-package datatransforobject;
+package datatransferobject;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -14,14 +14,14 @@ public class HomeAddressDTO {
   private Timestamp startDate;
   private Timestamp endDate;
   private List<String> amenities = new ArrayList<>();
-  private List<String>images = new ArrayList<>();
+  private List<String> images = new ArrayList<>();
 
   public HomeAddressDTO() {
   }
 
   public HomeAddressDTO(String city, String street, String zipCode, String country,
       int pricePerNight, Timestamp startDate, Timestamp endDate, List<String> amenities,
-      List<String>images) {
+      List<String> images) {
     this.city = city;
     this.street = street;
     this.zipCode = zipCode;

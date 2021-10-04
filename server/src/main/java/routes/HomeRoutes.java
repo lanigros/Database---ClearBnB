@@ -1,7 +1,7 @@
 package routes;
 
-import datatransforobject.HomeAddressDTO;
-import datatransforobject.HomeCoreDTO;
+import datatransferobject.HomeAddressDTO;
+import datatransferobject.HomeCoreDTO;
 import express.Express;
 import java.util.List;
 import java.util.Map;
@@ -64,7 +64,6 @@ public class HomeRoutes {
       HomeAddressDTO dto = req.body(HomeAddressDTO.class);
       Optional<Home> home = homeService.createHome(sessionID, dto);
       res.json(home.get());
-
     });
 
     app.put("rest/homes/:id", (req, res) -> {
@@ -74,6 +73,7 @@ public class HomeRoutes {
         Optional<Home> home = homeService.updateHome(id, dto);
         res.json(home.get());
       } catch (Exception e) {
+        e.printStackTrace();
         res.status(500).send("Internal error");
       }
     });

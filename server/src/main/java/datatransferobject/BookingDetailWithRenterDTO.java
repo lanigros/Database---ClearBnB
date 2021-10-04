@@ -1,8 +1,9 @@
-package datatransforobject;
+package datatransferobject;
 
 import java.sql.Timestamp;
 
-public class BookingDetailWithRenterDTO extends BookingDetailCoreDTO{
+public class BookingDetailWithRenterDTO extends BookingDetailCoreDTO {
+
   private int renterUserId;
   private int id;
 

@@ -1,6 +1,6 @@
 package service;
 
-import datatransforobject.UserCoreDTO;
+import datatransferobject.UserCoreDTO;
 import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -32,7 +32,7 @@ public class ActiveSessionService {
 
   public String createActiveSession(UserCoreDTO userCoreDTO) {
     ActiveSession activeSession = activeSessionRepository.insertActiveSession(userCoreDTO.getId(),
-                                                                              Utility.createRandomAlphanumeric());
+        Utility.createRandomAlphanumeric());
     if (activeSession == null) {
       return null;
     }

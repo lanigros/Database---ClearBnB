@@ -1,9 +1,9 @@
 package routes;
 
-import datatransforobject.ReviewBasicDTO;
-import datatransforobject.UserCompleteProfileDTO;
-import datatransforobject.UserNameIdDTO;
-import datatransforobject.UserProfileDTO;
+import datatransferobject.ReviewBasicDTO;
+import datatransferobject.UserCompleteProfileDTO;
+import datatransferobject.UserNameIdDTO;
+import datatransferobject.UserProfileDTO;
 import express.Express;
 import java.util.List;
 import java.util.Optional;
@@ -93,12 +93,12 @@ public class UserRoutes {
         String userId = String.valueOf(ActiveSessionService.getActiveSessionUserId(sessionID));
         String reviewId = req.params("id");
         Optional<Integer> review = userService.deleteReview(reviewId, userId);
-        if(review.isEmpty()){
+        if (review.isEmpty()) {
           res.status(401);
           return;
         }
         res.json(review);
-      }catch(Exception e){
+      } catch (Exception e) {
         e.printStackTrace();
         res.status(500);
       }

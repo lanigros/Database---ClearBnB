@@ -1,15 +1,14 @@
 package mapper;
 
 
-import datatransforobject.HomeAddressDTO;
-import datatransforobject.HomeCoreDTO;
-import datatransforobject.HomeCoreNoHostDTO;
-import datatransforobject.HomeCoreWithBooking;
-import datatransforobject.HomeHistoryDTO;
+import datatransferobject.HomeAddressDTO;
+import datatransferobject.HomeCoreDTO;
+import datatransferobject.HomeCoreNoHostDTO;
+import datatransferobject.HomeCoreWithBooking;
+import datatransferobject.HomeHistoryDTO;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import model.Amenity;
 import model.Home;
@@ -53,6 +52,7 @@ public class HomeMapper {
   }
 
   public static Home convertToHome(HomeAddressDTO dto, Host host) {
+
     Home home = new Home();
     home.setPricePerNight(dto.getPricePerNight());
     home.setStartDate(dto.getStartDate());
@@ -70,17 +70,17 @@ public class HomeMapper {
 
   public static List<HomeCoreNoHostDTO> convertToNoHost(List<Home> homes) {
     List<HomeCoreNoHostDTO> list = new ArrayList<>();
-
     homes.forEach(home -> {
-      HomeCoreNoHostDTO dto = new HomeCoreNoHostDTO();
-      dto.setAddress(home.getAddress());
-      dto.setAmenities(home.getAmenities());
-      dto.setId(home.getId());
-      dto.setImages(home.getImages());
-      dto.setCreatedDate(home.getCreatedDate());
-      dto.setEndDate(home.getEndDate());
-      dto.setStartDate(home.getStartDate());
-      dto.setPricePerNight(home.getPricePerNight());
+      HomeCoreNoHostDTO dto = new HomeCoreNoHostDTO(
+          home.getId(),
+          home.getAddress(),
+          home.getImages(),
+          home.getPricePerNight(),
+          home.getStartDate(),
+          home.getEndDate(),
+          home.getCreatedDate(),
+          home.getAmenities()
+      );
       list.add(dto);
     });
     return list;
@@ -89,27 +89,34 @@ public class HomeMapper {
   public static List<HomeCoreWithBooking> convertToWithBooking(List<Home> homes) {
     List<HomeCoreWithBooking> list = new ArrayList<>();
     homes.forEach(home -> {
-      HomeCoreWithBooking dto = new HomeCoreWithBooking(home.getId(),
-          home.getAddress(), home.getImages(), home.getPricePerNight(),
-          home.getStartDate(), home.getEndDate(), home.getCreatedDate(),
-          home.getAmenities(), BookingDetailMapper.convertToBookingWithRenterDTO(home.getBookingDetails()));
+      HomeCoreWithBooking dto = new HomeCoreWithBooking(
+          home.getId(),
+          home.getAddress(),
+          home.getImages(),
+          home.getPricePerNight(),
+          home.getStartDate(),
+          home.getEndDate(),
+          home.getCreatedDate(),
+          home.getAmenities(),
+          BookingDetailMapper.convertToBookingWithRenterDTO(home.getBookingDetails()));
       list.add(dto);
     });
     return list;
   }
 
   public static List<HomeHistoryLog> convertHistory(Home home) {
-    List<HomeHistoryLog>historylogs = home.getHistoryLogs();
-    HomeHistoryLog homeHistory = new HomeHistoryLog();
-    homeHistory.setHome(home);
-    homeHistory.setPricePerNight(home.getPricePerNight());
-    homeHistory.setStartDate(home.getStartDate());
-    homeHistory.setEndDate(home.getEndDate());
-    homeHistory.setImages(HomeImageMapper.convertToHistory(home.getImages(), homeHistory));
+    List<HomeHistoryLog> historyLogs = home.getHistoryLogs();
+    HomeHistoryLog homeHistory = new HomeHistoryLog(
+        home,
+        home.getPricePerNight(),
+        home.getStartDate(),
+        home.getEndDate(),
+        new Timestamp(Instant.now().toEpochMilli())
+    );
     homeHistory.setAmenities(AmenityMapper.convertToHistory(home.getAmenities(), homeHistory));
-    homeHistory.setCreatedDate(new Timestamp(Instant.now().toEpochMilli()));
-    historylogs.add(homeHistory);
-    return historylogs;
+    homeHistory.setImages(HomeImageMapper.convertToHistory(home.getImages(), homeHistory));
+    historyLogs.add(homeHistory);
+    return historyLogs;
 
   }
 

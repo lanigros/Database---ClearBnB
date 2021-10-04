@@ -1,9 +1,9 @@
-package datatransforobject;
+package datatransferobject;
 
 import java.sql.Timestamp;
-import model.Home;
 
-public class BookingCoreWithHomeDTO extends BookingDetailCoreDTO{
+public class BookingCoreWithHomeDTO extends BookingDetailCoreDTO {
+
   private int id;
   private HomeCoreDTO home;
 

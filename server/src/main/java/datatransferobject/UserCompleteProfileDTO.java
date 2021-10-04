@@ -1,4 +1,4 @@
-package datatransforobject;
+package datatransferobject;
 
 import java.util.List;
 import model.Review;
@@ -15,11 +15,11 @@ public class UserCompleteProfileDTO {
   private List<Review> renterReview;
   private List<HomeCoreWithBooking> homes;
   private List<Review> madeReviews;
-  private List<BookingCoreWithHomeDTO>bookingDetails;
+  private List<BookingCoreWithHomeDTO> bookingDetails;
 
   public UserCompleteProfileDTO(String firstName, String lastName, String email, int avgRatingHost,
       int avgRatingRenter, List<Review> hostReview, List<Review> renterReview,
-      List<HomeCoreWithBooking> homes, List<BookingCoreWithHomeDTO>bookingDetails) {
+      List<HomeCoreWithBooking> homes, List<BookingCoreWithHomeDTO> bookingDetails) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.email = email;

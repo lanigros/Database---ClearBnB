@@ -1,7 +1,7 @@
 package mapper;
 
 
-import datatransforobject.HostBasicDTO;
+import datatransferobject.HostBasicDTO;
 import model.Host;
 
 public class HostMapper {
@@ -11,7 +11,6 @@ public class HostMapper {
     dto.setFullName(host.getUser().getFirstName(), host.getUser().getLastName());
     dto.setUserID(host.getUser().getId());
     dto.setAvgRating(host.getReviews());
-    dto.setUserID(host.getUser().getId());
     return dto;
 
   }

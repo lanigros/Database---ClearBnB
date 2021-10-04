@@ -1,8 +1,9 @@
-package datatransforobject;
+package datatransferobject;
 
 import java.sql.Timestamp;
 
 public class BookingDetailCoreDTO {
+
   private int homeId;
   private int totalPrice;
   private Timestamp startDate;

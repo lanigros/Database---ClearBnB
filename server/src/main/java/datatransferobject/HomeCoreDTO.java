@@ -1,4 +1,4 @@
-package datatransforobject;
+package datatransferobject;
 
 import java.sql.Timestamp;
 import java.util.List;

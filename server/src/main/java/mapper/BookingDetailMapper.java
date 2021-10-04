@@ -1,9 +1,8 @@
 package mapper;
 
-import datatransforobject.BookingCoreWithHomeDTO;
-import datatransforobject.BookingDetailCoreDTO;
-import datatransforobject.BookingDetailWithRenterDTO;
-import datatransforobject.HomeCoreDTO;
+import datatransferobject.BookingCoreWithHomeDTO;
+import datatransferobject.BookingDetailCoreDTO;
+import datatransferobject.BookingDetailWithRenterDTO;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -14,20 +13,22 @@ import model.Renter;
 
 public class BookingDetailMapper {
 
-  public static BookingDetail convertToBookingDetail(BookingDetailCoreDTO bookingDetailCoreDTO, Renter renter, Home home){
-    BookingDetail bookingDetail = new BookingDetail();
-    bookingDetail.setCreatedDate(new Timestamp(Instant.now().toEpochMilli()));
-    bookingDetail.setStartDate(bookingDetailCoreDTO.getStartDate());
-    bookingDetail.setEndDate(bookingDetailCoreDTO.getEndDate());
-    bookingDetail.setRenter(renter);
-    bookingDetail.setTotalPrice(bookingDetailCoreDTO.getTotalPrice());
-    bookingDetail.setHome(home);
-    return bookingDetail;
+  public static BookingDetail convertToBookingDetail(BookingDetailCoreDTO dto, Renter renter,
+      Home home) {
+    return new BookingDetail(
+        home,
+        dto.getTotalPrice(),
+        dto.getStartDate(),
+        dto.getEndDate(),
+        new Timestamp(Instant.now().toEpochMilli()),
+        renter
+    );
   }
 
-  public static List<BookingCoreWithHomeDTO> convertToBookingCoreHomeDTO(List<BookingDetail> bookingDetails){
-    List<BookingCoreWithHomeDTO>bookingHomeDTOs = new ArrayList<>();
-    for(BookingDetail bookingDetail : bookingDetails){
+  public static List<BookingCoreWithHomeDTO> convertToBookingCoreHomeDTO(
+      List<BookingDetail> bookingDetails) {
+    List<BookingCoreWithHomeDTO> bookingHomeDTOs = new ArrayList<>();
+    for (BookingDetail bookingDetail : bookingDetails) {
       BookingCoreWithHomeDTO bookingCoreWithHomeDTO = new BookingCoreWithHomeDTO(
           bookingDetail.getId(),
           bookingDetail.getTotalPrice(),
@@ -37,12 +38,13 @@ public class BookingDetailMapper {
           ));
       bookingHomeDTOs.add(bookingCoreWithHomeDTO);
     }
-   return bookingHomeDTOs;
+    return bookingHomeDTOs;
   }
 
-  public static List<BookingDetailWithRenterDTO> convertToBookingWithRenterDTO(List<BookingDetail> bookingDetails){
-    List<BookingDetailWithRenterDTO>bookingRenterDTOs = new ArrayList<>();
-    for(BookingDetail bookingDetail : bookingDetails){
+  public static List<BookingDetailWithRenterDTO> convertToBookingWithRenterDTO(
+      List<BookingDetail> bookingDetails) {
+    List<BookingDetailWithRenterDTO> bookingRenterDTOs = new ArrayList<>();
+    for (BookingDetail bookingDetail : bookingDetails) {
       BookingDetailWithRenterDTO bookingCoreWithRenterDTO = new BookingDetailWithRenterDTO(
           bookingDetail.getHome().getId(),
           bookingDetail.getTotalPrice(),
@@ -50,7 +52,7 @@ public class BookingDetailMapper {
           bookingDetail.getEndDate(),
           bookingDetail.getRenter().getUser().getId(),
           bookingDetail.getId()
-          );
+      );
       bookingRenterDTOs.add(bookingCoreWithRenterDTO);
     }
     return bookingRenterDTOs;

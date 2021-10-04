@@ -2,9 +2,9 @@ package service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import database.Redis;
-import datatransforobject.HomeAddressDTO;
-import datatransforobject.HomeCoreDTO;
-import datatransforobject.HomeHistoryDTO;
+import datatransferobject.HomeAddressDTO;
+import datatransferobject.HomeCoreDTO;
+import datatransferobject.HomeHistoryDTO;
 import io.javalin.plugin.json.JavalinJackson;
 import java.text.ParseException;
 import java.util.HashSet;
@@ -47,12 +47,6 @@ public class HomeService {
   }
 
   public Optional<HomeCoreDTO> getById(String id) throws JsonProcessingException {
-    if (redis.exists("home" + id)) {
-      HomeCoreDTO c = JavalinJackson.getObjectMapper()
-          .readValue(redis.get("home" + id), HomeCoreDTO.class);
-      return Optional.of(c);
-    }
-
     Optional<Home> homeDO = homeRepository.findById(id);
     if (homeDO.isEmpty()) {
       return Optional.empty();
@@ -120,11 +114,10 @@ public class HomeService {
     newValues.setHistoryLogs(historyLogs);
     newValues.setAddress(oldValues.get().getAddress());
     newValues.setId(oldValues.get().getId());
-
-    redis.getDel("home" + id);
+    
     Optional<Home> updatedHome = homeRepository.save(newValues, true);
     return Optional.of(updatedHome.get());
-    
+
 
   }
 

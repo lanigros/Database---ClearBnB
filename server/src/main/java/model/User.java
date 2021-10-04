@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
-import datatransforobject.UserCoreDTO;
+import datatransferobject.UserCoreDTO;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -22,7 +22,9 @@ import org.hibernate.annotations.Filter;
 
 @Entity
 @Table(name = "user")
-@NamedQueries({@NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"), @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")})
+@NamedQueries({
+    @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
+    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")})
 public class User {
 
   @Id
@@ -46,7 +48,7 @@ public class User {
   private Renter renterProfile;
   @OneToMany(mappedBy = "creator")
   @JsonManagedReference(value = "user-review")
-  @Filter(name="reviewFilter")
+  @Filter(name = "reviewFilter")
   private List<Review> madeReviews = new ArrayList<>();
 
   public User() {
@@ -77,7 +79,8 @@ public class User {
 
   @Override
   public String toString() {
-    return "id=" + id + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\'' + ", email='" + email + '\'' + ", password='" + password + '\'';
+    return "id=" + id + ", firstName='" + firstName + '\'' + ", lastName='" + lastName + '\''
+        + ", email='" + email + '\'' + ", password='" + password + '\'';
   }
 
   public String getFirstName() {

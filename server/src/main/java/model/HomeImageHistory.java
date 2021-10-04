@@ -37,6 +37,11 @@ public class HomeImageHistory {
     this.imageUrl = imageUrl;
   }
 
+  public HomeImageHistory(HomeHistoryLog homeHistoryLog, String imageUrl) {
+    this.homeHistoryLog = homeHistoryLog;
+    this.imageUrl = imageUrl;
+  }
+
   public int getId() {
     return id;
   }

@@ -12,8 +12,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -55,6 +53,15 @@ public class HomeHistoryLog {
     this.startDate = startDate;
     this.endDate = endDate;
     this.images = images;
+  }
+
+  public HomeHistoryLog(Home home, int pricePerNight,
+      Timestamp startDate, Timestamp endDate, Timestamp createdDate) {
+    this.home = home;
+    this.pricePerNight = pricePerNight;
+    this.startDate = startDate;
+    this.endDate = endDate;
+    this.createdDate = createdDate;
   }
 
   public HomeHistoryLog() {
