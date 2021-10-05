@@ -10,6 +10,7 @@ import UserView from './components/UserView'
 import Chat from './views/Chat'
 import UserProfileLoggedIn from './components/UserProfileLoggedIn'
 import { Normalize } from 'styled-normalize'
+import HomeListNoFilter from './components/HomeListNoFilter'
 
 function App() {
   return (
@@ -18,14 +19,18 @@ function App() {
         <Normalize />
         <Header />
         <Switch>
-          <Route exact path='/' component={HomeList} />
+          <Route exact path='/' component={HomeListNoFilter} />
           <Route path='/create-user' component={CreateUserForm} />
           <Route path='/create-home' component={CreateHomeForm} />
           <Route path='/users' component={UserList} />
           <Route path='/homes' component={HomeList} />
           <Route path='/login' component={LoginForm} />
           <Route exact path='/user/:id' component={UserView} />
-          <Route exact path='/profile/private' component={UserProfileLoggedIn} />
+          <Route
+            exact
+            path='/profile/private'
+            component={UserProfileLoggedIn}
+          />
           <Route path='/chat' component={Chat} />
         </Switch>
       </Router>
