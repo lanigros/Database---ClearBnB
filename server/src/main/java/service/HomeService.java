@@ -1,6 +1,7 @@
 package service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import database.Redis;
 import datatransferobject.HomeAddressDTO;
 import datatransferobject.HomeCoreDTO;
@@ -42,6 +43,7 @@ public class HomeService {
   private final Jedis redis = Redis.getConnection();
   private final ActiveSessionService activeSessionService;
 
+
   public HomeService() {
     this.activeSessionService = new ActiveSessionService();
   }
@@ -59,7 +61,13 @@ public class HomeService {
 
   public List getAll(Map<String, List<String>> filters)
       throws ParseException, JsonProcessingException {
-    List<HomeView> homes = homeRepository.findAll(buildFilterQuery(filters), filters);
+
+    //send cache
+    if (filters.isEmpty()) {
+      return returnHomes();
+    }
+
+    List<HomeView> homes = homeRepository.findAllWithFilter(buildFilterQuery(filters), filters);
 
     //to get proper entities inc lists
     if (homes.size() > 0) {
@@ -102,6 +110,7 @@ public class HomeService {
     home.setAddress(address);
 
     Optional<Home> savedHome = homeRepository.save(home, false);
+    redis.getDel("homes");
     return savedHome;
   }
 
@@ -114,8 +123,9 @@ public class HomeService {
     newValues.setHistoryLogs(historyLogs);
     newValues.setAddress(oldValues.get().getAddress());
     newValues.setId(oldValues.get().getId());
-    
+
     Optional<Home> updatedHome = homeRepository.save(newValues, true);
+    redis.getDel("homes");
     return Optional.of(updatedHome.get());
 
 
@@ -140,13 +150,7 @@ public class HomeService {
         + "address.zip_code AS zipCode, " + "amenity_enum.home_id AS hid, "
         + "amenity_enum.amenity AS amenity FROM home "
         + "LEFT JOIN address ON home.address_id = address.id "
-        + "LEFT JOIN amenity_enum ON home.id = amenity_enum.home_id ");
-
-    if (filters.isEmpty()) {
-      return query.toString();
-    }
-
-    query.append("WHERE ");
+        + "LEFT JOIN amenity_enum ON home.id = amenity_enum.home_id WHERE ");
     boolean firstIteration = true;
 
     for (Map.Entry<String, List<String>> entry : filters.entrySet()) {
@@ -190,6 +194,17 @@ public class HomeService {
       firstIteration = false;
     }
     return query.toString();
+  }
+
+  private List<Home> returnHomes() throws JsonProcessingException {
+    if (redis.exists("homes")) {
+      return JavalinJackson.getObjectMapper().readValue(redis.get("homes"), new TypeReference<>() {
+      });
+    }
+    //for cache
+    List<Home> unfiltered = homeRepository.findAll();
+    redis.set("homes", JavalinJackson.getObjectMapper().writeValueAsString(HomeMapper.convertToNoHost(unfiltered)));
+    return unfiltered;
   }
 
 

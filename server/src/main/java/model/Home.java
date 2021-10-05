@@ -23,8 +23,8 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "Home")
 @NamedQueries({@NamedQuery(name = "Home.findById", query = "SELECT h FROM Home h WHERE h.id = :id"),
-    @NamedQuery(name = "Home.findAll", query = "SELECT h FROM Home h"),
-    @NamedQuery(name = "Home.findPriceById", query = "SELECT h.pricePerNight FROM Home h WHERE h.id = :id"),})
+    @NamedQuery(name = "Home.findPriceById", query = "SELECT h.pricePerNight FROM Home h WHERE h.id = :id"),
+    @NamedQuery(name = "Home.findAll", query = "SELECT h FROM Home h"),})
 
 public class Home {
 

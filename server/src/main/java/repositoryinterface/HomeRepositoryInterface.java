@@ -12,7 +12,7 @@ public interface HomeRepositoryInterface {
 
   public int findPriceById(int homeId);
 
-  public List<?> findAll(String query, Map<String, List<String>> filters) throws ParseException;
+  public List<?> findAllWithFilter(String query, Map<String, List<String>> filters) throws ParseException;
 
   public Optional<Home> save(Home home, boolean isUpdate);
 
