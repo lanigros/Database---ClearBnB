@@ -33,7 +33,7 @@ public class HomeRepository implements HomeRepositoryInterface {
   }
 
   @Override
-  public List<HomeView> findAll(String q, Map<String, List<String>> filters) throws ParseException {
+  public List<HomeView> findAllWithFilter(String q, Map<String, List<String>> filters) throws ParseException {
     Query query = entityManager.createNativeQuery(q, HomeView.class);
     for (Map.Entry<String, List<String>> entry : filters.entrySet()) {
       String key = entry.getKey();
@@ -56,6 +56,10 @@ public class HomeRepository implements HomeRepositoryInterface {
 
   public List<Home> bulkFind(String query) {
     return entityManager.createQuery(query, Home.class).getResultList();
+  }
+
+  public List<Home> findAll(){
+    return entityManager.createNamedQuery("Home.findAll", Home.class).getResultList();
   }
 
   @Override
